@@ -50,6 +50,8 @@ This blends idle gaming with focus‑timer psychology.
 
 
 **Gacha System**
+
+
 Players spend coins to roll for new angels.
 
 
