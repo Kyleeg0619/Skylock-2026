@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import './style.css';
+import './styles/main.css';
 
 // Scene imports
 import LoginScene from './scenes/LoginScene.js';
@@ -26,6 +26,7 @@ const config = {
 
 const game = new Phaser.Game(config);
 
+// Determine which scene to start based on player data
 game.scene.add('BootScene', BootScene, true);
 
 // Signup and Login
