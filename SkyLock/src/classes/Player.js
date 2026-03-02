@@ -10,7 +10,7 @@ export default class Player {
         this.coins = 0;
         this.angels = { owned: []};
         this.islands = { owned: ["starter_island"]};
-        this.settings = { music: true, sfx: true };
+        this.settings = { music: 100, sfx: 100, skipGacha: false};
     }
 
     toFirestore() {
