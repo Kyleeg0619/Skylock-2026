@@ -7,7 +7,7 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBLcibdWWfUj7viJqm1UbBe2etp2JYBhDM",
+  apiKey: "AIzaSyBpM0xa5up7TQZMGbvB7XO6zz6FncmBGo8",
   authDomain: "skylock-c920c.firebaseapp.com",
   databaseURL: "https://skylock-c920c-default-rtdb.firebaseio.com",
   projectId: "skylock-c920c",
