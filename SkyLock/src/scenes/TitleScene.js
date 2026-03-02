@@ -12,7 +12,7 @@ export class TitleScene extends Phaser.Scene {
     create() {
         this.add.image(0, 0, 'bg').setOrigin(0, 0);
 
-        // --- play brn ---
+        // --- play btn ---
         const playBtn = document.createElement('button');
         playBtn.className = 'playBtn';
         playBtn.innerHTML = '<span class="btn-label"> PLAY </span>';
