@@ -1,0 +1,51 @@
+/* Login Form Component */
+#loginForm {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--dark-purple);
+    color: var(--off-white);
+    padding: 60px 30px 30px 30px;
+    border-radius: 10px;
+    width: 400px;
+    z-index: 1000;
+}
+
+#loginForm a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#loginForm label {
+    font-size: 18px;
+    color: var(--off-white);
+}
+
+#loginForm input {
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+}
+
+#loginForm button {
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    background-color: var(--royal-purple);
+    color: var(--off-white);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#loginForm .logo {
+    position: absolute;
+    justify-self: center;
+    align-self: center;
+    top: -90px;
+    width: 150px;
+    height: auto;
+    margin: 0 auto 20px auto;
+}
