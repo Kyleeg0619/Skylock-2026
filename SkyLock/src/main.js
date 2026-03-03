@@ -1,42 +1,35 @@
-import Phaser from 'phaser';
-
-import './styles/main.css';
-
-// Scene imports
-import LoginScene from './scenes/LoginScene.js';
-import SignupScene from './scenes/SignupScene.js';
-import TitleScene from './scenes/TitleScene.js';
-import BootScene from './scenes/BootScene.js';
-
-const sizes = {
-    width: 600,
-    height: 800
-}
+import { auth, db } from "./firebase.js";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { Start } from './scenes/Start.js';
 
 const config = {
-    type: Phaser.WEBGL,
-    width: sizes.width,
-    height: sizes.height,
-    canvas: gameCanvas,
+    type: Phaser.AUTO,
+    title: 'Overlord Rising',
+    description: '',
     parent: 'game-container',
-    dom: {
-        createContainer: true
-    }
-};
+    width: 1280,
+    height: 720,
+    backgroundColor: '#000000',
+    pixelArt: false,
+    scene: [
+        preload,
+        create,
+        Start
+    ],
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
+}
 
-const game = new Phaser.Game(config);
+function preload() {
+    this.load.image('logo', 'assets/phaser.png');
+}
 
-// Determine which scene to start based on player data
-game.scene.add('BootScene', BootScene, true);
+function create() {
+    this.add.text(400, 300, 'Hello Phaser!', { font: '48px Arial', fill: '#ffffff' });
+}
 
-// Signup and Login
-game.scene.add('LoginScene', LoginScene, false);
-game.scene.add('SignupScene', SignupScene, false);
-
-// Add TitleScene after checking for player data to avoid unnecessary loading
-game.scene.add('TitleScene', TitleScene, false);
-
-game.scene.start('BootScene');
-
-
+new Phaser.Game(config);
             
