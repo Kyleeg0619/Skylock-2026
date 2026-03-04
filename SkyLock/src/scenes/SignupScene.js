@@ -16,9 +16,9 @@ export default class SignupScene extends Phaser.Scene {
         this.cameras.main.setBackgroundColor('#87ceeb');
         this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
-        // Create login form
-        this.form = this.add.dom(this.sys.game.config.width / 2, this.sys.game.config.height / 2).createFromCache('signupForm');
-        this.form.setOrigin(0, 0);
+        // Create signup form
+        const form = document.getElementById('signupForm');
+        form.style.display = 'flex'; // Ensure the form is visible
 
         // Add title to form
         const newChild = document.createElement("h1");
@@ -26,13 +26,13 @@ export default class SignupScene extends Phaser.Scene {
         newChild.style.color = "var(--off-white)";
         newChild.style.zIndex = "100";
         newChild.textContent = "Sign-Up";
-        document.getElementById("loginForm").prepend(newChild);
+        document.getElementById("signupForm").prepend(newChild);
 
         // Add logo to form
         const logo = document.createElement("img");
         logo.src = "assets/icons/logo.png";
         logo.classList.add("logo");
-        document.getElementById("loginForm").prepend(logo);
+        document.getElementById("signupForm").prepend(logo);
         // Add Link to Login
         const loginLink = document.getElementsByClassName("formLink");
         loginLink[0].addEventListener("click", (e) => {
@@ -43,13 +43,13 @@ export default class SignupScene extends Phaser.Scene {
         
 
         // Handle form submission
-        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const email = document.getElementById("email").value;
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            const confirmPassword = document.getElementById("confirmPassword").value;
+            const email = document.getElementById("signup-email").value;
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementById("signup-password").value;
+            const confirmPassword = document.getElementById("signup-confirmPassword").value;
 
             if (password !== confirmPassword) {
                 const errorText = document.createElement("p");
@@ -57,20 +57,25 @@ export default class SignupScene extends Phaser.Scene {
                 errorText.style.textAlign = "center";
                 errorText.textContent = "Passwords do not match.";
                 // Remove existing error messages
-                const existingErrors = document.querySelectorAll("#loginForm > p:not(.formLink)");
+                const existingErrors = document.querySelectorAll("#signupForm > p:not(.formLink)");
                 existingErrors.forEach(err => err.remove());
-                document.getElementById("loginForm").appendChild(errorText);
+                document.getElementById("signupForm").appendChild(errorText);
                 return;
             }
 
             try {
-                const user = await AuthService.signup(email, password);
+                await AuthService.signup(email, password);
 
-                // Create player data with the chosen username
+                // Create default player with Chosen username
+                await PlayerDataManager.createDefault(username);
+
+                // Load the final saved player data to ensure registry has all necessary info before starting TitleScene
                 const player = await PlayerDataManager.load();
 
+                // Store in registry for global access across scenes
                 this.registry.set('player', player);
 
+                // Continue to TitleScene after successful signup and player data setup
                 this.scene.start("TitleScene");
             } catch (error) {
                 const errorText = document.createElement("p");
@@ -79,10 +84,10 @@ export default class SignupScene extends Phaser.Scene {
                 errorText.textContent = error.message || "Sign up failed. Please try again.";
                 
                 // Remove existing error messages
-                const existingErrors = document.querySelectorAll("#loginForm > p:not(.formLink)");
+                const existingErrors = document.querySelectorAll("#signupForm > p:not(.formLink)");
                 existingErrors.forEach(err => err.remove());
                 
-                document.getElementById("loginForm").appendChild(errorText);
+                document.getElementById("signupForm").appendChild(errorText);
             }
         });
 
@@ -91,10 +96,11 @@ export default class SignupScene extends Phaser.Scene {
 
     cleanup() {
         // Clean up event listeners when the scene is shut down
-        if (this.form) {
-            this.form.removeAllListeners();
-            this.form.destroy();
-            this.form = null;
+        this.events.off('shutdown', this.cleanup, this);
+        const form = document.getElementById('signupForm');
+        if (form) {
+            form.removeEventListener("submit", this.handleSubmit);
+            form.style.display = 'none'; // Hide the form when leaving the scene
         }
     }
 }

@@ -6,10 +6,6 @@
     --gold: #e3b969;
 }
 
-#gameCanvas {
-  border: 5px solid lime;
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -47,45 +43,98 @@ header,footer {
     padding: 40px 20px;
 }
 
-main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #gameCanvas {
-    position: absolute;
-    border: none;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    display: flex;
-    z-index: -1;
+    display: block;
+    position: relative;
+    z-index: 0;
 }
 
 #game-container {
     position: relative;
     width: 600px;
     height: 800px;
-    justify-self: center;
+    margin: 0 auto;
 }
 
+
+/* *** */
+/* *** */
+/* *** */
+/* Login & Signup Scenes */
+/* Login Form Component */
+#loginForm, #signupForm {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--dark-purple);
+    color: var(--off-white);
+    padding: 60px 30px 30px 30px;
+    border-radius: 10px;
+    width: 400px;
+    z-index: 10;
+}
+
+#loginForm a, #signupForm a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#loginForm label, #signupForm label {
+    font-size: 18px;
+    color: var(--off-white);
+}
+
+#loginForm input, #signupForm input {
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+}
+
+#loginForm button, #signupForm button {
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    background-color: var(--royal-purple);
+    color: var(--off-white);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#loginForm .logo, #signupForm .logo {
+    position: absolute;
+    justify-self: center;
+    align-self: center;
+    top: -90px;
+    width: 150px;
+    height: auto;
+    margin: 0 auto 20px auto;
+}
+
+/* *** */
+/* *** */
+/* *** */
 /* Title Scene */
 /* --- play button --- */ 
 .playBtn { 
     position: absolute;
     left: 50%;
     top: 72%;
+    width: 200px;
+    justify-content: center;
     transform: translate(-50%, -50%);
     padding: 12px 35px;
-    background: linear-gradient(180deg, #a27ad4, #6654c0);
+    background: linear-gradient(to bottom right, #a27ad4, #6654c0);
     font-size: 17px;
     font-weight: 900;
-    color: #fffdef;
+    color: var(--off-white);
     border: none;
     border-radius: 2.5rem;
-    box-shadow: 0 0 0 #f6c8ff;
+    box-shadow: 0 0 0 white;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     z-index: 3;
@@ -99,7 +148,7 @@ main {
     pointer-events: none;
 }
 .playBtn:hover {
-    box-shadow: 0 0 15px var(--dark-purple);
+    box-shadow: 0 0 15px white;
     transform: translate(-50%, -50%) scale(1.05);
 }
 
@@ -107,14 +156,17 @@ main {
     transform: translateY(1px); 
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+
 /* info and settings button */ 
 .topBtns{
     position: absolute;
-    margin-top: 15px;
-    margin: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 60%;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    margin: 15px 0 0 0;
+    width: 65px;
+    height: 65px;
+    border-radius: 100px;
     border: none;
     font-size: 30px;
     background: var(--dark-purple);
@@ -122,30 +174,53 @@ main {
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     z-index: 5;
+    justify-content: center;
+    align-items: center;
 }
 .topBtns:hover{
     background: var(--royal-purple);
     transform: scale(1.1);
 }
+
 .infoBtn{
     right: 20px;
 }
 .settingsBtn{
-    right: 70px;
+    right: 100px;
 }
 
-.settingsPopup, .infoPopup{
-    position: absolute; 
-    right: 33%;
-    z-index: 10;
-}
 .infoPopup, .settingsPopup{
-    width: 300px; ;
+    position: absolute;
+    width: 300px;
     background: var(--royal-purple);
     border-radius: 10px;
     padding: 20px 30px;
     color: var(--off-white);
-    position: relative;
-    right: 33%;
-    z-index: 10;
+}
+
+.infoPopup {
+    top: 85px;
+    right: 20px;
+}
+
+.infoPopup p {
+    margin: 15px 0 10px 0;
+    color: var(--dark-purple);
+    font-weight: bolder;
+}
+
+.infoPopup a {
+    color: var(--off-white);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.settingsPopup {
+    top: 85px;
+    right: 100px;
+}
+
+.settingsPopup form hr {
+    width: 20px;
+    margin: 5px 0;
 }

@@ -5,12 +5,19 @@ export default class TitleScene extends Phaser.Scene {
         super('TitleScene');
     }
 
+    init() {
+        // Check if player data exists in the registry
+        console.log("Registry player:", this.registry.get("player"));
+        this.player = this.registry.get("player");
+        console.log(this.player.profile.username);
+    }
+
     preload() {
-        this.load.image('bg', 'assets/Island_bg.PNG');
+        this.load.image('title-bg', 'assets/backgrounds/Title_bg.PNG');
     }
 
     create() {
-        this.add.image(0, 0, 'bg').setOrigin(0, 0);
+        this.add.image(0, 0, 'title-bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
         // --- play btn ---
         const playBtn = document.createElement('button');
@@ -23,84 +30,74 @@ export default class TitleScene extends Phaser.Scene {
         });
 
         // --- info page//popop ---
-        this.infoPage = this.add.dom(300, 350).createFromHTML(`
-            <div class="infoPopup">
-                <h2>Behind The Game</h2>
-                <p>Socials</p>
-
-                <h2>Why we made SkyLock</h2>
-                <p>uhhuh</p>
-
-                <button id="closeInfoBtn">Close</button>
-            </div>
-        `);
-        this.infoPage.setVisible(false);
-
-        // --- settings page/popup --- 
-        this.settingsPage = this.add.dom(300, 350).createFromHTML(`
-            <div class="settingsPopup">
-                <h2>Settings</h2>
+        const infoPage = document.createElement('div');
+        infoPage.className = 'infoPopup';
+        infoPage.innerHTML = `
+                <h2>Socials</h2>
                 <hr>
+                <p><a href="https://www.instagram.com/skylockgame/" target="_blank">Kylee Grasela 
+                <i class="bi bi-linkedin"></i> </a><br>Graphic Designer & Programmer</p>
 
-                <h3>Volume</h3>
+                <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Charles Bundy <i class="bi bi-linkedin"></i></a><br>Programmer & Animator</p>
+
+                <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Brittany Fetters <i class="bi bi-linkedin"></i></a><br>Programmer</p>
+        `;
+        infoPage.style.display = 'none'; // Initially hidden
+        document.body.appendChild(infoPage);
+
+        // --- settings page//popup ---
+        const settingsPage = document.createElement('div');
+        settingsPage.className = 'settingsPopup';
+        settingsPage.innerHTML = `
+        <h2>Settings</h2>
                 <hr>
-                <p> Master Volume: </p>
-                <input type="range" id="masterVolume" min="0" max="100">
+                <form action="">
+                <br>
+                    <h3>Volume</h3>
+                    <hr>
+                    <p> Music: </p>
+                    <input type="range" id="musicVolume" min="0" max="100" value="${this.player.settings.music}">
+                    <p> SFX: </p>
+                    <input type="range" id="sfxVolume" min="0" max="100" value="${this.player.settings.sfx}">
+                    <br><br>
+                    <h3>Gacha</h3>
+                    <hr>
+                    <input type="checkbox" id="skipCutscene" ${this.player.settings.skipGacha ? "checked" : ""}> Skip Cutscene</input>
+                    <br><br>
+                    <h3>Player Info</h3>
+                    <hr>
+                    <p> Username: <input type="text" value="${this.player.profile.username}"></input> </p>
 
-                <p> Music: </p>
-                <input type="range" id="musicVolume" min="0" max="100">
-
-                <p> SFX: </p>
-                <input type="range" id="sfxVolume" min="0" max="100">
-
-                <h3>Gacha</h3>
-                <hr>
-                <p> Skip Cutcene </p>
-
-                <h3>Player Info</h3>
-                <hr>
-                <p> Username: Player </p>
-
-                <button id="closeStgBtn">Close</button>
-            </div>
-        `);
-        this.settingsPage.setVisible(false);
+                    <button type="submit"> Save </button>
+                </form>
+                `;
+        settingsPage.style.display = 'none'; // Initially hidden
+        document.body.appendChild(settingsPage);
 
         // --- buttons ---
         const infoBtn = document.createElement('button');
         infoBtn.className = 'topBtns infoBtn';
         infoBtn.innerHTML = '<i class="bi bi-info-circle"></i>';
-        document.body.appendChild(infoBtn);
 
         const settingsBtn = document.createElement('button');
         settingsBtn.className = 'topBtns settingsBtn';
         settingsBtn.innerHTML = '<i class="bi bi-gear"></i>';
-        document.body.appendChild(settingsBtn);
 
-        const container = document.getElementById('gameContainer');
+        const container = document.getElementById('game-container');
         container.appendChild(infoBtn);
         container.appendChild(settingsBtn);
         container.appendChild(playBtn);
+        container.appendChild(infoPage);
+        container.appendChild(settingsPage);
 
         // ---  event  listeners ---
         infoBtn.addEventListener('click', () => {
-            this.infoPage.setVisible(true);
+            infoPage.style.display = infoPage.style.display === 'none' ? 'block' : 'none';
         });
 
         settingsBtn.addEventListener('click', () => {
-            this.settingsPage.setVisible(true);
-        });
-
-        const closeInfoBtn = this.infoPage.node.querySelector('#closeInfoBtn');
-        closeInfoBtn.addEventListener('click', () => {
-            this.infoPage.setVisible(false);
-        });
-
-        const closeStgBtn = this.settingsPage.node.querySelector('#closeStgBtn');
-        closeStgBtn.addEventListener('click', () => {
-            this.settingsPage.setVisible(false);
+            settingsPage.style.display = settingsPage.style.display === 'none' ? 'block' : 'none';
         });
     }
 
-    update() {}
 }

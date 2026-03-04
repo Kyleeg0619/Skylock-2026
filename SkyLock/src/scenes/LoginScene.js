@@ -26,8 +26,8 @@ export default class LoginScene extends Phaser.Scene {
         this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
         // Create login form
-        this.form = this.add.dom(this.sys.game.config.width / 2, this.sys.game.config.height / 2).createFromCache('loginForm');
-        this.form.setOrigin(0, 0);
+        const form = document.getElementById('loginForm');
+        form.style.display = 'flex'; // Ensure the form is visible
 
         // Add title to form
         const newChild = document.createElement("h1");
@@ -52,11 +52,11 @@ export default class LoginScene extends Phaser.Scene {
         
 
         // Handle form submission
-        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
 
             try {
                 const user = await AuthService.login(email, password);
@@ -86,10 +86,11 @@ export default class LoginScene extends Phaser.Scene {
 
     cleanup() {
         // Clean up event listeners when the scene is shut down
-        if (this.form) {
-            this.form.removeAllListeners();
-            this.form.destroy();
-            this.form = null;
+        this.events.off('shutdown', this.cleanup, this);
+        const form = document.getElementById('loginForm');
+        if (form) {
+            form.removeEventListener("submit", this.handleSubmit);
+            form.style.display = 'none'; // Hide the form when leaving the scene
         }
     }
 }

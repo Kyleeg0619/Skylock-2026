@@ -17,11 +17,13 @@ const config = {
     type: Phaser.WEBGL,
     width: sizes.width,
     height: sizes.height,
-    canvas: gameCanvas,
+    canvas: document.getElementById('gameCanvas'),
     parent: 'game-container',
     dom: {
-        createContainer: true
+        createContainer: true,
+        behindCanvas: false,
     }
+    
 };
 
 const game = new Phaser.Game(config);
