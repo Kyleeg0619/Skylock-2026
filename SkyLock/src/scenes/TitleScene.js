@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import PlayerDataManager from "../services/PlayerDataManager.js";
+import { initUI } from "../services/ui.js";
 
 export default class TitleScene extends Phaser.Scene {
     constructor() {
@@ -29,75 +31,29 @@ export default class TitleScene extends Phaser.Scene {
             playBtn.remove();
         });
 
-        // --- info page//popop ---
-        const infoPage = document.createElement('div');
-        infoPage.className = 'infoPopup';
-        infoPage.innerHTML = `
-                <h2>Socials</h2>
-                <hr>
-                <p><a href="https://www.instagram.com/skylockgame/" target="_blank">Kylee Grasela 
-                <i class="bi bi-linkedin"></i> </a><br>Graphic Designer & Programmer</p>
-
-                <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Charles Bundy <i class="bi bi-linkedin"></i></a><br>Programmer & Animator</p>
-
-                <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Brittany Fetters <i class="bi bi-linkedin"></i></a><br>Programmer</p>
-        `;
-        infoPage.style.display = 'none'; // Initially hidden
-        document.body.appendChild(infoPage);
-
-        // --- settings page//popup ---
-        const settingsPage = document.createElement('div');
-        settingsPage.className = 'settingsPopup';
-        settingsPage.innerHTML = `
-        <h2>Settings</h2>
-                <hr>
-                <form action="">
-                <br>
-                    <h3>Volume</h3>
-                    <hr>
-                    <p> Music: </p>
-                    <input type="range" id="musicVolume" min="0" max="100" value="${this.player.settings.music}">
-                    <p> SFX: </p>
-                    <input type="range" id="sfxVolume" min="0" max="100" value="${this.player.settings.sfx}">
-                    <br><br>
-                    <h3>Gacha</h3>
-                    <hr>
-                    <input type="checkbox" id="skipCutscene" ${this.player.settings.skipGacha ? "checked" : ""}> Skip Cutscene</input>
-                    <br><br>
-                    <h3>Player Info</h3>
-                    <hr>
-                    <p> Username: <input type="text" value="${this.player.profile.username}"></input> </p>
-
-                    <button type="submit"> Save </button>
-                </form>
-                `;
-        settingsPage.style.display = 'none'; // Initially hidden
-        document.body.appendChild(settingsPage);
-
-        // --- buttons ---
-        const infoBtn = document.createElement('button');
-        infoBtn.className = 'topBtns infoBtn';
-        infoBtn.innerHTML = '<i class="bi bi-info-circle"></i>';
-
-        const settingsBtn = document.createElement('button');
-        settingsBtn.className = 'topBtns settingsBtn';
-        settingsBtn.innerHTML = '<i class="bi bi-gear"></i>';
-
         const container = document.getElementById('game-container');
-        container.appendChild(infoBtn);
-        container.appendChild(settingsBtn);
         container.appendChild(playBtn);
-        container.appendChild(infoPage);
-        container.appendChild(settingsPage);
 
-        // ---  event  listeners ---
-        infoBtn.addEventListener('click', () => {
-            infoPage.style.display = infoPage.style.display === 'none' ? 'block' : 'none';
-        });
+        // --- settings & info buttons ---
+        const infoBtn = document.getElementById('infoBtn');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const homeBtn = document.getElementById('homeBtn');
+        const shopBtn = document.getElementById('shopBtn');
+        const editBtn = document.getElementById('editBtn');
 
-        settingsBtn.addEventListener('click', () => {
-            settingsPage.style.display = settingsPage.style.display === 'none' ? 'block' : 'none';
-        });
+        infoBtn.style.display = "block";
+        settingsBtn.style.display = "block";
+        homeBtn.style.display = "none";
+        shopBtn.style.display = "none";
+        editBtn.style.display = "none";
+
+        if (!this.infoUIInitialized) {
+        this.initInfoUI();
+        this.infoUIInitialized = true;
     }
 
+        this.events.on("shutdown",() => {
+            infoBtn.style.display = "none";
+        })
+    }
 }

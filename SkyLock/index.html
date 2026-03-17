@@ -46,7 +46,68 @@
             <p>Have an account? <a href="" class="formLink">Login</a></p>
         </form>
 
+        <!-- Coin Display -->
+         <div class="coinQty">
+         </div>
+
+            <div class="game-ui">
+                <!-- Home Btn -->
+                 <button id="homeBtn">
+                    <img src="assets/icons/home-icon.PNG" alt="">
+                 </button>
+                <!-- Edit Btn -->
+                 <button id="editBtn">
+                    <img src="assets/icons/island-edit-icon.PNG" alt="">
+                 </button>
+                <!-- Shop Btn -->
+                 <button id="shopBtn">
+                    <img src="assets/icons/shop-icon.PNG" alt="">
+                 </button>
+                <!-- Settings UI -->
+                 <button id="settingsBtn">
+                    <i class="bi bi-gear"></i>
+
+                    <div id="settingsPopup" style="display: none;">
+                    <h2>Settings</h2>
+                    <hr>
+                    <form id="settingsForm">
+                        <br>
+                        <h3>Volume</h3>
+                        <hr>
+                        <p> Music: </p>
+                        <input type="range" id="musicVolume" min="0" max="100" value="100">
+                        <p> SFX: </p>
+                        <input type="range" id="sfxVolume" min="0" max="100" value="100">
+                        <br><br>
+                        <h3>Gacha</h3>
+                        <hr>
+                        <input type="checkbox" id="skipCutscene"> Skip Cutscene</input>
+                        <br><br>
+                        <h3>Player Info</h3>
+                        <hr>
+                        <p> Username: <input type="text" id="usernameInput" value=""></input> </p>
+                        <input type="submit" value="Save" id="settingsSubmit">
+                    </form>
+                </div>
+                 </button>
+                
+                <!-- Info UI -->
+                 <button id="infoBtn">
+                    <i class="bi bi-info-circle"></i>
+                    <div id="infoPopup" style="display: none;">
+                    <h2>Socials</h2>
+                    <hr>
+                    <p><a href="https://www.instagram.com/skylockgame/" target="_blank">Kylee Grasela
+                    <i class="bi bi-linkedin"></i> </a><br>Graphic Designer & Programmer</p>
+                    <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Charles Bundy <i class="bi bi-linkedin"></i></a><br>Programmer & Animator</p>
+                    <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Brittany Fetters <i class="bi bi-linkedin"></i></a><br>Programmer</p>
+                 </div>
+                 </button>
+                 
+            </div>
+
                 <canvas id="gameCanvas"></canvas>
+
             </div>
         </main>
         <footer>

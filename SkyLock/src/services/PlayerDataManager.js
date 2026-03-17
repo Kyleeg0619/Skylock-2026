@@ -9,7 +9,10 @@ export default class PlayerDataManager {
 
     static async load() {
         const snap = await getDoc(this.ref());
-        return snap.exists() ? snap.data() : null;
+        if (snap.exists()) {
+            return Player.fromFirestore(snap.data(), auth.currentUser.uid);
+        }
+        return null;
     }
 
     static async createDefault(username) {

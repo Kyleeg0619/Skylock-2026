@@ -17,7 +17,6 @@ export default class LoginScene extends Phaser.Scene {
     preload() {
         // Load any assets needed for the login scene (e.g., background, buttons)
         this.load.image('bg', 'assets/backgrounds/island_bg.png');
-        this.load.html('loginForm', 'assets/components/loginForm.html');
     }
 
     create() {        

@@ -1,3 +1,6 @@
+import { db } from "../firebase/firebase.js";
+import { doc, setDoc } from "firebase/firestore";
+
 export default class Player {
     constructor(uid, email, username) {
         this.uid = uid;
@@ -8,7 +11,7 @@ export default class Player {
             lastLogin: Date.now(),
         };
         this.coins = 0;
-        this.angels = { owned: []};
+        this.angels = { owned: ["dog-1"]};
         this.islands = { owned: ["starter_island"]};
         this.settings = { music: 100, sfx: 100, skipGacha: false};
     }
@@ -26,5 +29,15 @@ export default class Player {
     async save() {
         const ref = doc(db,"players",this.uid);
         await setDoc(ref, this.toFirestore(), { merge: true });
+    }
+
+    static fromFirestore(data, uid) {
+        const player = new Player(uid, data.profile.email, data.profile.username);
+        player.profile = data.profile;
+        player.coins = data.coins;
+        player.angels = data.angels;
+        player.islands = data.islands;
+        player.settings = data.settings;
+        return player;
     }
 }

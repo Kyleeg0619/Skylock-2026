@@ -4,6 +4,7 @@
     --dark-purple: #6654c0;
     --off-white: #fffbe6;
     --gold: #e3b969;
+    --honey: #d08e64;
 }
 
 * {
@@ -157,70 +158,134 @@ header,footer {
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* info and settings button */ 
-.topBtns{
+/* info and settings button */
+.game-ui {
+    display: flex;
     position: absolute;
+    justify-content: right;
     top: 0;
     right: 0;
     padding: 15px;
-    margin: 15px 0 0 0;
+}
+
+.game-ui > button {
+    display: block;
+    position: relative;
+    margin: 0 0 0 10px;
     width: 65px;
     height: 65px;
     border-radius: 100px;
     border: none;
-    font-size: 30px;
     background: var(--dark-purple);
     color: var(--off-white);
-    transition: all 0.3s ease-in-out;
     cursor: pointer;
     z-index: 5;
-    justify-content: center;
-    align-items: center;
 }
-.topBtns:hover{
-    background: var(--royal-purple);
+
+.game-ui > button img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.game-ui > button i {
+    font-size: 30px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.game-ui > button:hover i {
     transform: scale(1.1);
 }
 
-.infoBtn{
-    right: 20px;
-}
-.settingsBtn{
-    right: 100px;
-}
-
-.infoPopup, .settingsPopup{
+#infoPopup, #settingsPopup{
     position: absolute;
+    top: 100%;
+    right: 0;
     width: 300px;
     background: var(--royal-purple);
     border-radius: 10px;
     padding: 20px 30px;
     color: var(--off-white);
+    z-index: 10;
+    text-align: left;
+    font-size: 15px;
 }
 
-.infoPopup {
-    top: 85px;
-    right: 20px;
-}
-
-.infoPopup p {
+#infoPopup p {
     margin: 15px 0 10px 0;
     color: var(--dark-purple);
     font-weight: bolder;
 }
 
-.infoPopup a {
+#infoPopup a {
     color: var(--off-white);
     text-decoration: none;
     font-weight: bold;
 }
 
-.settingsPopup {
-    top: 85px;
-    right: 100px;
-}
-
-.settingsPopup form hr {
+#settingsPopup form hr {
     width: 20px;
     margin: 5px 0;
+}
+
+#usernameInput {
+    border: 2px solid var(--dark-purple);
+    border-radius: 50px;
+    padding: 5px 5px 5px 8px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  width: 100%;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    border: 2px solid var(--dark-purple);
+    background: linear-gradient(to right, var(--gold),var(--off-white));
+    height: 10px;
+    border-radius: 5px;
+    padding: 0 -6px;
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  background-image: url("../../assets/icons/four-point-star.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  border: none;
+  margin-top: -9px;
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  background-image: url("../../assets/icons/four-point-star.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: cover;
+  border: none;
+}
+
+
+#settingsSubmit {
+    border: 2px solid var(--dark-purple);
+    background: none;
+    color: var(--off-white);
+    padding: 5px 12px;
+    border-radius: 50px;
+    margin-top: 8px;
+    transition: all 0.8s;
+}
+
+#settingsSubmit:hover {
+    background: var(--dark-purple);
 }
