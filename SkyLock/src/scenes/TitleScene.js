@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import PlayerDataManager from "../services/PlayerDataManager.js";
 import { initUI } from "../services/ui.js";
+import { showUI } from "../services/ui.js";
 
 export default class TitleScene extends Phaser.Scene {
     constructor() {
@@ -21,6 +22,15 @@ export default class TitleScene extends Phaser.Scene {
     create() {
         this.add.image(0, 0, 'title-bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
+        showUI({
+                    settings: true,
+                    home: false,
+                    shop: false,
+                    edit: false,
+                    info: true,
+                    coins: false
+                });
+
         // --- play btn ---
         const playBtn = document.createElement('button');
         playBtn.className = 'playBtn';
@@ -34,26 +44,40 @@ export default class TitleScene extends Phaser.Scene {
         const container = document.getElementById('game-container');
         container.appendChild(playBtn);
 
-        // --- settings & info buttons ---
-        const infoBtn = document.getElementById('infoBtn');
-        const settingsBtn = document.getElementById('settingsBtn');
-        const homeBtn = document.getElementById('homeBtn');
-        const shopBtn = document.getElementById('shopBtn');
-        const editBtn = document.getElementById('editBtn');
-
-        infoBtn.style.display = "block";
-        settingsBtn.style.display = "block";
-        homeBtn.style.display = "none";
-        shopBtn.style.display = "none";
-        editBtn.style.display = "none";
-
-        if (!this.infoUIInitialized) {
-        this.initInfoUI();
-        this.infoUIInitialized = true;
-    }
-
         this.events.on("shutdown",() => {
             infoBtn.style.display = "none";
         })
     }
+
+async update() {
+        // When settings popup opens → populate values
+        if (window.__settingsOpened) {
+            window.__settingsOpened = false;
+
+            document.getElementById('musicVolume').value = this.player.settings.music;
+            document.getElementById('sfxVolume').value = this.player.settings.sfx;
+            document.getElementById('skipCutscene').checked = this.player.settings.skipGacha;
+            document.getElementById('usernameInput').value = this.player.profile.username;
+        }
+
+        // When settings form submits → save values
+        if (window.__settingsSubmitted) {
+            window.__settingsSubmitted = false;
+
+            player.settings.music = parseInt(musicVolume.value);
+            player.settings.sfx = parseInt(sfxVolume.value);
+            player.settings.skipGacha = skipCutscene.checked;
+            player.profile.username = usernameInput.value;
+
+            await player.save();
+            this.registry.set('player', player);
+        }
+
+        // Handle home button
+        if (window.__goHomeRequested) {
+            window.__goHomeRequested = false;
+            this.scene.start('MainScene');
+        }
+    }
+
 }

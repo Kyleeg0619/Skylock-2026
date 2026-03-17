@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import AuthService from "../services/AuthService";
 import PlayerDataManager from "../services/PlayerDataManager";
+import { showUI } from "../services/ui";
 
 export default class SignupScene extends Phaser.Scene {
     constructor() {
@@ -13,6 +14,15 @@ export default class SignupScene extends Phaser.Scene {
     }
 
     create() {
+        showUI({
+            settings: false,
+            home: false,
+            shop: false,
+            edit: false,
+            info: false,
+            coins: false
+        });
+        
         this.cameras.main.setBackgroundColor('#87ceeb');
         this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 

@@ -233,6 +233,25 @@ header,footer {
     padding: 5px 5px 5px 8px;
 }
 
+#coinQty {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    padding-right: 15px;
+    background: var(--off-white);
+    border-radius: 100px;
+    align-items: center;
+    font-weight: bold;
+    font-size: 30px;
+    margin: 15px;
+}
+
+#coinQty img {
+    width: 65px;
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;

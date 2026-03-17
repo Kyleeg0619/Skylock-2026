@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { initUI } from "../services/ui";
+import { showUI } from "../services/ui";
 
 export default class MainScene extends Phaser.Scene {
     init() {
@@ -11,28 +12,49 @@ export default class MainScene extends Phaser.Scene {
     }
 
     create() {
+        showUI({
+            settings: true,
+            home: true,
+            shop: true,
+            edit: true,
+            info: false,
+            coins: true
+        });
+
         // Background
         this.cameras.main.setBackgroundColor('#87ceeb');
         this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
-        // Display UI elements
-        const settingsBtn = document.getElementById('settingsBtn');
-        const homeBtn = document.getElementById('homeBtn');
-        const shopBtn = document.getElementById('shopBtn');
-        const editBtn = document.getElementById('editBtn');
-        const infoBtn = document.getElementById('infoBtn');
+    }
 
-        settingsBtn.style.display = 'block';
-        homeBtn.style.display = 'block';
-        shopBtn.style.display = 'block';
-        editBtn.style.display = 'block';
-        infoBtn.style.display = 'none';
+    async update() {
+        if (window.__settingsOpened) {
+            window.__settingsOpened = false;
 
-            // handle home button request
-        if (window.__goHomeRequested) {
-            this.scene.start('MainScene');
-            window.__goHomeRequested = false;
+            musicVolume.value = this.player.settings.music;
+            sfxVolume.value = this.player.settings.sfx;
+            skipCutscene.checked = this.player.settings.skipGacha;
+            usernameInput.value = this.player.profile.username;
         }
 
+        if (window.__settingsSubmitted) {
+            window.__settingsSubmitted = false;
+
+            this.player.settings.music = parseInt(musicVolume.value);
+            this.player.settings.sfx = parseInt(sfxVolume.value);
+            this.player.settings.skipGacha = skipCutscene.checked;
+            this.player.profile.username = usernameInput.value;
+
+            await this.player.save();
+            this.registry.set('player', this.player);
+        }
+
+        if (window.__goHomeRequested) {
+            window.__goHomeRequested = false;
+            this.scene.start('MainScene');
+        }
+
+        const coins = document.getElementById('coinCount');
+        coins.textContent = this.player.coins;
     }
 }

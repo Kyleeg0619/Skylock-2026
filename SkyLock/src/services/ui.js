@@ -1,62 +1,56 @@
-// ui.js
-import Phaser from "phaser";
+export function initUI() {
+    if (window.__uiInitialized) return;
+    window.__uiInitialized = true;
 
-export function initUI(player, registry, scene) {
+    // --- DOM elements ---
     const infoBtn = document.getElementById('infoBtn');
     const infoPage = document.getElementById('infoPopup');
+
     const settingsBtn = document.getElementById('settingsBtn');
     const settingsPage = document.getElementById('settingsPopup');
     const settingsForm = document.getElementById('settingsForm');
 
-    const homeBtn = document.getElementById('homeBtn');
-    const shopBtn = document.getElementById('shopBtn');
-    const editBtn = document.getElementById('editBtn');
-
-    homeBtn.addEventListener('click', () => {
-        this.scene.start
-    });
-
-    // toggle listeners
+    // --- INFO BUTTON ---
     infoBtn.addEventListener('click', (e) => {
         e.stopPropagation();
+        window.__infoOpened = true; // scene can react if needed
         infoPage.style.display =
             infoPage.style.display === 'none' ? 'block' : 'none';
     });
 
+    // prevent closing when clicking inside popup
+    infoPage.addEventListener('click', (e) => e.stopPropagation());
+
+
+    // Toggle popup
     settingsBtn.addEventListener('click', (e) => {
         e.stopPropagation();
+        window.__settingsOpened = true; // scene will handle populating
         settingsPage.style.display =
             settingsPage.style.display === 'none' ? 'block' : 'none';
-
-        if (settingsPage.style.display === 'block') {
-            document.getElementById('musicVolume').value = player.settings.music;
-            document.getElementById('sfxVolume').value = player.settings.sfx;
-            document.getElementById('skipCutscene').checked = player.settings.skipGacha;
-            document.getElementById('usernameInput').value = player.profile.username;
-        }
     });
 
-    // form submit
-    settingsForm.addEventListener('submit', async (e) => {
+    // Form submit
+    settingsForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        player.settings.music = parseInt(document.getElementById('musicVolume').value);
-        player.settings.sfx = parseInt(document.getElementById('sfxVolume').value);
-        player.settings.skipGacha = document.getElementById('skipCutscene').checked;
-        player.profile.username = document.getElementById('usernameInput').value;
-
-        await player.save();
-        registry.set('player', player);
-
+        window.__settingsSubmitted = true; // scene will handle saving
         settingsPage.style.display = 'none';
     });
 
-    // prevent popup clicks from closing
-    infoPage.addEventListener('click', (e) => e.stopPropagation());
+    // Prevent bubbling
     settingsPage.addEventListener('click', (e) => e.stopPropagation());
 
-    // click outside to close
+    // Click outside
     document.addEventListener('click', () => {
-        infoPage.style.display = 'none';
         settingsPage.style.display = 'none';
     });
+}
+
+export function showUI({ settings, home, shop, edit, info, coins }) {
+    document.getElementById('settingsBtn').style.display = settings ? 'block' : 'none';
+    document.getElementById('homeBtn').style.display = home ? 'block' : 'none';
+    document.getElementById('shopBtn').style.display = shop ? 'block' : 'none';
+    document.getElementById('editBtn').style.display = edit ? 'block' : 'none';
+    document.getElementById('infoBtn').style.display = info ? 'block' : 'none';
+    document.getElementById('coinQty').style.display = coins ? 'flex' : 'none';
 }
