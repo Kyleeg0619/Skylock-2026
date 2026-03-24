@@ -1,3 +1,5 @@
+import {getAuth,signOut} from "firebase/auth";
+
 export function initUI() {
     if (window.__uiInitialized) return;
     window.__uiInitialized = true;
@@ -43,6 +45,16 @@ export function initUI() {
     // Click outside
     document.addEventListener('click', () => {
         settingsPage.style.display = 'none';
+    });
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            window.location.reload(window.location.href);
+        }).catch((error) => {
+            console.error(error);
+        });
     });
 }
 

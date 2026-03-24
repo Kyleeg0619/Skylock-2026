@@ -11,7 +11,7 @@ export default class LoginScene extends Phaser.Scene {
     init() {
         // Check if player data exists in the registry
         if (this.registry.get('player')) {
-            this.scene.start('TitleScene');
+            this.scene.start('MainScene');
         }
     }
 

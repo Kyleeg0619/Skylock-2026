@@ -142,7 +142,6 @@ header,footer {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    position: absolute;
 }
 
 .playBtn .btn-label{
@@ -154,7 +153,6 @@ header,footer {
 }
 
 .playBtn:active{
-    transform: translateY(1px); 
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
@@ -295,14 +293,23 @@ input[type="range"]::-moz-range-thumb {
 }
 
 
-#settingsSubmit {
+#settingsSubmit, #logoutBtn {
+    display: block;
+    width: fit-content;
     border: 2px solid var(--dark-purple);
+    text-decoration: none;
+    font-size: inherit;
+    font-family: inherit;
     background: none;
     color: var(--off-white);
     padding: 5px 12px;
     border-radius: 50px;
     margin-top: 8px;
     transition: all 0.8s;
+}
+
+#logoutBtn {
+    background: var(--dark-purple);
 }
 
 #settingsSubmit:hover {
