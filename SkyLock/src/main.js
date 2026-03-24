@@ -9,7 +9,6 @@ import SignupScene from './scenes/SignupScene.js';
 import TitleScene from './scenes/TitleScene.js';
 import BootScene from './scenes/BootScene.js';
 import MainScene from './scenes/MainScene.js';
-import ShopScene from './scenes/ShopScene.js';
 
 const sizes = {
     width: 600,
@@ -49,8 +48,6 @@ game.scene.add('SignupScene', SignupScene, false);
 game.scene.add('TitleScene', TitleScene, false);
 
 game.scene.add('MainScene', MainScene, false);
-
-game.scene.add('ShopScene', ShopScene, false);
 
 game.scene.start('BootScene');
 
