@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://use.typekit.net/eod1kak.css">
         <!-- bootstrap icons -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="icon" href="assets/icons/logo.PNG">
     </head>
     <body>
         <header>
@@ -46,11 +47,32 @@
             <p>Have an account? <a href="" class="formLink">Login</a></p>
         </form>
 
+        <!-- Timer Form -->
+        <form id="timerForm">
+            <h1>Excursion</h1>
+            <div class="timeContainer">
+                <p>&#10022;</p>
+                <p style="text-transform:capitalize;font-size: 12px;">Let the angels descend to bless the earth while you stay tethered to the skies</p>
+                <p>&#10022;</p>
+            </div>
+            <div class="timeContainer">
+                <label for="timerInput">Timer: </label>
+                <input type="number" id="timerInput" name="timer" style="text-align: end;" required>
+                <p>minute(s)</p>
+            </div>
+            <button type="submit">Start Timer</button>
+        </form>
+
         <!-- Coin Display -->
          <div id="coinQty">
             <img src="assets/icons/cloud-coin.PNG" alt="">
             <p id="coinCount"></p>
          </div>
+
+        <!-- Excursion Btn -->
+         <button id="excursionBtn">
+            <img src="assets/icons/angel-icon.PNG" alt="">
+         </button>
 
             <div class="game-ui">
                 <!-- Home Btn -->

@@ -27,7 +27,8 @@ export default class LoginScene extends Phaser.Scene {
             shop: false,
             edit: false,
             info: false,
-            coins: false
+            coins: false,
+            excursion: false
         });
       
         // Background

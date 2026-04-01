@@ -35,7 +35,8 @@ export default class TitleScene extends Phaser.Scene {
                     shop: false,
                     edit: false,
                     info: true,
-                    coins: false
+                    coins: false,
+                    excursion: false
                 });
 
         // --- play btn ---
