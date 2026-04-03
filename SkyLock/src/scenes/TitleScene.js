@@ -54,6 +54,7 @@ export default class TitleScene extends Phaser.Scene {
 
         this.events.on("shutdown",() => {
             infoBtn.style.display = "none";
+            playBtn.remove();
         })
     }
 

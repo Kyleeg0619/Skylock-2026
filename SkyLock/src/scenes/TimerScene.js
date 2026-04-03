@@ -32,7 +32,7 @@ export default class TimerScene extends Phaser.Scene {
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const minutes = parseInt(document.getElementById('minutes').value) || 0;
+            const minutes = parseInt(document.getElementById('timerInput').value) || 0;
 
             this.scene.start('ExcursionScene', { timer: minutes * 60 }); // Pass timer in seconds
         });

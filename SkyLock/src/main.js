@@ -10,6 +10,7 @@ import TitleScene from './scenes/TitleScene.js';
 import BootScene from './scenes/BootScene.js';
 import MainScene from './scenes/MainScene.js';
 import TimerScene from './scenes/TimerScene.js';
+import ExcursionScene from './scenes/ExcursionScene.js';
 
 const sizes = {
     width: 600,
@@ -50,6 +51,7 @@ game.scene.add('TitleScene', TitleScene, false);
 
 game.scene.add('MainScene', MainScene, false);
 game.scene.add('TimerScene', TimerScene, false);
+game.scene.add('ExcursionScene', ExcursionScene, false);    
 
 game.scene.start('BootScene');
 

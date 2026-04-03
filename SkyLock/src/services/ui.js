@@ -57,6 +57,11 @@ export function initUI() {
         });
     });
 
+    const homeBtn = document.getElementById('homeBtn');
+    homeBtn.addEventListener('click', () => {
+        window.__goHomeRequested = true; // scene will handle navigation
+    });
+
     const excursionBtn = document.getElementById('excursionBtn');
     excursionBtn.addEventListener('click', () => {
         window.__goToExcursion = true; // scene will handle navigation
