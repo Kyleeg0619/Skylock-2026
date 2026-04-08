@@ -24,7 +24,7 @@ export default class ExcursionScene extends Phaser.Scene {
         });
 
         // Background
-        this.cameras.main.setBackgroundColor('#87ceeb');
+this.cameras.main.setBackgroundColor('#87ceeb');
         this.add.image(0, 0, 'excursion_bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
         // Timer
@@ -66,22 +66,11 @@ export default class ExcursionScene extends Phaser.Scene {
 
         // Social Media Extension Tracker
         window.addEventListener('message', (event) => {
-            if (event.data?.type === 'SKYLOCK_OPEN_TABS') {
-                const urls = event.data.urls;
-                console.log('Received open tabs request:', urls);
-
-                const distracted = urls.some(url => 
-                    url.includes('facebook.com') || 
-                    url.includes('twitter.com') || 
-                    url.includes('instagram.com') || 
-                    url.includes('tiktok.com') ||
-                    url.includes('bsky.app'));
-
-                if (distracted) {
-                    console.log('User is distracted - apply penalty');
-                    window.__applyExcursionPenalty = true; // Scene will handle applying penalty
-                }
-            }
+            // if (event.data?.type === 'SKYLOCK_OPEN_TABS') {
+            //     const urls = event.data.urls;
+            //     console.log('Received open tabs request:', urls);
+            // }
+            console.log('Received message:', event.data);
         });
     }
 
@@ -121,13 +110,13 @@ export default class ExcursionScene extends Phaser.Scene {
 
         if (remaining <= 0) {
             this.scene.start('TimerScene');
+        } else if (remaining > 0 && window.__skylockDistraction) {
+            window.__skylockDistraction = false; // Reset distraction flag each update
+            this.handleDistraction();
         }
+    }
 
-        if (window.__applyExcursionPenalty) {
-            window.__applyExcursionPenalty = false;
-            this.player.coins = Math.max(0, this.player.coins - 10);
-            await this.player.save();
-            this.registry.set('player', this.player);
-        }
+    handleDistraction() {
+        console.log('Distraction detected! Applying penalty.');
     }
 }

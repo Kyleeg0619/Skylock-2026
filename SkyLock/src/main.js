@@ -38,6 +38,12 @@ window.onload = () => {
     initUI();
 };
 
+window.addEventListener("message", (event) => {
+    if (event.data?.type === "SKYLOCK_OPEN_TABS") {
+        console.log("Global Distraction Event:", event.data.urls);
+        window.__skylockDistraction  = true;
+    }
+});
 
 // Determine which scene to start based on player data
 game.scene.add('BootScene', BootScene, true);

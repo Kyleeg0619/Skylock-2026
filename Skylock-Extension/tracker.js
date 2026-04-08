@@ -5,7 +5,6 @@ chrome.runtime.onMessage.addListener((msg) => {
         window.postMessage({ 
             type: "SKYLOCK_OPEN_TABS", 
             urls: msg.urls 
-        }, window.location.origin
-    );
+        }, window.location.origin);
     }
 });

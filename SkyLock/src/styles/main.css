@@ -38,12 +38,26 @@ body {
 }
 
 header,footer {
-    display: flex;
+    display: block;
     justify-content: center;
     align-self: center;
     padding: 40px 20px;
 }
 
+/* footer styles */
+.extension-info {
+    display: flex;
+    gap: 20px;
+    max-width: 800px;
+    color: #0d0a1b;
+}
+
+.extension-info img {
+    width: 150px;
+    object-fit: contain;
+}
+
+/* Canvas Styles */
 #gameCanvas {
     display: block;
     position: relative;
