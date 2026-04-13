@@ -1,6 +1,5 @@
 import Phaser from "phaser";
 import PlayerDataManager from "../services/PlayerDataManager.js";
-import { initUI } from "../services/ui.js";
 import { showUI } from "../services/ui.js";
 
 export default class TitleScene extends Phaser.Scene {

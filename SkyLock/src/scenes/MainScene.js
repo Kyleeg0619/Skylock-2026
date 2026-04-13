@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { initUI } from "../services/ui";
 import { showUI } from "../services/ui";
+import { updateCoinCount } from "../services/ui";
 
 export default class MainScene extends Phaser.Scene {
     init() {
@@ -22,6 +23,8 @@ export default class MainScene extends Phaser.Scene {
             coins: true,
             excursion: true
         });
+
+        updateCoinCount(this.player.coins);
 
         // music
         this.music = this.sound.add('theme',{
@@ -69,7 +72,5 @@ export default class MainScene extends Phaser.Scene {
         this.scene.start('TimerScene');
     }
 
-        const coins = document.getElementById('coinCount');
-        coins.textContent = this.player.coins;
     }
 }

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { initUI } from "../services/ui";
 import { showUI } from "../services/ui";
+import { updateCoinCount } from "../services/ui";
 
 export default class TimerScene extends Phaser.Scene {
     init() {
@@ -21,6 +22,9 @@ export default class TimerScene extends Phaser.Scene {
             coins: true,
             excursion: false
         });
+
+        updateCoinCount(this.player.coins);
+
 
         // Background
         this.cameras.main.setBackgroundColor('#87ceeb');
@@ -70,7 +74,9 @@ export default class TimerScene extends Phaser.Scene {
 
             await this.player.save();
             this.registry.set('player', this.player);
-            this.music.setVolume(this.player.settings.music / 100);
+            if (this.music) {
+                this.music.setVolume(this.player.settings.music / 100);
+            }
         }
 
         if (window.__goHomeRequested) {
@@ -78,8 +84,6 @@ export default class TimerScene extends Phaser.Scene {
             this.scene.start('MainScene');
         }
 
-        const coins = document.getElementById('coinCount');
-        coins.textContent = this.player.coins;
     }
 
 }
