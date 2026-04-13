@@ -9,6 +9,8 @@ import SignupScene from './scenes/SignupScene.js';
 import TitleScene from './scenes/TitleScene.js';
 import BootScene from './scenes/BootScene.js';
 import MainScene from './scenes/MainScene.js';
+import ShopScene from './scenes/ShopScene.js';
+import IslandShopScene from './scenes/IslandShopScene.js';
 
 const sizes = {
     width: 600,
@@ -38,7 +40,7 @@ window.onload = () => {
 
 
 // Determine which scene to start based on player data
-game.scene.add('BootScene', BootScene, true);
+game.scene.add('ShopScene', ShopScene, true);
 
 // Signup and Login
 game.scene.add('LoginScene', LoginScene, false);
@@ -49,7 +51,10 @@ game.scene.add('TitleScene', TitleScene, false);
 
 game.scene.add('MainScene', MainScene, false);
 
-game.scene.start('BootScene');
+// Shop Scenes 
+game.scene.start('ShopScene');
+game.scene.add('IslandShopScene', IslandShopScene, false);
+
 
 
             

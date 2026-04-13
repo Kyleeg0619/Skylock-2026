@@ -3,23 +3,26 @@ export const AngelRegistry = {
     'dog-1': {
         name: "Puggy",
         rarity: "common",
-        sprite: "puppy-1.png",
+        sprite: "dog-1.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50, 
+        buyValue: 300
     },
     'dog-2': {
         name: "Golden",
         rarity: "common",
-        sprite: "puppy-2.png",
+        sprite: "dog-2.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 300
     },
     'dog-3': {
         name: "Herder",
         rarity: "common",
-        sprite: "puppy-3.png",
+        sprite: "dog-3.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 300,
     },
 
     'cat-1': {
@@ -27,21 +30,24 @@ export const AngelRegistry = {
         rarity: "common",
         sprite: "cat-1.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 300
     },
     'cat-2': {
         name: "Tabby",
         rarity: "common",
         sprite: "cat-2.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 300
     },
     'cat-3': {
         name: "Tuxedo",
         rarity: "common",
         sprite: "cat-3.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 300
     },
 
     'bunny-1': {
@@ -49,21 +55,24 @@ export const AngelRegistry = {
         rarity: "common",
         sprite: "bunny-1.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 300
     },
     'bunny-2': {
         name: "Brown Bunny",
         rarity: "common",
         sprite: "bunny-2.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 300
     },
     'bunny-3': {
         name: "Spotted Bunny",
         rarity: "common",
         sprite: "bunny-3.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 300
     },
 
     // Rare Angels
