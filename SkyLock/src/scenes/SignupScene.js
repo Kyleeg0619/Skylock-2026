@@ -20,7 +20,8 @@ export default class SignupScene extends Phaser.Scene {
             shop: false,
             edit: false,
             info: false,
-            coins: false
+            coins: false,
+            excursion: false
         });
         
         this.cameras.main.setBackgroundColor('#87ceeb');

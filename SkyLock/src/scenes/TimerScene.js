@@ -3,40 +3,55 @@ import { initUI } from "../services/ui";
 import { showUI } from "../services/ui";
 import { updateCoinCount } from "../services/ui";
 
-export default class MainScene extends Phaser.Scene {
+export default class TimerScene extends Phaser.Scene {
     init() {
         this.player = this.registry.get("player");
     }
 
     preload() {
-        this.load.image('bg', 'assets/backgrounds/island_bg.png');
-        this.load.audio('theme',['assets/audio/floating-garden.mp3']);
+        this.load.image('timer_bg', 'assets/backgrounds/timer_bg.png');
     }
 
     create() {
         showUI({
             settings: true,
             home: true,
-            shop: true,
-            edit: true,
+            shop: false,
+            edit: false,
             info: false,
             coins: true,
-            excursion: true
+            excursion: false
         });
 
         updateCoinCount(this.player.coins);
 
-        // music
-        this.music = this.sound.add('theme',{
-            loop: true,
-            volume: this.player.settings.music/100
-        });
-        this.music.play();
 
         // Background
         this.cameras.main.setBackgroundColor('#87ceeb');
-        this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+        this.add.image(0, 0, 'timer_bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
+        // Timer Form
+        const form = document.getElementById('timerForm');
+        form.style.display = 'block'; // Ensure the form is visible
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const minutes = parseInt(document.getElementById('timerInput').value) || 0;
+
+            this.scene.start('ExcursionScene', { timer: minutes * 60 }); // Pass timer in seconds
+        });
+
+        // Remove Form
+        this.events.on('shutdown',this.cleanup,this);
+    }
+
+    cleanup() {
+        this.events.off('shutdown',this.cleanup,this);
+        const form = document.getElementById('timerForm');
+        if (form) {
+            form.removeEventListener('submit', this.handleSubmit);
+            form.style.display = 'none';
+        }
     }
 
     async update() {
@@ -59,7 +74,9 @@ export default class MainScene extends Phaser.Scene {
 
             await this.player.save();
             this.registry.set('player', this.player);
-            this.music.setVolume(this.player.settings.music / 100);
+            if (this.music) {
+                this.music.setVolume(this.player.settings.music / 100);
+            }
         }
 
         if (window.__goHomeRequested) {
@@ -67,10 +84,6 @@ export default class MainScene extends Phaser.Scene {
             this.scene.start('MainScene');
         }
 
-        if (window.__goToExcursion) {
-        window.__goToExcursion = false;
-        this.scene.start('TimerScene');
     }
 
-    }
 }

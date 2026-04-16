@@ -10,16 +10,11 @@ export default class Player {
             createdAt: Date.now(),
             lastLogin: Date.now(),
         };
+        this.level = 0;
         this.coins = 0;
         this.angels = { owned: ["dog-1"]};
         this.islands = { owned: ["starter-island"]};
         this.placedIslands = [];
-            // Each entry:
-            // {
-            //   islandId: "starter_island",
-            //   position: { x: 0, y: 0 },
-            //   angels: ["dog-1", null]
-            // }
         this.settings = { music: 100, sfx: 100, skipGacha: false};
     }
 

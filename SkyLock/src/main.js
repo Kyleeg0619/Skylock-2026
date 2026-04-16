@@ -9,6 +9,8 @@ import SignupScene from './scenes/SignupScene.js';
 import TitleScene from './scenes/TitleScene.js';
 import BootScene from './scenes/BootScene.js';
 import MainScene from './scenes/MainScene.js';
+import TimerScene from './scenes/TimerScene.js';
+import ExcursionScene from './scenes/ExcursionScene.js';
 
 const sizes = {
     width: 600,
@@ -36,6 +38,12 @@ window.onload = () => {
     initUI();
 };
 
+window.addEventListener("message", (event) => {
+    if (event.data?.type === "SKYLOCK_OPEN_TABS") {
+        console.log("Global Distraction Event:", event.data.urls);
+        window.__skylockDistraction  = true;
+    }
+});
 
 // Determine which scene to start based on player data
 game.scene.add('BootScene', BootScene, true);
@@ -48,6 +56,8 @@ game.scene.add('SignupScene', SignupScene, false);
 game.scene.add('TitleScene', TitleScene, false);
 
 game.scene.add('MainScene', MainScene, false);
+game.scene.add('TimerScene', TimerScene, false);
+game.scene.add('ExcursionScene', ExcursionScene, false);    
 
 game.scene.start('BootScene');
 
