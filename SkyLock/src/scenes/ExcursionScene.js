@@ -1,7 +1,6 @@
 import Phaser from "phaser";
-import { initUI } from "../services/ui";
-import { showUI } from "../services/ui";
-import { updateCoinCount } from "../services/ui";
+import { showUI, updateCoinCount } from "../services/ui";
+import { AngelRegistry } from "../data/AngelRegistry.js";
 
 export default class ExcursionScene extends Phaser.Scene {
     init(data) {
@@ -34,6 +33,7 @@ this.cameras.main.setBackgroundColor('#87ceeb');
         // Timer
         window.__excursionEnd = Date.now() + this.timer * 1000; // Store the end time in milliseconds
         this.coinsEarned = 0;
+        this.excursionRateBonus = this.getExcursionRateBonus();
 
         const excursionUI = document.getElementById('excursionUI');
         excursionUI.style.display = 'flex';
@@ -79,6 +79,14 @@ this.cameras.main.setBackgroundColor('#87ceeb');
         });
     }
 
+    getExcursionRateBonus() {
+        const ownedAngels = this.player?.angels?.owned || [];
+        return ownedAngels.reduce((total, angelId) => {
+            const entry = AngelRegistry[angelId];
+            return total + (entry?.buff?.excursionRate || 0);
+        }, 0);
+    }
+
     async update() {
         if (window.__settingsOpened) {
             window.__settingsOpened = false;
@@ -118,7 +126,7 @@ this.cameras.main.setBackgroundColor('#87ceeb');
 
         // 10 coins earned per minute
         this.coinsEarned = Math.floor(
-    ((this.timer - seconds) / 60) * 10 * (this.penaltyMultiplier || 1)
+            ((this.timer - seconds) / 60) * 10 * (this.penaltyMultiplier || 1) * (1 + this.excursionRateBonus)
         );
         this.coinsEarned = Math.max(0, this.coinsEarned); // Ensure coins don't go negative
 
