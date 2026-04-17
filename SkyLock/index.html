@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SkyLock</title>
-        <link rel="stylesheet" href="https://use.typekit.net/eod1kak.css">
-        <!-- bootstrap icons -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    </head>
-    <body>
-        <header>
-            <p>Phaser Demo</p>
-        </header>
-        <main>
-            <div id="game-container">
-                <!-- Login Form -->
-                <form id="loginForm">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyLock</title>
+    <link rel="stylesheet" href="https://use.typekit.net/eod1kak.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <p>Phaser Demo</p>
+    </header>
+    <main>
+        <div id="game-container">
+            
+            <button class="playBtn">
+                <span class="btn-label">PLAY</span>
+            </button>
+
+            <form id="loginForm">
                 <label for="login-email">Email:</label>
                 <input type="text" id="login-email" name="email" required>
 
@@ -23,99 +26,126 @@
                 <input type="password" id="login-password" name="password" required>
 
                 <button type="submit">Login</button>
-
                 <p>Don't have an account? <a href="" class="formLink">Register</a></p>
             </form>
 
-            <!-- Sign-Up Form -->
             <form id="signupForm">
-            <label for="signup-email">Email:</label>
-            <input type="email" id="signup-email" name="email" required>
+                <label for="signup-email">Email:</label>
+                <input type="email" id="signup-email" name="email" required>
 
-            <label for="signup-username">Username:</label>
-            <input type="text" id="signup-username" name="username" required>
+                <label for="signup-username">Username:</label>
+                <input type="text" id="signup-username" name="username" required>
 
-            <label for="signup-password">Password:</label>
-            <input type="password" id="signup-password" name="password" required>
+                <label for="signup-password">Password:</label>
+                <input type="password" id="signup-password" name="password" required>
 
-            <label for="signup-confirmPassword">Confirm Password:</label>
-            <input type="password" id="signup-confirmPassword" name="confirmPassword" required>
+                <label for="signup-confirmPassword">Confirm Password:</label>
+                <input type="password" id="signup-confirmPassword" name="confirmPassword" required>
 
-            <button type="submit">Sign Up</button>
+                <button type="submit">Sign Up</button>
+                <p>Have an account? <a href="" class="formLink">Login</a></p>
+            </form>
 
-            <p>Have an account? <a href="" class="formLink">Login</a></p>
-        </form>
-
-        <!-- Coin Display -->
-         <div id="coinQty">
-            <img src="assets/icons/cloud-coin.PNG" alt="">
-            <p id="coinCount"></p>
-         </div>
+            <div id="coinQty">
+                <img src="assets/icons/cloud-coin.PNG" alt="">
+                <p id="coinCount"></p>
+            </div>
 
             <div class="game-ui">
-                <!-- Home Btn -->
-                 <button id="homeBtn">
+                <button id="homeBtn">
                     <img src="assets/icons/home-icon.PNG" alt="">
-                 </button>
-                <!-- Edit Btn -->
-                 <button id="editBtn">
+                </button>
+
+                <button id="editBtn">
                     <img src="assets/icons/island-edit-icon.PNG" alt="">
-                 </button>
-                <!-- Shop Btn -->
-                 <button id="shopBtn">
+                </button>
+
+                <div id="editPopup" style="display: none;">
+                    <h2>Customize</h2>
+                    <hr>
+
+                    <!-- Islands Section -->
+                    <div class="edit-section">
+                        <h3>Island</h3>
+                        <hr>
+                        <div class="selection-grid" id="islandsGrid">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Angel Slot 1 (Dropdown) -->
+                    <div class="edit-section">
+                        <h3>Angel 1 (Left)</h3>
+                        <hr>
+                        <select id="angelSelect1" class="angel-dropdown">
+                            <!-- Populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <!-- Angel Slot 2 (Dropdown) -->
+                    <div class="edit-section">
+                        <h3>Angel 2 (Right)</h3>
+                        <hr>
+                        <select id="angelSelect2" class="angel-dropdown">
+                            <!-- Populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <button type="button" id="editConfirmBtn">Confirm</button>
+                </div>
+
+                <button id="shopBtn">
                     <img src="assets/icons/shop-icon.PNG" alt="">
-                 </button>
-                <!-- Settings UI -->
-                 <button id="settingsBtn">
+                </button>
+
+                <button id="settingsBtn">
                     <i class="bi bi-gear"></i>
 
                     <div id="settingsPopup" style="display: none;">
-                    <h2>Settings</h2>
-                    <hr>
-                    <form id="settingsForm">
-                        <br>
-                        <h3>Volume</h3>
+                        <h2>Settings</h2>
                         <hr>
-                        <p> Music: </p>
-                        <input type="range" id="musicVolume" min="0" max="100" value="100">
-                        <p> SFX: </p>
-                        <input type="range" id="sfxVolume" min="0" max="100" value="100">
-                        <br><br>
-                        <h3>Gacha</h3>
-                        <hr>
-                        <input type="checkbox" id="skipCutscene"> Skip Cutscene</input>
-                        <br><br>
-                        <h3>Player Info</h3>
-                        <hr>
-                        <p> Username: <input type="text" id="usernameInput" value=""></input> </p>
-                        <input type="submit" value="Save" id="settingsSubmit">
-                    </form>
-                </div>
-                 </button>
+                        <form id="settingsForm">
+                            <br>
+                            <h3>Volume</h3>
+                            <hr>
+                            <p> Music: </p>
+                            <input type="range" id="musicVolume" min="0" max="100" value="100">
+                            <p> SFX: </p>
+                            <input type="range" id="sfxVolume" min="0" max="100" value="100">
+                            <br><br>
+                            <h3>Gacha</h3>
+                            <hr>
+                            <input type="checkbox" id="skipCutscene"> Skip Cutscene</input>
+                            <br><br>
+                            <h3>Player Info</h3>
+                            <hr>
+                            <p> Username: <input type="text" id="usernameInput" value=""></input> </p>
+                            <input type="submit" value="Save" id="settingsSubmit">
+                        </form>
+                    </div>
+                </button>
                 
-                <!-- Info UI -->
-                 <button id="infoBtn">
+                <button id="infoBtn">
                     <i class="bi bi-info-circle"></i>
                     <div id="infoPopup" style="display: none;">
-                    <h2>Socials</h2>
-                    <hr>
-                    <p><a href="https://www.instagram.com/skylockgame/" target="_blank">Kylee Grasela
-                    <i class="bi bi-linkedin"></i> </a><br>Graphic Designer & Programmer</p>
-                    <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Charles Bundy <i class="bi bi-linkedin"></i></a><br>Programmer & Animator</p>
-                    <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Brittany Fetters <i class="bi bi-linkedin"></i></a><br>Programmer</p>
-                 </div>
-                 </button>
-                 
+                        <h2>Socials</h2>
+                        <hr>
+                        <p><a href="https://www.instagram.com/skylockgame/" target="_blank">Kylee Grasela
+                        <i class="bi bi-linkedin"></i> </a><br>Graphic Designer & Programmer</p>
+                        <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Charles Bundy <i class="bi bi-linkedin"></i></a><br>Programmer & Animator</p>
+                        <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Brittany Fetters <i class="bi bi-linkedin"></i></a><br>Programmer</p>
+                    </div>
+                </button>
             </div>
 
-                <canvas id="gameCanvas"></canvas>
+            <canvas id="gameCanvas"></canvas>
 
-            </div>
-        </main>
-        <footer>
-            <p>Created with Phaser 3</p>
-        </footer>
-        <script type="module" src="/src/main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    </body>
-    </html>
+        </div>
+    </main>
+    <footer>
+        <p>Created with Phaser 3</p>
+    </footer>
+    <script type="module" src="/src/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

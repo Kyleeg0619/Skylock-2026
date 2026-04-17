@@ -3,14 +3,14 @@ export const AngelRegistry = {
     'dog-1': {
         name: "Puggy",
         rarity: "common",
-        sprite: "puppy-1.png",
+        sprite: "Dog-1.png",
         buff: { coins: 0.1 },
         sellValue: 10
     },
     'dog-2': {
         name: "Golden",
         rarity: "common",
-        sprite: "puppy-2.png",
+        sprite: "Dog-2.png",
         buff: { coins: 0.1 },
         sellValue: 10
     },

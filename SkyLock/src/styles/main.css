@@ -37,7 +37,7 @@ body {
     background-color: var(--off-white);
 }
 
-header,footer {
+header, footer {
     display: flex;
     justify-content: center;
     align-self: center;
@@ -55,14 +55,12 @@ header,footer {
     width: 600px;
     height: 800px;
     margin: 0 auto;
+    outline: 2px solid red;
 }
 
-
-/* *** */
-/* *** */
 /* *** */
 /* Login & Signup Scenes */
-/* Login Form Component */
+/* *** */
 #loginForm, #signupForm {
     display: none;
     position: absolute;
@@ -94,6 +92,7 @@ header,footer {
     padding: 10px;
     border: none;
     border-radius: 30px;
+    background-color: var(--off-white);
 }
 
 #loginForm button, #signupForm button {
@@ -101,7 +100,7 @@ header,footer {
     border: none;
     border-radius: 30px;
     background-color: var(--royal-purple);
-    color: var(--off-white);
+    color: var(--off-white) !important;
     font-size: 18px;
     cursor: pointer;
 }
@@ -117,10 +116,8 @@ header,footer {
 }
 
 /* *** */
+/* Title Scene - Play Button */
 /* *** */
-/* *** */
-/* Title Scene */
-/* --- play button --- */ 
 .playBtn { 
     position: absolute;
     left: 50%;
@@ -142,30 +139,32 @@ header,footer {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    position: absolute;
 }
 
-.playBtn .btn-label{
+.playBtn .btn-label {
     pointer-events: none;
 }
+
 .playBtn:hover {
     box-shadow: 0 0 15px white;
     transform: translate(-50%, -50%) scale(1.05);
 }
 
-.playBtn:active{
+.playBtn:active {
     transform: translateY(1px); 
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* info and settings button */
+/* *** */
+/* Game UI Buttons */
+/* *** */
 .game-ui {
-    display: flex;
     position: absolute;
-    justify-content: right;
-    top: 0;
-    right: 0;
-    padding: 15px;
+    top: 15px;
+    right: 15px;
+    z-index: 50;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .game-ui > button {
@@ -196,7 +195,32 @@ header,footer {
     transform: scale(1.1);
 }
 
-#infoPopup, #settingsPopup{
+/* *** */
+/* Coin Display */
+/* *** */
+#coinQty {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    padding-right: 15px;
+    background: var(--off-white);
+    border-radius: 100px;
+    align-items: center;
+    font-weight: bold;
+    font-size: 30px;
+    margin: 15px;
+}
+
+#coinQty img {
+    width: 65px;
+}
+
+/* *** */
+/* Info & Settings Popups (inside buttons) */
+/* *** */
+#infoPopup, #settingsPopup {
     position: absolute;
     top: 100%;
     right: 0;
@@ -233,68 +257,6 @@ header,footer {
     padding: 5px 5px 5px 8px;
 }
 
-#coinQty {
-    display: flex;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    padding-right: 15px;
-    background: var(--off-white);
-    border-radius: 100px;
-    align-items: center;
-    font-weight: bold;
-    font-size: 30px;
-    margin: 15px;
-}
-
-#coinQty img {
-    width: 65px;
-}
-
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  width: 100%;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-    border: 2px solid var(--dark-purple);
-    background: linear-gradient(to right, var(--gold),var(--off-white));
-    height: 10px;
-    border-radius: 5px;
-    padding: 0 -6px;
-}
-
-/* WebKit (Chrome, Edge, Safari) */
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-  background-image: url("../../assets/icons/four-point-star.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top;
-  border: none;
-  margin-top: -9px;
-}
-
-/* Firefox */
-input[type="range"]::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-  background-image: url("../../assets/icons/four-point-star.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: cover;
-  border: none;
-}
-
-
 #settingsSubmit {
     border: 2px solid var(--dark-purple);
     background: none;
@@ -307,4 +269,304 @@ input[type="range"]::-moz-range-thumb {
 
 #settingsSubmit:hover {
     background: var(--dark-purple);
+}
+
+/* *** */
+/* Range Input Styling */
+/* *** */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    width: 100%;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    border: 2px solid var(--dark-purple);
+    background: linear-gradient(to right, var(--gold), var(--off-white));
+    height: 10px;
+    border-radius: 5px;
+    padding: 0 -6px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    background-image: url("../../assets/icons/four-point-star.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    border: none;
+    margin-top: -9px;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    background-image: url("../../assets/icons/four-point-star.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: cover;
+    border: none;
+}
+
+/* *** */
+/* Edit Popup (OUTSIDE button - sibling of #editBtn) */
+/* *** */
+#editPopup {
+    position: absolute;
+    top: 90px;
+    right: 15px;
+    width: 350px;
+    max-height: 500px;
+    overflow-y: auto;
+    background: var(--royal-purple);
+    border-radius: 10px;
+    padding: 20px;
+    color: var(--off-white);
+    z-index: 60;
+    text-align: left;
+    font-size: 15px;
+}
+
+#editPopup h2 {
+    color: var(--off-white);
+    margin-bottom: 10px;
+}
+
+#editPopup > hr {
+    border: none;
+    border-top: 2px solid var(--dark-purple);
+    margin: 10px 0;
+}
+
+/* Edit Section */
+.edit-section {
+    margin: 15px 0;
+}
+
+.edit-section h3 {
+    color: var(--off-white);
+    margin-bottom: 5px;
+}
+
+.edit-section hr {
+    width: 30px;
+    border: none;
+    border-top: 2px solid var(--dark-purple);
+    margin: 5px 0 10px 0;
+}
+
+/* Selection Grid */
+.selection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Selection Items */
+.selection-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--off-white);
+    border: 3px solid transparent;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.selection-item:hover:not(.locked) {
+    border-color: var(--gold);
+    transform: scale(1.05);
+}
+
+.selection-item.selected {
+    border-color: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+}
+
+.selection-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.selection-item span {
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--dark-purple);
+    text-align: center;
+}
+
+/* Rarity Badge */
+.selection-item .rarity-badge {
+    font-size: 9px !important;
+    padding: 2px 6px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    margin-top: 3px;
+}
+
+/* Locked Items */
+.selection-item.locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.selection-item.locked img {
+    filter: grayscale(100%) brightness(0.5);
+}
+
+.selection-item.locked i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: var(--dark-purple);
+    z-index: 2;
+}
+
+.selection-item.locked:hover {
+    transform: none;
+    border-color: transparent;
+}
+
+/* Confirm Button */
+#editConfirmBtn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    border: 2px solid var(--dark-purple);
+    background: none;
+    color: var(--off-white);
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#editConfirmBtn:hover {
+    background: var(--dark-purple);
+}
+
+/* Scrollbar for Edit Popup */
+#editPopup::-webkit-scrollbar {
+    width: 8px;
+}
+
+#editPopup::-webkit-scrollbar-track {
+    background: var(--dark-purple);
+    border-radius: 10px;
+}
+
+#editPopup::-webkit-scrollbar-thumb {
+    background: var(--off-white);
+    border-radius: 10px;
+}
+
+/* Shake Animation for Locked Items */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}
+/* Angel Dropdown Styling */
+.angel-dropdown {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    font-family: fields, sans-serif;
+    color: var(--dark-purple);
+    background-color: var(--off-white);
+    border: 3px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236654c0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+.angel-dropdown:hover {
+    border-color: var(--gold);
+}
+
+.angel-dropdown:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+}
+
+.angel-dropdown option {
+    padding: 10px;
+    background-color: var(--off-white);
+    color: var(--dark-purple);
+}
+
+.angel-dropdown option:disabled {
+    color: #999;
+    font-style: italic;
+}
+
+.angel-dropdown option.locked {
+    color: #999;
+}
+
+/* Optgroup styling */
+.angel-dropdown optgroup {
+    font-weight: bold;
+    color: var(--dark-purple);
+    background-color: var(--royal-purple);
+}
+
+/* Angel preview next to dropdown */
+.angel-select-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.angel-preview {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background: var(--off-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--dark-purple);
+}
+
+.angel-preview img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.angel-preview.empty {
+    background: #ccc;
+}
+
+.angel-preview.empty::after {
+    content: '✕';
+    font-size: 24px;
+    color: #666;
 }

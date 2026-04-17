@@ -22,6 +22,13 @@ export class Game extends Phaser.Scene {
         // using the overlap logic inside Player.js
 
         this.cursors = this.input.keyboard.createCursorKeys();
+        // In Game.js create()
+        this.physics.add.overlap(this.player.group, this.platforms, (angel, island) => {
+     if (!angel.isDragged) {
+        angel.onIsland = true;
+        angel.currentIsland = island;
+    }
+});
     }
 
     update() {
