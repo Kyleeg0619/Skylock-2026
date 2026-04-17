@@ -75,7 +75,7 @@ export default class LoginScene extends Phaser.Scene {
 
                 this.registry.set('player', player);
 
-                this.scene.start("TimerScene");
+                this.scene.start("TitleScene");
             } catch (error) {
                 const errorText = document.createElement("p");
                 errorText.setAttribute("id", "errorText");
