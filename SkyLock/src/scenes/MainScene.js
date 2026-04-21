@@ -21,7 +21,7 @@ export default class MainScene extends Phaser.Scene {
             edit: true,
             info: false,
             coins: true,
-            excursion: true
+            excursion: true,
         });
 
         updateCoinCount(this.player.coins);

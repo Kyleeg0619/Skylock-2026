@@ -12,6 +12,7 @@ export default class Player {
         };
         this.level = 0;
         this.coins = 0;
+        this.angelCoins = 0;
         this.angels = { owned: ["dog-1"]};
         this.islands = { owned: ["starter-island"]};
         this.placedIslands = [];
@@ -22,6 +23,7 @@ export default class Player {
         return {
             profile: this.profile,
             coins: this.coins,
+            angelCoins: this.angelCoins,
             angels: this.angels,
             islands: this.islands,
             settings: this.settings
@@ -37,6 +39,7 @@ export default class Player {
         const player = new Player(uid, data.profile.email, data.profile.username);
         player.profile = data.profile;
         player.coins = data.coins;
+        player.angelCoins = data.angelCoins;
         player.angels = data.angels;
         player.islands = data.islands;
         player.settings = data.settings;
