@@ -3,6 +3,7 @@ import { showUI } from "../services/ui";
 import { Player } from '../gameObjects/Player.js';
 import { IslandRegistry } from '../data/IslandRegistry.js';
 import { AngelRegistry } from '../data/AngelRegistry.js';
+import CoinManager from '../services/CoinManager.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -11,6 +12,7 @@ export default class MainScene extends Phaser.Scene {
         this.angels = [];  // Now array of arrays: [[angel1, angel2], [angel1, angel2], ...]
         this.selectedIslandIndex = null;
         this.assetsLoaded = false;
+        this.coinManager = null;
         
         // Size constants
         this.ISLAND_SCALE = 0.4;
@@ -202,6 +204,11 @@ export default class MainScene extends Phaser.Scene {
         window.gameCustomization.ownedIslands = ownedIslands;
         window.gameCustomization.ownedAngels = ownedAngels;
 
+        this.coinManager = new CoinManager(this.player);
+        this.coinManager.start();
+
+        this.updateCPMDisplay();
+
         console.log('MainScene ready!');
     }
 
@@ -271,6 +278,21 @@ export default class MainScene extends Phaser.Scene {
         });
     }
 
+     // Update CPM display
+    updateCPMDisplay() {
+        const cpm = this.coinManager?.getCoinsPerMinuteDisplay() || '0';
+        
+        // Update or create CPM display
+        let cpmDisplay = document.getElementById('cpmDisplay');
+        if (!cpmDisplay) {
+            cpmDisplay = document.createElement('p');
+            cpmDisplay.id = 'cpmDisplay';
+            const coinQty = document.getElementById('coinQty');
+            if (coinQty) coinQty.appendChild(cpmDisplay);
+        }
+        cpmDisplay.textContent = `+${cpm}/min`;
+    }
+
     handleCustomizationChange(customization) {
         console.log('=== MainScene received customizationChanged ===');
         console.log('Customization data:', customization);
@@ -301,6 +323,12 @@ export default class MainScene extends Phaser.Scene {
         if (customization.selectedAngel2 !== undefined) {
             this.swapAngel(slotToSwap, 1, customization.selectedAngel2);
         }
+
+        // Recalculate coins per minute after swap
+        this.time.delayedCall(400, () => {
+            this.coinManager?.onLayoutChange();
+            this.updateCPMDisplay();
+        });
         
         // Backwards compatibility - if just selectedAngel, put in slot 0
         if (customization.selectedAngel && !customization.selectedAngel1 && !customization.selectedAngel2) {
@@ -517,7 +545,10 @@ export default class MainScene extends Phaser.Scene {
         if (coins) coins.textContent = this.player.coins;
     }
 
+
+
     shutdown() {
+        this.coinManager?.stop();
         this.game.events.off('customizationChanged', this.handleCustomizationChange, this);
     }
 }

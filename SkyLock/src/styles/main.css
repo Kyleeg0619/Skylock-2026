@@ -570,3 +570,9 @@ input[type="range"]::-moz-range-thumb {
     font-size: 24px;
     color: #666;
 }
+#cpmDisplay {
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: bold;
+    padding-left: 5px;
+}
