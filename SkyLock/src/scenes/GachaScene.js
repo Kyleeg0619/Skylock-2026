@@ -13,15 +13,14 @@ export default class GachaScene extends Phaser.Scene {
     preload() {
         // Load any assets needed for the gacha scene (e.g., background, buttons)
         this.load.image('background', 'assets/backgrounds/gacha_bg.png');
-        this.load.image('cherub','assets/angels/cherub-rise.png');
 
         // Buttons
         this.load.image('b1', 'assets/icons/button_summon1.png');
         this.load.image('b5', 'assets/icons/button_summon5.png');
+        this.load.image('legendary', 'assets/icons/legendary_summon_button.png')
     }
 
     create() {
-        console.log("Player data in GachaScene:", this.player);
         showUI({
             settings: true,
             home: true,
@@ -36,16 +35,56 @@ export default class GachaScene extends Phaser.Scene {
             updateCoinCount(this.player.coins);
             updateAngelCoinCount(this.player.angelCoins);
 
+        // Gacha Prices
+        this.summon1Cost = 200;
+        this.summon5Cost = 1000;
+
         // Background
         this.cameras.main.setBackgroundColor('#f0e68c');
         this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
         // Summon Buttons
-        const summon1Button = this.add.image(0, 0, 'b1').setInteractive().on('pointerdown', () => this.smnGacha(1));
-        const summon5Button = this.add.image(0, 0, 'b5').setInteractive().on('pointerdown', () => this.smnGacha(5));
+        const summon1Button = this.add.image(0, 0, 'b1').setInteractive().on('pointerdown', async () => {
+            const legendary = false;
+            const results = [];
+            const result = await this.rollGacha();
 
-        summon5Button.setOrigin(1,1).setPosition(this.sys.game.config.width - 50, this.sys.game.config.height - 50);
-        summon1Button.setOrigin(1,1).setPosition(this.sys.game.config.width - 50, this.sys.game.config.height - 225);
+            if (result.rarity === 'legendary') legendary = true;
+
+            this.player.coins -= this.summon1Cost;
+            this.player.angels.owned.push(result.angel.id);
+            await this.player.save();
+
+            results.push(result);
+            this.scene.start('RollScene', { results, legendary });
+        });
+
+        const summon5Button = this.add.image(0, 0, 'b5').setInteractive().on('pointerdown', async () => {
+            const legendary = false;
+            const results = [];
+            this.player.coins -= this.summon5Cost;
+            for (let i = 0; i < 5; i++) {
+                const result = await this.rollGacha();
+
+                if (result.rarity === 'legendary') legendary = true;
+
+                this.player.angels.owned.push(result.angel.id);
+
+                results.push(result);
+            }
+
+            await this.player.save();
+
+            this.scene.start('RollScene', { results, legendary });
+        });
+
+        const legendaryButton = this.add.image(0, 0, 'legendary').setInteractive().on('pointerdown', async () => {
+            this.smnLegendary();
+        });
+
+        summon5Button.setOrigin(1,1).setPosition(this.sys.game.config.width - 30, this.sys.game.config.height - 30);
+        summon1Button.setOrigin(1,1).setPosition(this.sys.game.config.width - 30, this.sys.game.config.height - 205);
+        legendaryButton.setOrigin(1,0).setPosition(200 + 30, this.sys.game.config.height - 150 - 30);
     }
 
     async update() {
@@ -81,7 +120,17 @@ export default class GachaScene extends Phaser.Scene {
         }
     }
 
-    smnGacha(count) {
-        console.log(`Summoning ${count} times!`);
+    async rollGacha() {
+        const res = await fetch('http://localhost:3000/rollGacha', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        return await res.json();
+    }
+
+    smnLegendary() {
+        console.log(`Summoning legendary character!`);
     }
 }
