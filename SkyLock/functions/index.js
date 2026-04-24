@@ -4,9 +4,6 @@ import { AngelRegistry } from "./AngelRegistry.js";
 
 setGlobalOptions({ maxInstances: 10 });
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
-
 const rarityOdds = {
   common: 0.75,
   rare: 0.20,
@@ -42,6 +39,18 @@ function pickAngel(rarity) {
 }
 
 export const rollGacha = onRequest((req, res) => {
+  // CORS HEADERS — MUST BE FIRST
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+
+  // Handle preflight
+  if (req.method === "OPTIONS") {
+    res.status(204).send("");
+    return;
+  }
+
+  // Actual function logic
   const rarity = rollRarity();
   const angel = pickAngel(rarity);
 

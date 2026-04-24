@@ -121,7 +121,7 @@ export default class GachaScene extends Phaser.Scene {
     }
 
     async rollGacha() {
-        const res = await fetch('http://localhost:3000/rollGacha', {
+        const res = await fetch('https://us-central1-skylock-c920c.cloudfunctions.net/rollGacha', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
