@@ -45,11 +45,17 @@ export default class GachaScene extends Phaser.Scene {
 
         // Summon Buttons
         const summon1Button = this.add.image(0, 0, 'b1').setInteractive().on('pointerdown', async () => {
-            const legendary = false;
+            var legendary = false;
             const results = [];
             const result = await this.rollGacha();
 
             if (result.rarity === 'legendary') legendary = true;
+
+            if (!this.player.angels.owned.includes(result.angel.id)) {
+                    this.player.angels.owned.push(result.angel.id);
+                } else {
+                    this.player.angelCoins += 1;
+                };
 
             this.player.coins -= this.summon1Cost;
             this.player.angels.owned.push(result.angel.id);
@@ -60,7 +66,7 @@ export default class GachaScene extends Phaser.Scene {
         });
 
         const summon5Button = this.add.image(0, 0, 'b5').setInteractive().on('pointerdown', async () => {
-            const legendary = false;
+            var legendary = false;
             const results = [];
             this.player.coins -= this.summon5Cost;
             for (let i = 0; i < 5; i++) {
@@ -68,7 +74,11 @@ export default class GachaScene extends Phaser.Scene {
 
                 if (result.rarity === 'legendary') legendary = true;
 
-                this.player.angels.owned.push(result.angel.id);
+                if (!this.player.angels.owned.includes(result.angel.id)) {
+                    this.player.angels.owned.push(result.angel.id);
+                } else {
+                    this.player.angelCoins += 1;
+                };
 
                 results.push(result);
             }

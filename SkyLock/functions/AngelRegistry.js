@@ -3,21 +3,21 @@ export const AngelRegistry = {
     'dog-1': {
         name: "Puggy",
         rarity: "common",
-        sprite: "puppy-1.png",
+        sprite: "dog-1.png",
         buff: { coins: 0.1 },
         sellValue: 10
     },
     'dog-2': {
         name: "Golden",
         rarity: "common",
-        sprite: "puppy-2.png",
+        sprite: "dog-2.png",
         buff: { coins: 0.1 },
         sellValue: 10
     },
     'dog-3': {
         name: "Herder",
         rarity: "common",
-        sprite: "puppy-3.png",
+        sprite: "dog-3.png",
         buff: { coins: 0.1 },
         sellValue: 10
     },
@@ -65,43 +65,77 @@ export const AngelRegistry = {
         buff: { coins: 0.1 },
         sellValue: 10
     },
-
-    // Rare Angels
     'seal-1': {
         name: "Seal",
-        rarity: "rare",
-        sprite: "seal-1.png",
+        rarity: "common",
+        sprite: "seal.png",
         buff: { coins: 0.2 },
-        sellValue: 30
+        sellValue: 10
     },
+    'bat': {
+        name: "Bat",
+        rarity: "common",
+        sprite: "bat.png",
+        buff: { coins: 0.1 },
+        sellValue: 10
+    },
+
+    // Rare Angels
     'seal-2': {
         name: "Snow Seal",
         rarity: "rare",
-        sprite: "seal-2.png",
+        sprite: "snow-seal.png",
         buff: { coins: 0.2 },
         sellValue: 30
     },
     'seal-3': {
         name: "Walrus",
         rarity: "rare",
-        sprite: "seal-3.png",
+        sprite: "walrus.png",
         buff: { coins: 0.2 },
         sellValue: 30
     },
-
-    'squirrel-1': {
-        name: "Squirrel",
+    'bird-1': {
+        name: "Blue Parakeet",
         rarity: "rare",
-        sprite: "squirrel-1.png",
+        sprite: "blue-keet.png",
+        buff: { coins: 0.2 },
+        sellValue: 30
+    },
+    'bird-2': {
+        name: "Yellow Parakeet",
+        rarity: "rare",
+        sprite: "keet.png",
+        buff: { coins: 0.2 },
+        sellValue: 30
+    },
+    'axolotl-1': {
+        name: "Pink Axolotl",
+        rarity: "rare",
+        sprite: "axolotl-1.png",
+        buff: { coins: 0.2 },
+        sellValue: 30
+    },
+    'axolotl-2': {
+        name: "Black Axolotl",
+        rarity: "rare",
+        sprite: "axolotl-2.png",
+        buff: { coins: 0.2 },
+        sellValue: 30
+    },
+    'axolotl-3': {
+        name: "Yellow Axolotl",
+        rarity: "rare",
+        sprite: "axolotl-3.png",
         buff: { coins: 0.2 },
         sellValue: 30
     },
 
     // Epic Angels
-    'tiger-1': {
+    'tiger': {
         name: "Tiger",
         rarity: "epic",
-        sprite: "tiger-1.png",
+        sprite: "tiger.png",
         buff: { coins: 0.5, excursionRate: 0.2 },
         sellValue: 50
     },
@@ -112,12 +146,54 @@ export const AngelRegistry = {
         buff: { coins: 0.5, excursionRate: 0.2 },
         sellValue: 50
     },
+    'raven': {
+        name: "Raven",
+        rarity: "epic",
+        sprite: "raven.png",
+        buff: { coins: 0.5, excursionRate: 0.2 },
+        sellValue: 50
+    },
+    'raven-2': {
+        name: "White Raven",
+        rarity: "epic",
+        sprite: "white-raven.png",
+        buff: { coins: 0.5, excursionRate: 0.2 },
+        sellValue: 50
+    },
+    'orchid-cat': {
+        name: "Orchid Cat",
+        rarity: "epic",
+        sprite: "orchid-cat.png",
+        buff: { coins: 0.5, excursionRate: 0.2 },
+        sellValue: 50
+    },
 
     // Legendary Angels
     'star-squirrel': {
         name: "Star Squirrel",
         rarity: "legendary",
         sprite: "star-squirrel.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'goat-seraphim': {
+        name: "Goat Seraphim",
+        rarity: "legendary",
+        sprite: "goat-seraphim.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'space-tiger': {
+        name: "Space Tiger",
+        rarity: "legendary",
+        sprite: "space-tiger.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'star-bat': {
+        name: "Star Bat",
+        rarity: "legendary",
+        sprite: "star-bat.png",
         buff: { coins: 1.0, excursionRate: 0.5 },
         sellValue: 200
     },
