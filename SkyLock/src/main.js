@@ -9,6 +9,8 @@ import SignupScene from './scenes/SignupScene.js';
 import TitleScene from './scenes/TitleScene.js';
 import BootScene from './scenes/BootScene.js';
 import MainScene from './scenes/MainScene.js';
+import ShopScene from './scenes/ShopScene.js';
+import IslandShopScene from './scenes/IslandShopScene.js';
 import TimerScene from './scenes/TimerScene.js';
 import ExcursionScene from './scenes/ExcursionScene.js';
 import GachaScene from './scenes/GachaScene.js';
@@ -49,7 +51,7 @@ window.addEventListener("message", (event) => {
 });
 
 // Determine which scene to start based on player data
-game.scene.add('BootScene', BootScene, true);
+game.scene.add('ShopScene', ShopScene, true);
 
 // Signup and Login
 game.scene.add('LoginScene', LoginScene, false);
@@ -66,7 +68,10 @@ game.scene.add('GachaScene', GachaScene, false);
 game.scene.add('RollScene', RollScene, false);
 game.scene.add('GachaResultScene', GachaResultScene, false);
 
-game.scene.start('BootScene');
+// Shop Scenes 
+game.scene.start('ShopScene');
+game.scene.add('IslandShopScene', IslandShopScene, false);
+
 
 
             
