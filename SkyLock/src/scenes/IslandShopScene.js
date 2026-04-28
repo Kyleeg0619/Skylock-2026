@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 import { IslandRegistry } from "../data/IslandRegistry.js";
+import { showUI, updateCoinCount } from "../services/ui.js";
+import { verifyPurchase } from "../classes/Player.js";
 
 const colorPalette = {
     "royal-purple": "#a27ad4",
@@ -14,57 +16,93 @@ export default class IslandShopScene extends Phaser.Scene {
         super("IslandShopScene");
     }
 
+    init() {
+        this.player = this.registry.get("player");
+    }
+
     preload() {
         for (const [id, island] of Object.entries(IslandRegistry)) {
             this.load.image(id, `/assets/islands/${island.sprite}`);
         }
+
+        this.load.image('bg','assets/backgrounds/island_bg.png');
+
+        this.load.image('angel-shop-icon', 'assets/icons/angel-shop-icon.png');
+        this.load.image('island-shop-icon', 'assets/icons/island-shop-icon.png');
+
+        this.load.image('coin','assets/icons/cloud-coin.png');
+        this.load.image('rounded','assets/icons/rounded-rect.png');
     }
 
     create() {
-        this.add.rectangle(300, 400, 600, 800, colorPalette["royal-purple"]);
+        showUI({
+            settings: true,
+            home: true,
+            shop: true,
+            edit: false,
+            info: false,
+            coins: true,
+            excursion: false,
+        });
+
+        updateCoinCount(this.registry.get("player").coins);
+        
+        const bg = this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+
+        this.scrollContainer = this.add.container(0,135);
 
         this.createToggleBar();
 
-        this.grouped = this.groupIslands();
+        this.generateIslands();
 
-        this.createShelf(this.grouped.tier1, 440);
-        this.createShelf(this.grouped.tier2, 620);
+        this.input.on("wheel", (pointer, gameObjects, dx, dy) => {
+            this.scrollContainer.y -= dy * 0.5;
+            this.scrollContainer.y = Phaser.Math.Clamp(
+                this.scrollContainer.y,
+                -600, // how far down you can scroll
+                135     // top limit
+            );
+        });
     }
 
     createToggleBar() {
-        const bg = this.add.rectangle(300, 60, 600, 80, colorPalette["dark-purple"])
-            .setStrokeStyle(4, colorPalette["gold"]);
+        const angels = this.add.image(200, 0, "angel-shop-icon").setOrigin(0.5).setInteractive({ useHandCursor: true });
 
-        const angels = this.add.text(180, 60, "ANGELS", {
-            fontSize: "36px",
-            color: colorPalette["off-white"],
-            fontFamily: "fields",
-            fontWeight: "900"
-        }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-        const islands = this.add.text(420, 60, "ISLANDS", {
-            fontSize: "36px",
-            color: colorPalette["gold"],
-            fontFamily: "fields",
-            fontWeight: "900"
-        }).setOrigin(0.5);
+        const islands = this.add.image(400, 0, "island-shop-icon").setOrigin(0.5).setInteractive({ useHandCursor: true });
 
         angels.on("pointerdown", () => {
             this.scene.start("ShopScene");
         });
+
+        this.scrollContainer.add([angels,islands]);
     }
 
-    groupIslands() {
-        const tier1 = [];
-        const tier2 = [];
+    generateIslands() {
+        // Display Islands
+        var x1 = this.sys.game.config.width/2 - 150;
+        var x2 = this.sys.game.config.width/2 + 150;
+        var x = this.sys.game.config.width/2 - 200
+        var y = 200;
+        const islands = Object.entries(IslandRegistry).map(([id, data]) => ({id,...data}));
 
-        for (const [id, island] of Object.entries(IslandRegistry)) {
-            const entry = { id, ...island };
+        for (var i=0;i<islands.length;i++) {
+            if (i % 2 == 0) {
+                x = x1;
+                y = (i!==0) ? y + 275 : y;
+            } else {
+                x = x2;
+            }
+            
+            var islandImage = this.add.image(x,y,islands[i].id).setScale(0.35);
+            var label = this.add.text(x+20,y+50,islands[i].price, {
+                fontSize: "40px",
+                fontFamily: "fields"
+            });
+            const labelBg = this.add.image(x+label.displayWidth/2,y+70,'rounded').setScale(1.5);
+            const coin = this.add.image(x+label.displayWidth/2-55,y+70,'coin').setScale(0.1);
 
-            if(island.price === 100) tier1.push(entry);
-            else tier2.push(entry);
+            this.scrollContainer.add([islandImage,labelBg,label,coin]);
         }
-        return { tier1, tier2 };
     }
 
     createShelf(items, yOffset, label) {
@@ -79,7 +117,7 @@ export default class IslandShopScene extends Phaser.Scene {
             fontWeight: "900"
         });
 
-        const startX = 140;
+        const startX = 120;
         const spacingX = 180;
 
         items.forEach((item, i) => {

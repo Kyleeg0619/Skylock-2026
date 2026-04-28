@@ -13,7 +13,7 @@ export default class GachaScene extends Phaser.Scene {
 
     preload() {
         // Load any assets needed for the gacha scene (e.g., background, buttons)
-        this.load.image('background', 'assets/backgrounds/gacha_bg.png');
+        this.load.image('gacha_bg', 'assets/backgrounds/gacha_bg.png');
 
         // Buttons
         this.load.image('b1', 'assets/icons/button_summon1.png');
@@ -43,7 +43,7 @@ export default class GachaScene extends Phaser.Scene {
 
         // Background
         this.cameras.main.setBackgroundColor('#f0e68c');
-        this.add.image(0, 0, 'background').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+        this.add.image(0, 0, 'gacha_bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
         // Summon Buttons
         const summon1Button = this.add.image(0, 0, 'b1').setInteractive().on('pointerdown', async () => {
@@ -149,7 +149,7 @@ export default class GachaScene extends Phaser.Scene {
 
         if (window.__goToShop) {
             window.__goToShop = false;
-            this.scene.start('TitleScene');
+            this.scene.start('ShopScene');
         }
     }
 

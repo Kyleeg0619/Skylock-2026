@@ -3,7 +3,7 @@ export const IslandRegistry = {
     'starter-island': {
         name: "Starter Island",
         sprite: "starter-island.png",
-        price: 0,
+        price: 100,
         buff: { coins: 0.1 },
         sellValue: 0
     },

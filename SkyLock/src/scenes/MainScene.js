@@ -67,6 +67,11 @@ export default class MainScene extends Phaser.Scene {
             this.scene.start('MainScene');
         }
 
+        if (window.__goToShop) {
+            window.__goToShop = false;
+            this.scene.start('ShopScene');
+        }
+
         if (window.__goToExcursion) {
         window.__goToExcursion = false;
         this.scene.start('TimerScene');

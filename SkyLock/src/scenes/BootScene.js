@@ -11,7 +11,7 @@ export default class BootScene extends Phaser.Scene {
             if (user) {
                 const player = await PlayerDataManager.load();
                 this.registry.set('player', player);
-                this.scene.start('MainScene');
+                this.scene.start('IslandShopScene');
             } else {
                 this.scene.start('LoginScene');
             }

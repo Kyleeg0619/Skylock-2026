@@ -51,7 +51,9 @@ window.addEventListener("message", (event) => {
 });
 
 // Determine which scene to start based on player data
-game.scene.add('ShopScene', ShopScene, true);
+game.scene.add('ShopScene', ShopScene, false);
+
+game.scene.add('BootScene', BootScene, true); // Start BootScene immediately to check auth state
 
 // Signup and Login
 game.scene.add('LoginScene', LoginScene, false);
@@ -69,7 +71,6 @@ game.scene.add('RollScene', RollScene, false);
 game.scene.add('GachaResultScene', GachaResultScene, false);
 
 // Shop Scenes 
-game.scene.start('ShopScene');
 game.scene.add('IslandShopScene', IslandShopScene, false);
 
 
