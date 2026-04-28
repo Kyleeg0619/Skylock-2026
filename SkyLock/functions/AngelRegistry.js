@@ -68,7 +68,7 @@ export const AngelRegistry = {
     'seal-1': {
         name: "Seal",
         rarity: "common",
-        sprite: "seal-1.png",
+        sprite: "seal.png",
         buff: { coins: 0.2 },
         sellValue: 10
     },

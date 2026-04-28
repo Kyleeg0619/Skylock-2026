@@ -1,32 +1,84 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+import { onRequest } from "firebase-functions/v2/https";
+import { setGlobalOptions } from "firebase-functions/v2";
+import { AngelRegistry } from "./AngelRegistry.js";
 
-const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
-const logger = require("firebase-functions/logger");
-
-// For cost control, you can set the maximum number of containers that can be
-// running at the same time. This helps mitigate the impact of unexpected
-// traffic spikes by instead downgrading performance. This limit is a
-// per-function limit. You can override the limit for each function using the
-// `maxInstances` option in the function's options, e.g.
-// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
-// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
-// functions should each use functions.runWith({ maxInstances: 10 }) instead.
-// In the v1 API, each function can only serve one request per container, so
-// this will be the maximum concurrent request count.
 setGlobalOptions({ maxInstances: 10 });
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+const rarityOdds = {
+  common: 0.75,
+  rare: 0.20,
+  epic: 0.04,
+  legendary: 0.01
+};
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+const angelsByRarity = {
+  common: [],
+  rare: [],
+  epic: [],
+  legendary: []
+};
+
+for (const [id, angel] of Object.entries(AngelRegistry)) {
+  angelsByRarity[angel.rarity].push({ id, ...angel });
+}
+
+function rollRarity() {
+  const r = Math.random();
+  let sum = 0;
+
+  for (const [rarity, odds] of Object.entries(rarityOdds)) {
+    sum += odds;
+    if (r <= sum) return rarity;
+  }
+  return "common";
+}
+
+function pickAngel(rarity) {
+  const pool = angelsByRarity[rarity];
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+export const rollGacha = onRequest((req, res) => {
+  // CORS HEADERS — MUST BE FIRST
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+
+  // Handle preflight
+  if (req.method === "OPTIONS") {
+    res.status(204).send("");
+    return;
+  }
+
+  // Actual function logic
+  const rarity = rollRarity();
+  const angel = pickAngel(rarity);
+
+  res.json({
+    success: true,
+    rarity,
+    angel
+  });
+});
+
+export const rollLegendary = onRequest((req, res) => {
+  // CORS HEADERS — MUST BE FIRST
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+
+  // Handle preflight
+  if (req.method === "OPTIONS") {
+    res.status(204).send("");
+    return;
+  }
+
+  // Actual function logic
+  const angel = pickAngel("legendary");
+  
+  res.json({
+    success: true,
+    rarity: "legendary",
+    angel
+  });
+});

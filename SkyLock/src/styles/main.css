@@ -245,11 +245,9 @@ header,footer {
     padding: 5px 5px 5px 8px;
 }
 
-#coinQty {
+.coinQty {
     display: flex;
     position: absolute;
-    top: 0;
-    left: 0;
     z-index: 5;
     padding-right: 15px;
     background: var(--off-white);
@@ -260,7 +258,18 @@ header,footer {
     margin: 15px;
 }
 
-#coinQty img {
+#cloudCoin {
+    top: 0;
+    left: 0;
+}
+
+#angelCoin {
+    top: 80px;
+    left: 0;
+    color: var(--honey);
+}
+
+.coinQty img {
     width: 65px;
 }
 
