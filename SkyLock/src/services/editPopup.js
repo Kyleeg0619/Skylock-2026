@@ -72,6 +72,25 @@ function populateAngelDropdown(selectElement, ownedAngels, currentValue) {
     }
     selectElement.appendChild(noneOption);
 
+    // Get all angels used in OTHER slots (to prevent duplicates)
+    const selectedSlot = window.gameCustomization.selectedSlot;
+    const usedAngels = new Set();
+    
+    if (window.gameCustomization.angelLayout) {
+        window.gameCustomization.angelLayout.forEach((slotAngels, index) => {
+            if (index !== selectedSlot) {
+                // Add angels from other slots
+                if (slotAngels && Array.isArray(slotAngels)) {
+                    slotAngels.forEach(angel => {
+                        if (angel && angel !== 'null' && angel !== null) {
+                            usedAngels.add(angel);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     // Group by rarity
     const rarityOrder = ['common', 'rare', 'epic', 'legendary'];
     const angelsByRarity = {};
@@ -91,11 +110,20 @@ function populateAngelDropdown(selectElement, ownedAngels, currentValue) {
 
         angels.forEach(angel => {
             const isOwned = ownedAngels.includes(angel.key);
+            const isUsedElsewhere = usedAngels.has(angel.key);
 
             const option = document.createElement('option');
             option.value = angel.key;
-            option.textContent = isOwned ? angel.name : '??? (Locked)';
-            option.disabled = !isOwned;
+            
+            if (!isOwned) {
+                option.textContent = '??? (Locked)';
+                option.disabled = true;
+            } else if (isUsedElsewhere) {
+                option.textContent = `${angel.name} (In use)`;
+                option.disabled = true;
+            } else {
+                option.textContent = angel.name;
+            }
 
             if (angel.key === currentValue) option.selected = true;
 
@@ -190,13 +218,50 @@ export function initEditPopup(game) {
                 return;
             }
 
+            // Check for duplicate angels
+            const selectedSlot = window.gameCustomization.selectedSlot;
+            const usedAngels = new Set();
+            
+            // Collect all angels used in OTHER slots
+            if (window.gameCustomization.angelLayout) {
+                window.gameCustomization.angelLayout.forEach((slotAngels, index) => {
+                    if (index !== selectedSlot) {
+                        if (slotAngels && Array.isArray(slotAngels)) {
+                            slotAngels.forEach(angel => {
+                                if (angel && angel !== 'null' && angel !== null) {
+                                    usedAngels.add(angel);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+
+            // Check if selected angels are duplicates
+            const angel1Selected = angel1Value !== 'none' ? angel1Value : null;
+            const angel2Selected = angel2Value !== 'none' ? angel2Value : null;
+
+            if (angel1Selected && usedAngels.has(angel1Selected)) {
+                showDuplicateAngelWarning(angel1Selected);
+                return;
+            }
+            if (angel2Selected && usedAngels.has(angel2Selected)) {
+                showDuplicateAngelWarning(angel2Selected);
+                return;
+            }
+            // Also check that angel1 and angel2 are not the same
+            if (angel1Selected && angel2Selected && angel1Selected === angel2Selected) {
+                showDuplicateAngelWarning(angel1Selected, true);
+                return;
+            }
+
             const slotToSwap = window.gameCustomization.selectedSlot;
 
             if (game && game.events) {
                 game.events.emit('customizationChanged', {
                     selectedIsland: window.gameCustomization.selectedIsland,
-                    selectedAngel1: angel1Value === 'none' ? null : angel1Value,
-                    selectedAngel2: angel2Value === 'none' ? null : angel2Value,
+                    selectedAngel1: angel1Selected,
+                    selectedAngel2: angel2Selected,
                     selectedSlot: slotToSwap
                 });
                 console.log('Event emitted!');
@@ -251,4 +316,38 @@ export function showNoSelectionWarning() {
     }
 
     setTimeout(() => { warning.style.display = 'none'; }, 2000);
+}
+
+export function showDuplicateAngelWarning(angelId, isSameSlot = false) {
+    let warning = document.getElementById('duplicateAngelWarning');
+    
+    if (!warning) {
+        warning = document.createElement('div');
+        warning.id = 'duplicateAngelWarning';
+        document.getElementById('game-container').appendChild(warning);
+    }
+
+    const angelName = AngelRegistry[angelId]?.name || 'Angel';
+    const message = isSameSlot 
+        ? `⚠️ Cannot assign the same angel to both slots!`
+        : `⚠️ ${angelName} is already assigned to another island!`;
+
+    warning.innerHTML = `<p>${message}</p>`;
+    warning.style.cssText = `
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #e74c3c;
+        color: white;
+        padding: 20px 30px;
+        border-radius: 10px;
+        z-index: 100;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    `;
+    warning.style.display = 'block';
+
+    setTimeout(() => { warning.style.display = 'none'; }, 2500);
 }

@@ -66,39 +66,40 @@ export default class CoinManager {
         }
     }
 
-    // Called every second
-    tick() {
-        if (this.coinsPerMinute <= 0) return;
+   // Called every second
+tick() {
+    if (this.coinsPerMinute <= 0) return;
 
-        // Coins per second = coinsPerMinute / 60
-        const coinsThisTick = this.coinsPerMinute / 60;
+    // Coins per second = coinsPerMinute / 60
+    const coinsThisTick = this.coinsPerMinute / 60;
 
-        // Add coins
-        this.player.coins += coinsThisTick;
+    // Add coins
+    this.player.coins += coinsThisTick;
 
-        // Update coin display
-        const coinDisplay = document.getElementById('coinCount');
-        if (coinDisplay) {
-            coinDisplay.textContent = Math.floor(this.player.coins);
-        }
-
-        // Save to Firebase every 30 seconds
-        const now = Date.now();
-        if (now - this.lastSaveTime >= this.SAVE_INTERVAL) {
-            this.saveCoins();
-            this.lastSaveTime = now;
-        }
+    // Update coin display - show whole numbers only
+    const coinDisplay = document.getElementById('coinCount');
+    if (coinDisplay) {
+        coinDisplay.textContent = Math.floor(this.player.coins);
     }
 
-    // Save coins to Firebase
-    async saveCoins() {
-        try {
-            await this.player.save();
-            console.log('Coins saved to Firebase:', Math.floor(this.player.coins));
-        } catch (e) {
-            console.error('Error saving coins:', e);
-        }
+    // Save to Firebase every 30 seconds
+    const now = Date.now();
+    if (now - this.lastSaveTime >= this.SAVE_INTERVAL) {
+        this.saveCoins();
+        this.lastSaveTime = now;
     }
+}
+
+   async saveCoins() {
+    try {
+        // Round before saving to Firebase
+        this.player.coins = Math.floor(this.player.coins);
+        await this.player.save();
+        console.log('Coins saved:', this.player.coins);
+    } catch (e) {
+        console.error('Error saving coins:', e);
+    }
+}
 
     // Update CPM when layout changes
     onLayoutChange() {
