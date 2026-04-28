@@ -12,7 +12,7 @@ export default class Player {
         };
         this.coins = 0;
         this.angels = { owned: ["dog-1"]};
-        this.islands = { owned: ["starter_island"]};
+        this.islands = { owned: ["starter-island"]};
         this.settings = { music: 100, sfx: 100, skipGacha: false};
     }
 
