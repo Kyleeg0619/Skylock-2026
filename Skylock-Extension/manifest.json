@@ -1,0 +1,28 @@
+{
+  "name": "SkyLock Social Media Tracker",
+  "description": "Track your social media usage and gain insights into your habits with SkyLock. This extension detects your activity on popular social media platforms, while helping you understand and manage your online presence effectively.",
+  "version": "1.0",
+  "manifest_version": 3,
+
+  "action": {
+    "default_popup": "skylock_tracker.html",
+    "default_icon": "images/logo.png"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:5173/*",
+        "http://127.0.0.1:5173/*",
+        "https://localhost:5173/*"
+      ],
+      "js": ["tracker.js"]
+    }
+  ],
+
+  "permissions": ["tabs", "scripting"]
+}

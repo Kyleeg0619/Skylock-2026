@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://use.typekit.net/eod1kak.css">
         <!-- bootstrap icons -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="icon" href="assets/icons/logo.PNG">
     </head>
     <body>
         <header>
@@ -46,11 +47,60 @@
             <p>Have an account? <a href="" class="formLink">Login</a></p>
         </form>
 
+        <!-- Timer Form -->
+        <form id="timerForm">
+            <h1>Excursion</h1>
+            <div class="timeContainer">
+                <p>&#10022;</p>
+                <p style="text-transform:capitalize;font-size: 12px;">Let the angels descend to bless the earth while you stay tethered to the skies</p>
+                <p>&#10022;</p>
+            </div>
+            <div class="timeContainer">
+                <label for="timerInput">Timer: </label>
+                <input type="number" id="timerInput" name="timer" style="text-align: end;" required>
+                <p>minute(s)</p>
+            </div>
+            <button type="submit">Start Timer</button>
+        </form>
+
+        <!-- Excursion -->
+         <div id="excursionUI">
+            <p>Excursion Time Remaining: <span id="excursionTimer">0</span> seconds</p>
+            <br>
+            <p>Current Reward:</p>
+            <div class="reward">
+                <img src="assets/icons/cloud-coin.PNG" alt="">
+                <p id="rewardAmount"></p>
+            </div>
+
+            <button id="cancelExcursionBtn">Cancel</button>
+         </div>
+
+         <div id="cancelExcursionPopup">
+            <p>Are you sure you want to cancel the excursion?</p>
+            <p>Rewards will be reduced.</p>
+            <div class="potentialReward">
+                <img src="assets/icons/cloud-coin.PNG" alt="">
+                <p id="potentialReward"></p>
+            </div>
+            <button id="confirmCancelBtn">Yes, Cancel</button>
+            <button id="cancelCloseBtn">No, Keep Going</button>
+         </div>
+
         <!-- Coin Display -->
-         <div id="coinQty">
+         <div id="cloudCoin" class="coinQty">
             <img src="assets/icons/cloud-coin.PNG" alt="">
             <p id="coinCount"></p>
          </div>
+         <div id="angelCoin" class="coinQty">
+            <img src="assets/icons/Angel-coin.PNG" alt="">
+            <p id="angelcoinCount"></p>
+         </div>
+
+        <!-- Excursion Btn -->
+         <button id="excursionBtn">
+            <img src="assets/icons/angel-icon.PNG" alt="">
+         </button>
 
             <div class="game-ui">
                 <!-- Home Btn -->
@@ -113,8 +163,16 @@
 
             </div>
         </main>
+        <hr style="margin: 40px auto 0 auto;width: 800px;">
         <footer>
-            <p>Created with Phaser 3</p>
+            <div class="extension-info">
+                <img src="assets/icons/Extension-icon.PNG" alt="">
+                <div>
+                    <h1>Get the Chrome Extension!</h1>
+                    <h3>Stay focused, Stay productive!</h3>
+                    <p>The extension monitors all open browser tabs and detects when the user opens a social media site during an active excursion. When it finds a distracting tab, it sends a message into the SkyLock game so the ExcursionScene can apply penalties in real time. In short, it acts as a bridge between the browser and the game, signaling distraction only while the excursion timer is running.</p>
+                </div>
+            </div>
         </footer>
         <script type="module" src="/src/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

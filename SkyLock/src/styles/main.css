@@ -38,12 +38,26 @@ body {
 }
 
 header,footer {
-    display: flex;
+    display: block;
     justify-content: center;
     align-self: center;
     padding: 40px 20px;
 }
 
+/* footer styles */
+.extension-info {
+    display: flex;
+    gap: 20px;
+    max-width: 800px;
+    color: #0d0a1b;
+}
+
+.extension-info img {
+    width: 150px;
+    object-fit: contain;
+}
+
+/* Canvas Styles */
 #gameCanvas {
     display: block;
     position: relative;
@@ -231,11 +245,9 @@ header,footer {
     padding: 5px 5px 5px 8px;
 }
 
-#coinQty {
+.coinQty {
     display: flex;
     position: absolute;
-    top: 0;
-    left: 0;
     z-index: 5;
     padding-right: 15px;
     background: var(--off-white);
@@ -246,7 +258,18 @@ header,footer {
     margin: 15px;
 }
 
-#coinQty img {
+#cloudCoin {
+    top: 0;
+    left: 0;
+}
+
+#angelCoin {
+    top: 80px;
+    left: 0;
+    color: var(--honey);
+}
+
+.coinQty img {
     width: 65px;
 }
 
@@ -314,4 +337,190 @@ input[type="range"]::-moz-range-thumb {
 
 #settingsSubmit:hover {
     background: var(--dark-purple);
+}
+
+#excursionBtn {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    border-radius: 150px;
+    border: none;
+    background: var(--dark-purple);
+    color: var(--off-white);
+    cursor: pointer;
+    z-index: 5;
+}
+
+#excursionBtn img {
+    width: 100px;
+    object-fit: contain;
+}
+
+/* Timer Scene */
+#timerForm {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background: #271a6975;
+    border: 8px solid var(--gold);
+    backdrop-filter: blur(15px);
+    color: var(--off-white);
+    padding: 30px;
+    border-radius: 20px;
+    width: 400px;
+    z-index: 1;
+    text-align: center;
+}
+
+#timerForm h1 {
+    font-size: 32px;
+    color: var(--gold);
+    text-align: center;
+}
+
+.timeContainer {
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto 20px auto;
+}
+
+#timerForm label {
+    display: block;
+    font-size: 18px;
+    color: var(--off-white);
+    width: fit-content;
+}
+
+#timerForm input {
+    display: block;
+    width: 150px;
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+}
+
+#timerForm button {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: var(--royal-purple);
+    color: var(--off-white);
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    box-shadow: none;
+}
+
+#timerForm button:hover {
+    background-color: var(--honey);
+    box-shadow: 0 0 10px var(--gold);
+    padding: 20px 30px;
+}
+
+/* Excursion Scene */
+#excursionUI {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    border: 5px solid var(--gold);
+    padding: 30px 20px;
+    border-radius: 20px;
+    background: #271a6975;
+    border: 8px solid var(--gold);
+    backdrop-filter: blur(15px);
+    z-index: 4;
+    color: var(--off-white);
+    font-size: 20px;
+    text-align: center;
+}
+
+#excursionTimer {
+    display: block;
+    font-size: 48px;
+    color: var(--gold);
+    text-align: center;
+}
+
+#cancelExcursionBtn {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0px auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: var(--royal-purple);
+    color: var(--off-white);
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    box-shadow: none;
+}
+
+#cancelExcursionPopup {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background: var(--royal-purple);
+    border-radius: 10px;
+    padding: 20px 30px;
+    color: var(--off-white);
+    z-index: 10;
+    text-align: center;
+}
+
+#cancelExcursionPopup p {
+    margin: 15px 0 10px 0;
+    color: var(--off-white);
+    font-weight: bolder;
+}
+
+#cancelExcursionPopup button {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0px auto;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: var(--dark-purple);
+    color: var(--off-white);
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    box-shadow: none;
+}
+
+.potentialReward, .reward {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.potentialReward img, .reward img {
+    width: 30px;
+}
+
+#potentialReward, #rewardAmount {
+    font-size: 22px;
+    color: var(--off-white);
+    font-weight: bold;
 }

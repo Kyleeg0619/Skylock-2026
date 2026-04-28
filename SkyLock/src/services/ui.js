@@ -56,13 +56,42 @@ export function initUI() {
             console.error(error);
         });
     });
+
+    const homeBtn = document.getElementById('homeBtn');
+    homeBtn.addEventListener('click', () => {
+        window.__goHomeRequested = true; // scene will handle navigation
+    });
+
+    const shopBtn = document.getElementById('shopBtn');
+    shopBtn.addEventListener('click', () => {
+        window.__goToShop = true; // scene will handle navigation
+    });
+
+    const excursionBtn = document.getElementById('excursionBtn');
+    excursionBtn.addEventListener('click', () => {
+        window.__goToExcursion = true; // scene will handle navigation
+    });
 }
 
-export function showUI({ settings, home, shop, edit, info, coins }) {
+export function showUI({ settings, home, shop, edit, info, coins, excursion, angelcoins }) {
     document.getElementById('settingsBtn').style.display = settings ? 'block' : 'none';
     document.getElementById('homeBtn').style.display = home ? 'block' : 'none';
     document.getElementById('shopBtn').style.display = shop ? 'block' : 'none';
     document.getElementById('editBtn').style.display = edit ? 'block' : 'none';
     document.getElementById('infoBtn').style.display = info ? 'block' : 'none';
-    document.getElementById('coinQty').style.display = coins ? 'flex' : 'none';
+
+    document.getElementById('cloudCoin').style.display = coins ? 'flex' : 'none';
+    document.getElementById('angelCoin').style.display = angelcoins ? 'flex' : 'none';
+
+    document.getElementById('excursionBtn').style.display = excursion ? 'block' : 'none';
+}
+
+export function updateCoinCount(coins) {
+    document.getElementById('coinCount').textContent = coins;
+    console.log(`Updated coin count: ${coins}`);
+}
+
+export function updateAngelCoinCount(angelcoins) {
+    document.getElementById('angelcoinCount').textContent = angelcoins;
+    console.log(`Updated angel coin count: ${angelcoins}`);
 }

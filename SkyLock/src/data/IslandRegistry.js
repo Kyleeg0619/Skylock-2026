@@ -30,6 +30,13 @@ export const IslandRegistry = {
     },
 
     // Intermediate Islands
+    'dark-trap-isle': {
+        name: "Dark Trap Isle",
+        sprite: "dark-trap-isle.png",
+        price: 500,
+        buff: { coins: 0.15 },
+        sellValue: 150
+    },
     'coral-reef': {
         name: "Coral Reef",
         sprite: "coral-reef.png",
@@ -37,36 +44,6 @@ export const IslandRegistry = {
         buff: { coins: 0.2 },
         sellValue: 250
     },
-    // 'sacred-circle': {
-    //     name: "Sacred Circle",
-    //     sprite: "sacred-circle.png",
-    //     price: 500,
-    //     buff: { coins: 0.2 },
-    //     sellValue: 250
-    // },
-    // 'emerald-isle': {
-    //     name: "Emerald Isle",
-    //     sprite: "emerald-isle.png",
-    //     price: 500,
-    //     buff: { coins: 0.2 },
-    //     sellValue: 250
-    // },
-
-    // Advanced Islands
-    // 'treasure-retreat': {
-    //     name: "Treasure Retreat",
-    //     sprite: "treasure-retreat.png",
-    //     price: 2000,
-    //     buff: { coins: 0.4 },
-    //     sellValue: 1000
-    // },
-    // 'skyward-sanctuary': {
-    //     name: "Skyward Sanctuary",
-    //     sprite: "skyward-sanctuary.png",
-    //     price: 2000,
-    //     buff: { coins: 0.4 },
-    //     sellValue: 1000
-    // },
     'summoning-circle': {
         name: "Summoning Circle",
         sprite: "summoning-circle.png",

@@ -5,24 +5,21 @@ export const AngelRegistry = {
         rarity: "common",
         sprite: "dog-1.png",
         buff: { coins: 0.1 },
-        sellValue: 50, 
-        buyValue: 300
+        sellValue: 10
     },
     'dog-2': {
         name: "Golden",
         rarity: "common",
         sprite: "dog-2.png",
         buff: { coins: 0.1 },
-        sellValue: 50,
-        buyValue: 300
+        sellValue: 10
     },
     'dog-3': {
         name: "Herder",
         rarity: "common",
         sprite: "dog-3.png",
         buff: { coins: 0.1 },
-        sellValue: 50,
-        buyValue: 300,
+        sellValue: 10
     },
 
     'cat-1': {
@@ -30,24 +27,21 @@ export const AngelRegistry = {
         rarity: "common",
         sprite: "cat-1.png",
         buff: { coins: 0.1 },
-        sellValue: 50,
-        buyValue: 300
+        sellValue: 10
     },
     'cat-2': {
         name: "Tabby",
         rarity: "common",
         sprite: "cat-2.png",
         buff: { coins: 0.1 },
-        sellValue: 50,
-        buyValue: 300
+        sellValue: 10
     },
     'cat-3': {
         name: "Tuxedo",
         rarity: "common",
         sprite: "cat-3.png",
         buff: { coins: 0.1 },
-        sellValue: 50,
-        buyValue: 300
+        sellValue: 10
     },
 
     'bunny-1': {
@@ -55,29 +49,26 @@ export const AngelRegistry = {
         rarity: "common",
         sprite: "bunny-1.png",
         buff: { coins: 0.1 },
-        sellValue: 50,
-        buyValue: 300
+        sellValue: 10
     },
     'bunny-2': {
         name: "Brown Bunny",
         rarity: "common",
         sprite: "bunny-2.png",
         buff: { coins: 0.1 },
-        sellValue: 50,
-        buyValue: 300
+        sellValue: 10
     },
     'bunny-3': {
         name: "Spotted Bunny",
         rarity: "common",
         sprite: "bunny-3.png",
         buff: { coins: 0.1 },
-        sellValue: 50,
-        buyValue: 300
+        sellValue: 10
     },
     'seal-1': {
         name: "Seal",
         rarity: "common",
-        sprite: "seal-1.png",
+        sprite: "seal.png",
         buff: { coins: 0.2 },
         sellValue: 10
     },

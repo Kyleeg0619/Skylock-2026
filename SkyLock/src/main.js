@@ -11,6 +11,11 @@ import BootScene from './scenes/BootScene.js';
 import MainScene from './scenes/MainScene.js';
 import ShopScene from './scenes/ShopScene.js';
 import IslandShopScene from './scenes/IslandShopScene.js';
+import TimerScene from './scenes/TimerScene.js';
+import ExcursionScene from './scenes/ExcursionScene.js';
+import GachaScene from './scenes/GachaScene.js';
+import RollScene from './scenes/RollScene.js';
+import GachaResultScene from './scenes/GachaResultScene.js';
 
 const sizes = {
     width: 600,
@@ -38,6 +43,12 @@ window.onload = () => {
     initUI();
 };
 
+window.addEventListener("message", (event) => {
+    if (event.data?.type === "SKYLOCK_OPEN_TABS") {
+        console.log("Global Distraction Event:", event.data.urls);
+        window.__skylockDistraction  = true;
+    }
+});
 
 // Determine which scene to start based on player data
 game.scene.add('ShopScene', ShopScene, true);
@@ -50,6 +61,12 @@ game.scene.add('SignupScene', SignupScene, false);
 game.scene.add('TitleScene', TitleScene, false);
 
 game.scene.add('MainScene', MainScene, false);
+game.scene.add('TimerScene', TimerScene, false);
+game.scene.add('ExcursionScene', ExcursionScene, false);
+
+game.scene.add('GachaScene', GachaScene, false);
+game.scene.add('RollScene', RollScene, false);
+game.scene.add('GachaResultScene', GachaResultScene, false);
 
 // Shop Scenes 
 game.scene.start('ShopScene');

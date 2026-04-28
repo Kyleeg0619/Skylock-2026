@@ -27,7 +27,8 @@ export default class LoginScene extends Phaser.Scene {
             shop: false,
             edit: false,
             info: false,
-            coins: false
+            coins: false,
+            excursion: false
         });
       
         // Background
@@ -74,7 +75,7 @@ export default class LoginScene extends Phaser.Scene {
 
                 this.registry.set('player', player);
 
-                this.scene.start("TitleScene");
+                this.scene.start("BootScene");
             } catch (error) {
                 const errorText = document.createElement("p");
                 errorText.setAttribute("id", "errorText");
