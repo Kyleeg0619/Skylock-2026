@@ -60,3 +60,25 @@ export const rollGacha = onRequest((req, res) => {
     angel
   });
 });
+
+export const rollLegendary = onRequest((req, res) => {
+  // CORS HEADERS — MUST BE FIRST
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+
+  // Handle preflight
+  if (req.method === "OPTIONS") {
+    res.status(204).send("");
+    return;
+  }
+
+  // Actual function logic
+  const angel = pickAngel("legendary");
+  
+  res.json({
+    success: true,
+    rarity: "legendary",
+    angel
+  });
+});

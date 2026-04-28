@@ -4,6 +4,7 @@ import PlayerDataManager from "../services/PlayerDataManager";
 import { initUI, showUI } from "../services/ui";
 import { updateCoinCount } from "../services/ui";
 import { updateAngelCoinCount } from "../services/ui";
+import { verifyPurchase, verifyLegendaryPurchase } from "../classes/Player";
 
 export default class GachaScene extends Phaser.Scene {
     init() {
@@ -38,6 +39,7 @@ export default class GachaScene extends Phaser.Scene {
         // Gacha Prices
         this.summon1Cost = 200;
         this.summon5Cost = 1000;
+        this.legendaryCost = 100;
 
         // Background
         this.cameras.main.setBackgroundColor('#f0e68c');
@@ -45,6 +47,11 @@ export default class GachaScene extends Phaser.Scene {
 
         // Summon Buttons
         const summon1Button = this.add.image(0, 0, 'b1').setInteractive().on('pointerdown', async () => {
+            if (!verifyPurchase(this.player, this.summon1Cost)) {
+                // Not enough coins, show an error message or feedback
+                alert("Not enough coins for a summon!");
+                return;
+            }
             var legendary = false;
             const results = [];
             const result = await this.rollGacha();
@@ -66,6 +73,11 @@ export default class GachaScene extends Phaser.Scene {
         });
 
         const summon5Button = this.add.image(0, 0, 'b5').setInteractive().on('pointerdown', async () => {
+            if (!verifyPurchase(this.player, this.summon5Cost)) {
+                // Not enough coins, show an error message or feedback
+                alert("Not enough coins for 5 summons!");
+                return;
+            }
             var legendary = false;
             const results = [];
             this.player.coins -= this.summon5Cost;
@@ -89,7 +101,13 @@ export default class GachaScene extends Phaser.Scene {
         });
 
         const legendaryButton = this.add.image(0, 0, 'legendary').setInteractive().on('pointerdown', async () => {
-            this.smnLegendary();
+            if (!verifyLegendaryPurchase(this.player, this.legendaryCost)) {
+                // Not enough angel coins, show an error message or feedback
+                alert("Not enough Angel Coins for a legendary summon!");
+                return;
+            }
+            const result = await this.rollLegendary();
+            this.scene.start('RollScene', { results: [result], legendary: true });
         });
 
         summon5Button.setOrigin(1,1).setPosition(this.sys.game.config.width - 30, this.sys.game.config.height - 30);
@@ -128,6 +146,11 @@ export default class GachaScene extends Phaser.Scene {
             window.__goHomeRequested = false;
             this.scene.start('MainScene');
         }
+
+        if (window.__goToShop) {
+            window.__goToShop = false;
+            this.scene.start('TitleScene');
+        }
     }
 
     async rollGacha() {
@@ -140,7 +163,13 @@ export default class GachaScene extends Phaser.Scene {
         return await res.json();
     }
 
-    smnLegendary() {
-        console.log(`Summoning legendary character!`);
+    async rollLegendary() {
+        const res = await fetch('https://us-central1-skylock-c920c.cloudfunctions.net/rollLegendary', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        return await res.json();
     }
 }

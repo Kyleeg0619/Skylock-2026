@@ -46,3 +46,21 @@ export default class Player {
         return player;
     }
 }
+
+export function verifyPurchase(player,cost) {
+    if (player.coins >= cost) {
+        player.coins -= cost;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+export function verifyLegendaryPurchase(player,cost) {
+    if (player.angelCoins >= cost) {
+        player.angelCoins -= cost;
+        return true;
+    } else {
+        return false;
+    }
+}
