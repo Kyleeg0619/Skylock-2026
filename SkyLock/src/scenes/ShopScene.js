@@ -27,6 +27,7 @@ export default class ShopScene extends Phaser.Scene {
         }
 
         this.load.image('bg', '/assets/backgrounds/island_bg.png');
+        this.load.image('cloud-coin', '/assets/icons/cloud-coin.png');
 
         this.load.image('gacha','/assets/icons/gacha-link.png');
         this.load.image('angel-shop-icon', '/assets/icons/angel-shop-icon.png');
@@ -34,8 +35,6 @@ export default class ShopScene extends Phaser.Scene {
 
         this.load.image('rounded', '/assets/icons/rounded-rect.png');
         this.load.image('rounded-large', '/assets/icons/rounded-rect-2.png');
-
-        this.load.image('cloud-coin', '/assets/icons/cloud-coin.png');
     }
 
     create() {
