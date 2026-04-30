@@ -1,3 +1,4 @@
+import PlayerDataManager from "../services/PlayerDataManager";
 import { AngelRegistry } from "../data/AngelRegistry.js";
 import { showUI, updateCoinCount, initUI } from "../services/ui.js";
 import { verifyPurchase } from "../classes/Player.js";
@@ -25,16 +26,16 @@ export default class ShopScene extends Phaser.Scene {
             this.load.image(id, `/assets/angels/${angel.sprite}`);
         }
 
-        this.load.image('bg', 'assets/backgrounds/island_bg.png');
+        this.load.image('bg', '/assets/backgrounds/island_bg.png');
 
-        this.load.image('gacha','assets/icons/gacha-link.png');
-        this.load.image('angel-shop-icon', 'assets/icons/angel-shop-icon.png');
-        this.load.image('island-shop-icon', 'assets/icons/island-shop-icon.png');
+        this.load.image('gacha','/assets/icons/gacha-link.png');
+        this.load.image('angel-shop-icon', '/assets/icons/angel-shop-icon.png');
+        this.load.image('island-shop-icon', '/assets/icons/island-shop-icon.png');
 
-        this.load.image('rounded', 'assets/icons/rounded-rect.png');
-        this.load.image('rounded-large', 'assets/icons/rounded-rect-2.png');
+        this.load.image('rounded', '/assets/icons/rounded-rect.png');
+        this.load.image('rounded-large', '/assets/icons/rounded-rect-2.png');
 
-        this.load.image('cloud-coin.PNG', 'assets/icons/cloud-coin.PNG');
+        this.load.image('cloud-coin', '/assets/icons/cloud-coin.png');
     }
 
     create() {
@@ -171,7 +172,7 @@ export default class ShopScene extends Phaser.Scene {
             fontFamily: "fields"
         }).setOrigin(0, 0.5);
 
-        const coin = this.add.image(x + 20, y, "cloud-coin.PNG")
+        const coin = this.add.image(x + 20, y, "cloud-coin")
             .setScale(0.10)
             .setOrigin(1, 0.5);
 
@@ -240,16 +241,23 @@ export default class ShopScene extends Phaser.Scene {
         cancel.destroy();
     };
 
-    adopt.on("pointerdown", () => {
-        this.purchaseItem(item);
+    adopt.on("pointerdown", async () => {
+        if (this.player.angels.owned.includes(item.id)) {
+            alert('angel already obtained');
+            return;
+        }
+
+        if (verifyPurchase(this.player,item.buyValue)) {
+            this.player.angels.owned.push(item.id);
+            await this.player.save();
+            updateCoinCount(this.player.coins);
+        } else {
+            alert('insufficient funds');
+            return;
+        }
         close();
     });
 
     cancel.on("pointerdown", close);
 }
-
-
-    purchaseItem(item) {
-        console.log("Purchased:", item.id);
-    }
 }

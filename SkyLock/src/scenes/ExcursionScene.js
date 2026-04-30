@@ -9,8 +9,8 @@ export default class ExcursionScene extends Phaser.Scene {
     }  
 
     preload() {
-        this.load.image('excursion_bg', 'assets/backgrounds/excursion_bg.png');
-        this.load.image('cancel_popup', 'assets/icons/penalty.png');
+        this.load.image('excursion_bg', '/assets/backgrounds/excursion_bg.png');
+        this.load.image('cancel_popup', '/assets/icons/penalty.png');
     }
 
     create() {

@@ -12,10 +12,10 @@ export default class RollScene extends Phaser.Scene {
 
     preload() {
         // Load any assets needed for the cutscene (e.g., backgrounds, character sprites)
-        this.load.image('gate', 'assets/cutscenes/gate.png');
-        this.load.image('cloud', 'assets/cutscenes/cloud.png');
-        this.load.image('cherub', 'assets/cutscenes/Cherub-rise.PNG');
-        this.load.image('bg','assets/backgrounds/island_bg.png');
+        this.load.image('gate', '/assets/cutscenes/gate.png');
+        this.load.image('cloud', '/assets/cutscenes/cloud.png');
+        this.load.image('cherub', '/assets/cutscenes/Cherub-rise.PNG');
+        this.load.image('bg','/assets/backgrounds/island_bg.png');
     }
 
     create() {

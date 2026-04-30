@@ -17,7 +17,7 @@ export default class LoginScene extends Phaser.Scene {
 
     preload() {
         // Load any assets needed for the login scene (e.g., background, buttons)
-        this.load.image('bg', 'assets/backgrounds/island_bg.png');
+        this.load.image('bg', '/assets/backgrounds/island_bg.png');
     }
 
     create() {  
@@ -46,12 +46,7 @@ export default class LoginScene extends Phaser.Scene {
         newChild.style.zIndex = "100";
         newChild.textContent = "Login";
         document.getElementById("loginForm").prepend(newChild);
-
-        // Add logo to form
-        const logo = document.createElement("img");
-        logo.src = "assets/icons/logo.png";
-        logo.classList.add("logo");
-        document.getElementById("loginForm").prepend(logo);
+        
         // Add Link to Signup
         const signupLink = document.getElementsByClassName("formLink");
         signupLink[0].addEventListener("click", (e) => {

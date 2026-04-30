@@ -15,9 +15,9 @@ export default class TitleScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('title-bg', 'assets/backgrounds/Title_bg.PNG');
+        this.load.image('title-bg', '/assets/backgrounds/Title_bg.PNG');
 
-        this.load.audio('theme',['assets/audio/floating-garden.mp3']);
+        this.load.audio('theme',['/assets/audio/floating-garden.mp3']);
     }
 
     create() {

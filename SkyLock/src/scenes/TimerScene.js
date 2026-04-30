@@ -9,7 +9,7 @@ export default class TimerScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('timer_bg', 'assets/backgrounds/timer_bg.png');
+        this.load.image('timer_bg', '/assets/backgrounds/timer_bg.png');
     }
 
     create() {

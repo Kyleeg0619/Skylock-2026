@@ -9,8 +9,8 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('bg', 'assets/backgrounds/island_bg.png');
-        this.load.audio('theme',['assets/audio/floating-garden.mp3']);
+        this.load.image('bg', '/assets/backgrounds/island_bg.png');
+        this.load.audio('theme',['/assets/audio/floating-garden.mp3']);
     }
 
     create() {

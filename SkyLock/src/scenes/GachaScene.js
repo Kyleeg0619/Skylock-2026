@@ -13,12 +13,12 @@ export default class GachaScene extends Phaser.Scene {
 
     preload() {
         // Load any assets needed for the gacha scene (e.g., background, buttons)
-        this.load.image('gacha_bg', 'assets/backgrounds/gacha_bg.png');
+        this.load.image('gacha_bg', '/assets/backgrounds/gacha_bg.png');
 
         // Buttons
-        this.load.image('b1', 'assets/icons/button_summon1.png');
-        this.load.image('b5', 'assets/icons/button_summon5.png');
-        this.load.image('legendary', 'assets/icons/legendary_summon_button.png')
+        this.load.image('b1', '/assets/icons/button_summon1.png');
+        this.load.image('b5', '/assets/icons/button_summon5.png');
+        this.load.image('legendary', '/assets/icons/legendary_summon_button.png')
     }
 
     create() {

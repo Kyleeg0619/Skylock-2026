@@ -12,14 +12,14 @@ export default class GachaResultScene extends Phaser.Scene {
 
     preload() {
         // Load any assets needed for the gacha result scene (e.g., backgrounds, character sprites)
-        this.load.image('bg','assets/backgrounds/island_bg.png');
-        this.load.image('backButton','assets/icons/back_to_gacha.png');
+        this.load.image('bg','/assets/backgrounds/island_bg.png');
+        this.load.image('backButton','/assets/icons/back_to_gacha.png');
 
         for (const result of this.results) {
-            this.load.image(result.angel.id, `assets/angels/${result.angel.sprite}`);
+            this.load.image(result.angel.id, `/assets/angels/${result.angel.sprite}`);
         }
 
-        this.load.font('titleFont', 'assets/fonts/titleFont.ttf');
+        this.load.font('titleFont', '/assets/fonts/titleFont.ttf');
     }
 
     create() {
