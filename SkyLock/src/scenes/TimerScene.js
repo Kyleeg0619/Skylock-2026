@@ -8,10 +8,6 @@ export default class TimerScene extends Phaser.Scene {
         this.player = this.registry.get("player");
     }
 
-    preload() {
-        this.load.image('timer_bg', '/assets/backgrounds/timer_bg.png');
-    }
-
     create() {
         showUI({
             settings: true,
@@ -25,6 +21,11 @@ export default class TimerScene extends Phaser.Scene {
 
         updateCoinCount(this.player.coins);
 
+        this.music = this.sound.add('theme', {
+            volume: this.player.settings.music / 100
+        });
+        this.music.setLoop(true);
+        this.music.play();
 
         // Background
         this.cameras.main.setBackgroundColor('#87ceeb');
@@ -46,6 +47,7 @@ export default class TimerScene extends Phaser.Scene {
     }
 
     cleanup() {
+        this.sound.stopAll();
         this.events.off('shutdown',this.cleanup,this);
         const form = document.getElementById('timerForm');
         if (form) {

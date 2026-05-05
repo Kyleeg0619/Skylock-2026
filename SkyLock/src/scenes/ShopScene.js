@@ -21,22 +21,6 @@ export default class ShopScene extends Phaser.Scene {
         this.player = this.registry.get("player");
     }
 
-    preload() {
-        for (const [id, angel] of Object.entries(AngelRegistry)) {
-            this.load.image(id, `/assets/angels/${angel.sprite}`);
-        }
-
-        this.load.image('bg', '/assets/backgrounds/island_bg.png');
-        this.load.image('cloud-coin', '/assets/icons/cloud-coin.png');
-
-        this.load.image('gacha','/assets/icons/gacha-link.png');
-        this.load.image('angel-shop-icon', '/assets/icons/angel-shop-icon.png');
-        this.load.image('island-shop-icon', '/assets/icons/island-shop-icon.png');
-
-        this.load.image('rounded', '/assets/icons/rounded-rect.png');
-        this.load.image('rounded-large', '/assets/icons/rounded-rect-2.png');
-    }
-
     create() {
         showUI({
             settings: true,
@@ -49,6 +33,14 @@ export default class ShopScene extends Phaser.Scene {
         });
 
         updateCoinCount(this.registry.get("player").coins);
+
+        if (!this.sound.get('shopMusic')) {
+            this.music = this.sound.add('shopMusic', {
+            volume: this.player.settings.music / 100
+        });
+            this.music.setLoop(true);
+            this.music.play();
+        }
 
         this.cameras.main.setBackgroundColor("#4f2e95");
         const bg = this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
@@ -96,6 +88,7 @@ export default class ShopScene extends Phaser.Scene {
         }
 
         if (window.__goHomeRequested) {
+            this.sound.stopAll();
             window.__goHomeRequested = false;
             this.scene.start('MainScene');
         }
@@ -127,7 +120,8 @@ export default class ShopScene extends Phaser.Scene {
     }
 
     gachaButton() {
-        const gachaButton = this.add.image(300, 230, "gacha").setOrigin(0.5).setInteractive({ useHandCursor: true }).on("pointerdown", async () => {
+        const gachaButton = this.add.image(300, 230, "gacha-link").setOrigin(0.5).setInteractive({ useHandCursor: true }).on("pointerdown", async () => {
+            this.sound.stopAll();
             this.scene.sleep('ShopScene');
             this.scene.start("GachaScene");
         });

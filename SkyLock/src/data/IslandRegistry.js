@@ -44,9 +44,30 @@ export const IslandRegistry = {
         buff: { coins: 0.2 },
         sellValue: 250
     },
+    'strawberry-field': {
+        name: "Strawberry Field",
+        sprite: "strawberry-field.png",
+        price: 700,
+        buff: { coins: 0.25 },
+        sellValue: 300
+    },
+    'healing-bath.png': {
+        name: "Healing Bath",
+        sprite: "healing-bath.png",
+        price: 700,
+        buff: { coins: 0.25 },
+        sellValue: 300
+    },
     'summoning-circle': {
         name: "Summoning Circle",
         sprite: "summoning-circle.png",
+        price: 2000,
+        buff: { coins: 0.4 },
+        sellValue: 1000
+    },
+    'persephones-garden': {
+        name: "Persephone's Garden",
+        sprite: "persephones-garden.png",
         price: 2000,
         buff: { coins: 0.4 },
         sellValue: 1000

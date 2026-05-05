@@ -5,21 +5,24 @@ export const AngelRegistry = {
         rarity: "common",
         sprite: "dog-1.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50, 
+        buyValue: 100
     },
     'dog-2': {
         name: "Golden",
         rarity: "common",
         sprite: "dog-2.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 100
     },
     'dog-3': {
         name: "Herder",
         rarity: "common",
         sprite: "dog-3.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 100,
     },
 
     'cat-1': {
@@ -27,21 +30,24 @@ export const AngelRegistry = {
         rarity: "common",
         sprite: "cat-1.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 100
     },
     'cat-2': {
         name: "Tabby",
         rarity: "common",
         sprite: "cat-2.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 100
     },
     'cat-3': {
         name: "Tuxedo",
         rarity: "common",
         sprite: "cat-3.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 100
     },
 
     'bunny-1': {
@@ -49,33 +55,36 @@ export const AngelRegistry = {
         rarity: "common",
         sprite: "bunny-1.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 100
     },
     'bunny-2': {
         name: "Brown Bunny",
         rarity: "common",
         sprite: "bunny-2.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 100
     },
     'bunny-3': {
         name: "Spotted Bunny",
         rarity: "common",
         sprite: "bunny-3.png",
         buff: { coins: 0.1 },
-        sellValue: 10
+        sellValue: 50,
+        buyValue: 100
     },
     'seal-1': {
         name: "Seal",
         rarity: "common",
-        sprite: "seal.png",
+        sprite: "seal-1.png",
         buff: { coins: 0.2 },
         sellValue: 10
     },
-    'bat': {
+    'bat-1': {
         name: "Bat",
         rarity: "common",
-        sprite: "bat.png",
+        sprite: "bat-1.png",
         buff: { coins: 0.1 },
         sellValue: 10
     },
@@ -84,28 +93,28 @@ export const AngelRegistry = {
     'seal-2': {
         name: "Snow Seal",
         rarity: "rare",
-        sprite: "snow-seal.png",
+        sprite: "seal-2.png",
         buff: { coins: 0.2 },
         sellValue: 30
     },
     'seal-3': {
         name: "Walrus",
         rarity: "rare",
-        sprite: "walrus.png",
+        sprite: "seal-3.png",
         buff: { coins: 0.2 },
         sellValue: 30
     },
     'bird-1': {
         name: "Blue Parakeet",
         rarity: "rare",
-        sprite: "blue-keet.png",
+        sprite: "bird-1.png",
         buff: { coins: 0.2 },
         sellValue: 30
     },
     'bird-2': {
         name: "Yellow Parakeet",
         rarity: "rare",
-        sprite: "keet.png",
+        sprite: "bird-2.png",
         buff: { coins: 0.2 },
         sellValue: 30
     },
@@ -132,10 +141,10 @@ export const AngelRegistry = {
     },
 
     // Epic Angels
-    'tiger': {
+    'tiger-1': {
         name: "Tiger",
         rarity: "epic",
-        sprite: "tiger.png",
+        sprite: "tiger-1.png",
         buff: { coins: 0.5, excursionRate: 0.2 },
         sellValue: 50
     },
@@ -146,17 +155,17 @@ export const AngelRegistry = {
         buff: { coins: 0.5, excursionRate: 0.2 },
         sellValue: 50
     },
-    'raven': {
+    'raven-1': {
         name: "Raven",
         rarity: "epic",
-        sprite: "raven.png",
+        sprite: "raven-1.png",
         buff: { coins: 0.5, excursionRate: 0.2 },
         sellValue: 50
     },
     'raven-2': {
         name: "White Raven",
         rarity: "epic",
-        sprite: "white-raven.png",
+        sprite: "raven-2.png",
         buff: { coins: 0.5, excursionRate: 0.2 },
         sellValue: 50
     },
@@ -166,6 +175,12 @@ export const AngelRegistry = {
         sprite: "orchid-cat.png",
         buff: { coins: 0.5, excursionRate: 0.2 },
         sellValue: 50
+    },
+    'wizard-pup': {
+        name: "Wizard Pup",
+        rarity: "epic",
+        sprite: "wizard-pup.png",
+        buff: { coins:0.5, excursionRate: 0.2},
     },
 
     // Legendary Angels
@@ -207,7 +222,35 @@ export const AngelRegistry = {
     'cerberus': {
         name: "Cerberus",
         rarity: "legendary",
-        sprite: "cerb.png",
+        sprite: "cerberus.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'moth-1': {
+        name: "Silk Moth",
+        rarity: "legendary",
+        sprite: "moth-1.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'moth-2': {
+        name: "Lunar Moth",
+        rarity: "legendary",
+        sprite: "moth-2.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'moth-3': {
+        name: "Atlas Moth",
+        rarity: "legendary",
+        sprite: "moth-3.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'monarch': {
+        name: "Monarch",
+        rarity: "legendary",
+        sprite: "monarch.png",
         buff: { coins: 1.0, excursionRate: 0.5 },
         sellValue: 200
     }

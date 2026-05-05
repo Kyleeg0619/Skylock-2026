@@ -21,21 +21,6 @@ export default class IslandShopScene extends Phaser.Scene {
         this.player = this.registry.get("player");
     }
 
-    preload() {
-        for (const [id, island] of Object.entries(IslandRegistry)) {
-            this.load.image(id, `/assets/islands/${island.sprite}`);
-        }
-
-        this.load.image('bg','/assets/backgrounds/island_bg.png');
-
-        this.load.image('angel-shop-icon', '/assets/icons/angel-shop-icon.png');
-        this.load.image('island-shop-icon', '/assets/icons/island-shop-icon.png');
-
-        this.load.image('coin','/assets/icons/cloud-coin.png');
-        this.load.image('rounded','/assets/icons/rounded-rect.png');
-        this.load.image('rounded-rect','/assets/icons/rounded-rect-2.png');
-    }
-
     async create() {
         showUI({
             settings: true,
@@ -48,6 +33,14 @@ export default class IslandShopScene extends Phaser.Scene {
         });
 
         updateCoinCount(this.registry.get("player").coins);
+
+        if (!this.sound.get('shopMusic')) {
+            this.music = this.sound.add('shopMusic', {
+            volume: this.player.settings.music / 100
+        });
+            this.music.setLoop(true);
+            this.music.play();
+        }
         
         const bg = this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
@@ -92,6 +85,7 @@ export default class IslandShopScene extends Phaser.Scene {
         }
 
         if (window.__goHomeRequested) {
+            this.sound.stopAll();
             window.__goHomeRequested = false;
             this.scene.start('MainScene');
         }
@@ -139,7 +133,7 @@ export default class IslandShopScene extends Phaser.Scene {
                 fontFamily: "fields"
             });
             const labelBg = this.add.image(x+label.displayWidth/2,y+70,'rounded').setScale(1.5);
-            const coin = this.add.image(x+label.displayWidth/2-55,y+70,'coin').setScale(0.1);
+            const coin = this.add.image(x+label.displayWidth/2-55,y+70,'cloud-coin').setScale(0.1);
 
             this.scrollContainer.add([islandImage,labelBg,label,coin]);
         }
@@ -148,7 +142,7 @@ export default class IslandShopScene extends Phaser.Scene {
     async openConfirmPopup(island) {
         const overlay = this.add.rectangle(300, 400, 600, 800, 0x000000, 0.4);
 
-        const box = this.add.image(300, 400, 'rounded-rect').setOrigin(0.5);
+        const box = this.add.image(300, 400, 'rounded-large').setOrigin(0.5);
         box.displayWidth = 420;
         box.displayHeight = 300;
 

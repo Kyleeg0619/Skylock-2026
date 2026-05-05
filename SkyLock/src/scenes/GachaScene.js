@@ -11,16 +11,6 @@ export default class GachaScene extends Phaser.Scene {
         this.player = this.registry.get("player");
     }
 
-    preload() {
-        // Load any assets needed for the gacha scene (e.g., background, buttons)
-        this.load.image('gacha_bg', '/assets/backgrounds/gacha_bg.png');
-
-        // Buttons
-        this.load.image('b1', '/assets/icons/button_summon1.png');
-        this.load.image('b5', '/assets/icons/button_summon5.png');
-        this.load.image('legendary', '/assets/icons/legendary_summon_button.png')
-    }
-
     create() {
         showUI({
             settings: true,
@@ -35,6 +25,14 @@ export default class GachaScene extends Phaser.Scene {
 
             updateCoinCount(this.player.coins);
             updateAngelCoinCount(this.player.angelCoins);
+
+            if (!this.sound.get('gachaMusic')) {
+                this.music = this.sound.add('gachaMusic', {
+                volume: this.player.settings.music / 100
+                });
+                this.music.setLoop(true);
+                this.music.play();
+            }
 
         // Gacha Prices
         this.summon1Cost = 200;
@@ -69,7 +67,11 @@ export default class GachaScene extends Phaser.Scene {
             await this.player.save();
 
             results.push(result);
-            this.scene.start('RollScene', { results, legendary });
+            if (!this.player.settings.skipGacha) {
+                this.scene.start('RollScene', { results, legendary });
+            } else {
+                this.scene.start('GachaResultScene', { results });
+            }
         });
 
         const summon5Button = this.add.image(0, 0, 'b5').setInteractive().on('pointerdown', async () => {
@@ -143,11 +145,13 @@ export default class GachaScene extends Phaser.Scene {
         }
 
         if (window.__goHomeRequested) {
+            this.sound.stopAll();
             window.__goHomeRequested = false;
             this.scene.start('MainScene');
         }
 
         if (window.__goToShop) {
+            this.sound.stopAll();
             window.__goToShop = false;
             this.scene.start('ShopScene');
         }

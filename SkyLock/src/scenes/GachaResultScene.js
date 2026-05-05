@@ -10,22 +10,18 @@ export default class GachaResultScene extends Phaser.Scene {
         this.player = this.registry.get("player");
     }
 
-    preload() {
-        // Load any assets needed for the gacha result scene (e.g., backgrounds, character sprites)
-        this.load.image('bg','/assets/backgrounds/island_bg.png');
-        this.load.image('backButton','/assets/icons/back_to_gacha.png');
-
-        for (const result of this.results) {
-            this.load.image(result.angel.id, `/assets/angels/${result.angel.sprite}`);
-        }
-
-        this.load.font('titleFont', '/assets/fonts/titleFont.ttf');
-    }
-
     create() {
         updateAngelCoinCount(this.player.angelCoins);
         updateCoinCount(this.player.coins);
 
+        if (!this.sound.get('gachaMusic')) {
+            this.music = this.sound.add('gachaMusic', {
+                volume: this.player.settings.music / 100
+            });
+            this.music.setLoop(true);
+            this.music.play();
+        }
+        
     this.cameras.main.setBackgroundColor('#000000');
     const cam = this.cameras.main;
     cam.fadeIn(300, 0, 0, 50);

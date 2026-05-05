@@ -10,15 +10,11 @@ export default class RollScene extends Phaser.Scene {
         this.legendary = data.legendary || false;
     }
 
-    preload() {
-        // Load any assets needed for the cutscene (e.g., backgrounds, character sprites)
-        this.load.image('gate', '/assets/cutscenes/gate.png');
-        this.load.image('cloud', '/assets/cutscenes/cloud.png');
-        this.load.image('cherub', '/assets/cutscenes/Cherub-rise.PNG');
-        this.load.image('bg','/assets/backgrounds/island_bg.png');
-    }
-
     create() {
+        this.music = this.sound.add('gachaMusic', {
+            volume: this.registry.get("player").settings.sfx / 100
+        });
+        this.music.play();
         this.cameras.main.setBackgroundColor('#000000');
         this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 

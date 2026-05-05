@@ -176,6 +176,12 @@ export const AngelRegistry = {
         buff: { coins: 0.5, excursionRate: 0.2 },
         sellValue: 50
     },
+    'wizard-pup': {
+        name: "Wizard Pup",
+        rarity: "epic",
+        sprite: "wizard-pup.png",
+        buff: { coins:0.5, excursionRate: 0.2},
+    },
 
     // Legendary Angels
     'star-squirrel': {
@@ -217,6 +223,34 @@ export const AngelRegistry = {
         name: "Cerberus",
         rarity: "legendary",
         sprite: "cerberus.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'moth-1': {
+        name: "Silk Moth",
+        rarity: "legendary",
+        sprite: "moth-1.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'moth-2': {
+        name: "Lunar Moth",
+        rarity: "legendary",
+        sprite: "moth-2.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'moth-3': {
+        name: "Atlas Moth",
+        rarity: "legendary",
+        sprite: "moth-3.png",
+        buff: { coins: 1.0, excursionRate: 0.5 },
+        sellValue: 200
+    },
+    'monarch': {
+        name: "Monarch",
+        rarity: "legendary",
+        sprite: "monarch.png",
         buff: { coins: 1.0, excursionRate: 0.5 },
         sellValue: 200
     }

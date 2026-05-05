@@ -8,11 +8,6 @@ export default class ExcursionScene extends Phaser.Scene {
         this.timer = data.timer || 0; // Timer in seconds
     }  
 
-    preload() {
-        this.load.image('excursion_bg', '/assets/backgrounds/excursion_bg.png');
-        this.load.image('cancel_popup', '/assets/icons/penalty.png');
-    }
-
     create() {
         showUI({
             settings: true,
@@ -25,6 +20,12 @@ export default class ExcursionScene extends Phaser.Scene {
         });
 
         updateCoinCount(this.player.coins);
+
+        this.music = this.sound.add('excursionMusic', {
+            volume: this.player.settings.music / 100
+        });
+        this.music.setLoop(true);
+        this.music.play();
 
         // Background
 this.cameras.main.setBackgroundColor('#87ceeb');
@@ -64,6 +65,7 @@ this.cameras.main.setBackgroundColor('#87ceeb');
         });
 
         this.events.on('shutdown', () => {
+            this.sound.stopAll();
             excursionUI.style.display = 'none';
             cancelPopup.style.display = 'none';
             cancelBtn.removeEventListener('click', this.handleCancelClick);

@@ -8,11 +8,6 @@ export default class MainScene extends Phaser.Scene {
         this.player = this.registry.get("player");
     }
 
-    preload() {
-        this.load.image('bg', '/assets/backgrounds/island_bg.png');
-        this.load.audio('theme',['/assets/audio/floating-garden.mp3']);
-    }
-
     create() {
         showUI({
             settings: true,
@@ -28,15 +23,19 @@ export default class MainScene extends Phaser.Scene {
 
         // music
         this.music = this.sound.add('theme',{
-            loop: true,
             volume: this.player.settings.music/100
         });
+        this.music.setLoop(true);
         this.music.play();
 
         // Background
         this.cameras.main.setBackgroundColor('#87ceeb');
         this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
+        // shutdown
+        this.events.on("shutdown",() => {
+            this.sound.stopAll();
+        })
     }
 
     async update() {

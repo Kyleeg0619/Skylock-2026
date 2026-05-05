@@ -8,11 +8,6 @@ export default class SignupScene extends Phaser.Scene {
         super('SignupScene');
     }
 
-    preload() {
-        this.load.image('bg', '/assets/backgrounds/island_bg.png');
-        this.load.html('signupForm', '/assets/components/signupForm.html');
-    }
-
     create() {
         showUI({
             settings: false,

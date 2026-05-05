@@ -14,14 +14,8 @@ export default class TitleScene extends Phaser.Scene {
         console.log(this.player.profile.username);
     }
 
-    preload() {
-        this.load.image('title-bg', '/assets/backgrounds/Title_bg.PNG');
-
-        this.load.audio('theme',['/assets/audio/floating-garden.mp3']);
-    }
-
     create() {
-        this.add.image(0, 0, 'title-bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+        this.add.image(0, 0, 'title_bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
         const music = this.sound.add('theme',{
             loop: true,
             volume: this.player.settings.music/100
