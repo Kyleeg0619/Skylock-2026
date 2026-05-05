@@ -54,7 +54,7 @@ export default class IslandShopScene extends Phaser.Scene {
             this.scrollContainer.y -= dy * 0.5;
             this.scrollContainer.y = Phaser.Math.Clamp(
                 this.scrollContainer.y,
-                -600, // how far down you can scroll
+                -850, // how far down you can scroll
                 135     // top limit
             );
         });

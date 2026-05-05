@@ -51,7 +51,7 @@ export const IslandRegistry = {
         buff: { coins: 0.25 },
         sellValue: 300
     },
-    'healing-bath.png': {
+    'healing-bath': {
         name: "Healing Bath",
         sprite: "healing-bath.png",
         price: 700,
