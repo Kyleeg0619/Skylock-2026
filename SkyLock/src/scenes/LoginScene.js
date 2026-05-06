@@ -11,13 +11,8 @@ export default class LoginScene extends Phaser.Scene {
     init() {
         // Check if player data exists in the registry
         if (this.registry.get('player')) {
-            this.scene.start('TitleScene');
+            this.scene.start('MainScene');
         }
-    }
-
-    preload() {
-        // Load any assets needed for the login scene (e.g., background, buttons)
-        this.load.image('bg', 'assets/backgrounds/island_bg.png');
     }
 
     create() {  
@@ -27,7 +22,8 @@ export default class LoginScene extends Phaser.Scene {
             shop: false,
             edit: false,
             info: false,
-            coins: false
+            coins: false,
+            excursion: false
         });
       
         // Background
@@ -45,12 +41,7 @@ export default class LoginScene extends Phaser.Scene {
         newChild.style.zIndex = "100";
         newChild.textContent = "Login";
         document.getElementById("loginForm").prepend(newChild);
-
-        // Add logo to form
-        const logo = document.createElement("img");
-        logo.src = "assets/icons/logo.png";
-        logo.classList.add("logo");
-        document.getElementById("loginForm").prepend(logo);
+        
         // Add Link to Signup
         const signupLink = document.getElementsByClassName("formLink");
         signupLink[0].addEventListener("click", (e) => {
@@ -74,7 +65,7 @@ export default class LoginScene extends Phaser.Scene {
 
                 this.registry.set('player', player);
 
-                this.scene.start("TitleScene");
+                this.scene.start("BootScene");
             } catch (error) {
                 const errorText = document.createElement("p");
                 errorText.setAttribute("id", "errorText");

@@ -4,6 +4,7 @@ import { Player } from '../gameObjects/Player.js';
 import { IslandRegistry } from '../data/IslandRegistry.js';
 import { AngelRegistry } from '../data/AngelRegistry.js';
 import CoinManager from '../services/CoinManager.js';
+import { updateCoinCount } from "../services/ui";
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -73,8 +74,18 @@ export default class MainScene extends Phaser.Scene {
             shop: true,
             edit: true,
             info: false,
-            coins: true
+            coins: true,
+            excursion: true,
         });
+
+        updateCoinCount(this.player.coins);
+
+        // music
+        this.music = this.sound.add('theme',{
+            volume: this.player.settings.music/100
+        });
+        this.music.setLoop(true);
+        this.music.play();
 
         // Set world bounds for scrolling
         this.cameras.main.setBounds(0, 0, this.GAME_WIDTH, this.WORLD_HEIGHT);
@@ -769,6 +780,7 @@ export default class MainScene extends Phaser.Scene {
             this.player.profile.username = usernameInput.value;
             this.player.save();
             this.registry.set('player', this.player);
+            this.music.setVolume(this.player.settings.music / 100);
         }
 
         if (window.__goHomeRequested) {

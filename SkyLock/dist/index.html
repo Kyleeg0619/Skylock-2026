@@ -4,11 +4,180 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SkyLock</title>
-        <link rel="stylesheet" href="style.css">
-      <script type="module" crossorigin src="/assets/index-DV3r3slI.js"></script>
+        <link rel="stylesheet" href="https://use.typekit.net/eod1kak.css">
+        <!-- bootstrap icons -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="icon" href="assets/icons/logo.png">
+      <script type="module" crossorigin src="/assets/index-D8g0I_W7.js"></script>
+      <link rel="stylesheet" crossorigin href="/assets/index-DgRr4kQz.css">
     </head>
     <body>
-        <div id="game-container"></div>
-        <script src="./phaser.js"></script>
+        <header>
+            <p>Phaser Demo</p>
+        </header>
+        <main>
+            <div id="game-container">
+                <!-- Login Form -->
+                <form id="loginForm">
+                <img src="assets/icons/logo.png" alt="" class="logo">
+                <label for="login-email">Email:</label>
+                <input type="text" id="login-email" name="email" required>
+
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="password" required>
+
+                <button type="submit">Login</button>
+
+                <p>Don't have an account? <a href="" class="formLink">Register</a></p>
+            </form>
+
+            <!-- Sign-Up Form -->
+            <form id="signupForm">
+            <img src="assets/icons/logo.png" alt="" class="logo">
+            <label for="signup-email">Email:</label>
+            <input type="email" id="signup-email" name="email" required>
+
+            <label for="signup-username">Username:</label>
+            <input type="text" id="signup-username" name="username" required>
+
+            <label for="signup-password">Password:</label>
+            <input type="password" id="signup-password" name="password" required>
+
+            <label for="signup-confirmPassword">Confirm Password:</label>
+            <input type="password" id="signup-confirmPassword" name="confirmPassword" required>
+
+            <button type="submit">Sign Up</button>
+
+            <p>Have an account? <a href="" class="formLink">Login</a></p>
+        </form>
+
+        <!-- Timer Form -->
+        <form id="timerForm">
+            <h1>Excursion</h1>
+            <div class="timeContainer">
+                <p>&#10022;</p>
+                <p style="text-transform:capitalize;font-size: 12px;">Let the angels descend to bless the earth while you stay tethered to the skies</p>
+                <p>&#10022;</p>
+            </div>
+            <div class="timeContainer">
+                <label for="timerInput">Timer: </label>
+                <input type="number" id="timerInput" name="timer" style="text-align: end;" required>
+                <p>minute(s)</p>
+            </div>
+            <button type="submit">Start Timer</button>
+        </form>
+
+        <!-- Excursion -->
+         <div id="excursionUI">
+            <p>Excursion Time Remaining: <span id="excursionTimer">0</span> seconds</p>
+            <br>
+            <p>Current Reward:</p>
+            <div class="reward">
+                <img src="assets/icons/cloud-coin.png" alt="">
+                <p id="rewardAmount"></p>
+            </div>
+
+            <button id="cancelExcursionBtn">Cancel</button>
+         </div>
+
+         <div id="cancelExcursionPopup">
+            <p>Are you sure you want to cancel the excursion?</p>
+            <p>Rewards will be reduced.</p>
+            <div class="potentialReward">
+                <img src="assets/icons/cloud-coin.png" alt="">
+                <p id="potentialReward"></p>
+            </div>
+            <button id="confirmCancelBtn">Yes, Cancel</button>
+            <button id="cancelCloseBtn">No, Keep Going</button>
+         </div>
+
+        <!-- Coin Display -->
+         <div id="cloudCoin" class="coinQty">
+            <img src="assets/icons/cloud-coin.png" alt="">
+            <p id="coinCount"></p>
+         </div>
+         <div id="angelCoin" class="coinQty">
+            <img src="assets/icons/angel-coin.png" alt="">
+            <p id="angelcoinCount"></p>
+         </div>
+
+        <!-- Excursion Btn -->
+         <button id="excursionBtn">
+            <img src="assets/icons/angel-icon.png" alt="">
+         </button>
+
+            <div class="game-ui">
+                <!-- Home Btn -->
+                 <button id="homeBtn">
+                    <img src="assets/icons/home-icon.png" alt="">
+                 </button>
+                <!-- Edit Btn -->
+                 <button id="editBtn">
+                    <img src="assets/icons/island-edit-icon.png" alt="">
+                 </button>
+                <!-- Shop Btn -->
+                 <button id="shopBtn">
+                    <img src="assets/icons/shop-icon.png" alt="">
+                 </button>
+                <!-- Settings UI -->
+                 <button id="settingsBtn">
+                    <i class="bi bi-gear"></i>
+
+                    <div id="settingsPopup" style="display: none;">
+                    <h2>Settings</h2>
+                    <hr>
+                    <form id="settingsForm">
+                        <br>
+                        <h3>Volume</h3>
+                        <hr>
+                        <p> Music: </p>
+                        <input type="range" id="musicVolume" min="0" max="100" value="100">
+                        <p> SFX: </p>
+                        <input type="range" id="sfxVolume" min="0" max="100" value="100">
+                        <br><br>
+                        <h3>Gacha</h3>
+                        <hr>
+                        <input type="checkbox" id="skipCutscene"> Skip Cutscene</input>
+                        <br><br>
+                        <h3>Player Info</h3>
+                        <hr>
+                        <p> Username: <input type="text" id="usernameInput" value=""></input> </p>
+                        <input type="submit" value="Save" id="settingsSubmit">
+                        <a href="" id="logoutBtn">Logout</a>
+                    </form>
+                </div>
+                 </button>
+                
+                <!-- Info UI -->
+                 <button id="infoBtn">
+                    <i class="bi bi-info-circle"></i>
+                    <div id="infoPopup" style="display: none;">
+                    <h2>Socials</h2>
+                    <hr>
+                    <p><a href="https://www.instagram.com/skylockgame/" target="_blank">Kylee Grasela
+                    <i class="bi bi-linkedin"></i> </a><br>Graphic Designer & Programmer</p>
+                    <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Charles Bundy <i class="bi bi-linkedin"></i></a><br>Programmer & Animator</p>
+                    <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Brittany Fetters <i class="bi bi-linkedin"></i></a><br>Programmer</p>
+                 </div>
+                 </button>
+                 
+            </div>
+
+                <canvas id="gameCanvas"></canvas>
+
+            </div>
+        </main>
+        <hr style="margin: 40px auto 0 auto;width: 800px;">
+        <footer>
+            <div class="extension-info">
+                <img src="assets/icons/extension-icon.png" alt="">
+                <div>
+                    <h1>Get the Chrome Extension!</h1>
+                    <h3>Stay focused, Stay productive!</h3>
+                    <p>The extension monitors all open browser tabs and detects when the user opens a social media site during an active excursion. When it finds a distracting tab, it sends a message into the SkyLock game so the ExcursionScene can apply penalties in real time. In short, it acts as a bridge between the browser and the game, signaling distraction only while the excursion timer is running.</p>
+                </div>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     </body>
     </html>

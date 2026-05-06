@@ -1,6 +1,5 @@
 import Phaser from "phaser";
 import PlayerDataManager from "../services/PlayerDataManager.js";
-import { initUI } from "../services/ui.js";
 import { showUI } from "../services/ui.js";
 
 export default class TitleScene extends Phaser.Scene {
@@ -14,20 +13,32 @@ export default class TitleScene extends Phaser.Scene {
         console.log(this.player.profile.username);
     }
 
-    preload() {
-        this.load.image('title-bg', 'assets/backgrounds/Title_bg.PNG');
-    }
-
     create() {
-        this.add.image(0, 0, 'title-bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+        this.add.image(0, 0, 'title_bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+        const music = this.sound.add('theme',{
+            loop: true,
+            volume: this.player.settings.music/100
+        });
+        music.play();
 
         showUI({
-            settings: true,
-            home: false,
-            shop: false,
-            edit: false,
-            info: true,
-            coins: false
+                    settings: true,
+                    home: false,
+                    shop: false,
+                    edit: false,
+                    info: true,
+                    coins: false,
+                    excursion: false
+                });
+
+        // --- play btn ---
+        const playBtn = document.createElement('button');
+        playBtn.className = 'playBtn';
+        playBtn.innerHTML = '<span class="btn-label"> PLAY </span>';
+
+        playBtn.addEventListener('click', () => {
+            this.scene.start('MainScene');
+            playBtn.remove();
         });
 
         // Use the existing HTML play button
@@ -45,14 +56,10 @@ export default class TitleScene extends Phaser.Scene {
             });
         }
 
-        this.events.on("shutdown", () => {
-            // Hide play button when leaving TitleScene
-            const playButton = document.querySelector('.playBtn');
-            if (playButton) playButton.style.display = 'none';
-            
-            const infoBtn = document.getElementById('infoBtn');
-            if (infoBtn) infoBtn.style.display = "none";
-        });
+        this.events.on("shutdown",() => {
+            infoBtn.style.display = "none";
+            playBtn.remove();
+        })
     }
 
     async update() {

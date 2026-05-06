@@ -8,11 +8,6 @@ export default class SignupScene extends Phaser.Scene {
         super('SignupScene');
     }
 
-    preload() {
-        this.load.image('bg', 'assets/backgrounds/island_bg.png');
-        this.load.html('signupForm', 'assets/components/signupForm.html');
-    }
-
     create() {
         showUI({
             settings: false,
@@ -20,7 +15,8 @@ export default class SignupScene extends Phaser.Scene {
             shop: false,
             edit: false,
             info: false,
-            coins: false
+            coins: false,
+            excursion: false
         });
         
         this.cameras.main.setBackgroundColor('#87ceeb');
@@ -38,11 +34,6 @@ export default class SignupScene extends Phaser.Scene {
         newChild.textContent = "Sign-Up";
         document.getElementById("signupForm").prepend(newChild);
 
-        // Add logo to form
-        const logo = document.createElement("img");
-        logo.src = "assets/icons/logo.png";
-        logo.classList.add("logo");
-        document.getElementById("signupForm").prepend(logo);
         // Add Link to Login
         const loginLink = document.getElementsByClassName("formLink");
         loginLink[0].addEventListener("click", (e) => {

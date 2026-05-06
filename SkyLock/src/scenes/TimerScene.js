@@ -1,0 +1,91 @@
+import Phaser from "phaser";
+import { initUI } from "../services/ui";
+import { showUI } from "../services/ui";
+import { updateCoinCount } from "../services/ui";
+
+export default class TimerScene extends Phaser.Scene {
+    init() {
+        this.player = this.registry.get("player");
+    }
+
+    create() {
+        showUI({
+            settings: true,
+            home: true,
+            shop: false,
+            edit: false,
+            info: false,
+            coins: true,
+            excursion: false
+        });
+
+        updateCoinCount(this.player.coins);
+
+        this.music = this.sound.add('theme', {
+            volume: this.player.settings.music / 100
+        });
+        this.music.setLoop(true);
+        this.music.play();
+
+        // Background
+        this.cameras.main.setBackgroundColor('#87ceeb');
+        this.add.image(0, 0, 'timer_bg').setOrigin(0, 0).setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+
+        // Timer Form
+        const form = document.getElementById('timerForm');
+        form.style.display = 'block'; // Ensure the form is visible
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const minutes = parseInt(document.getElementById('timerInput').value) || 0;
+
+            this.scene.start('ExcursionScene', { timer: minutes * 60 }); // Pass timer in seconds
+        });
+
+        // Remove Form
+        this.events.on('shutdown',this.cleanup,this);
+    }
+
+    cleanup() {
+        this.sound.stopAll();
+        this.events.off('shutdown',this.cleanup,this);
+        const form = document.getElementById('timerForm');
+        if (form) {
+            form.removeEventListener('submit', this.handleSubmit);
+            form.style.display = 'none';
+        }
+    }
+
+    async update() {
+        if (window.__settingsOpened) {
+            window.__settingsOpened = false;
+
+            musicVolume.value = this.player.settings.music;
+            sfxVolume.value = this.player.settings.sfx;
+            skipCutscene.checked = this.player.settings.skipGacha;
+            usernameInput.value = this.player.profile.username;
+        }
+
+        if (window.__settingsSubmitted) {
+            window.__settingsSubmitted = false;
+
+            this.player.settings.music = parseInt(musicVolume.value);
+            this.player.settings.sfx = parseInt(sfxVolume.value);
+            this.player.settings.skipGacha = skipCutscene.checked;
+            this.player.profile.username = usernameInput.value;
+
+            await this.player.save();
+            this.registry.set('player', this.player);
+            if (this.music) {
+                this.music.setVolume(this.player.settings.music / 100);
+            }
+        }
+
+        if (window.__goHomeRequested) {
+            window.__goHomeRequested = false;
+            this.scene.start('MainScene');
+        }
+
+    }
+
+}
