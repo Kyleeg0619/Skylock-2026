@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 import { initUI } from './services/ui.js';
+import { loadCustomization, updateOwnedItems, unlockItem, defaultCustomization } from './services/customization.js';
+import { initEditPopup } from './services/editPopup.js';
 
 import './styles/main.css';
 
@@ -24,23 +26,37 @@ const sizes = {
 
 const config = {
     type: Phaser.WEBGL,
-    width: sizes.width,
-    height: sizes.height,
+    width: 600,
+    height: 800,
     canvas: document.getElementById('gameCanvas'),
     parent: 'game-container',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 0 },
+            debug: false
+        }
+    },
     dom: {
         createContainer: true,
         behindCanvas: false,
     }
-    
 };
 
 const game = new Phaser.Game(config);
 
-// main.js
+// Initialize global customization state
+window.gameCustomization = { ...defaultCustomization };
+
+// Make helper functions globally accessible for Phaser scenes
+window.updateOwnedItems = updateOwnedItems;
+window.unlockItem = unlockItem;
+
+// Initialize UI on page load
 window.onload = () => {
-    // initialize UI once when the page loads
     initUI();
+    initEditPopup(game);
+    loadCustomization();
 };
 
 window.addEventListener("message", (event) => {

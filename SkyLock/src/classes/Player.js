@@ -15,7 +15,6 @@ export default class Player {
         this.angelCoins = 0;
         this.angels = { owned: ["dog-1"]};
         this.islands = { owned: ["starter-island"]};
-        this.placedIslands = [];
         this.settings = { music: 100, sfx: 100, skipGacha: false};
     }
 

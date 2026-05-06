@@ -12,6 +12,19 @@ export function initUI() {
     const settingsPage = document.getElementById('settingsPopup');
     const settingsForm = document.getElementById('settingsForm');
 
+    const playBtn = document.querySelector('.playBtn');
+
+    // --- PLAY BUTTON ---
+    if (playBtn) {
+        playBtn.addEventListener('click', () => {
+            // Assuming the game is global
+            if (window.game) {
+                window.game.scene.start('MainScene');
+                playBtn.style.display = 'none';
+            }
+        });
+    }
+
     // --- INFO BUTTON ---
     infoBtn.addEventListener('click', (e) => {
         e.stopPropagation();

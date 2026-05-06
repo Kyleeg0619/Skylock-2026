@@ -25,11 +25,9 @@
                 <input type="password" id="login-password" name="password" required>
 
                 <button type="submit">Login</button>
-
                 <p>Don't have an account? <a href="" class="formLink">Register</a></p>
             </form>
 
-            <!-- Sign-Up Form -->
             <form id="signupForm">
             <img src="assets/icons/logo.png" alt="" class="logo">
             <label for="signup-email">Email:</label>
@@ -38,16 +36,18 @@
             <label for="signup-username">Username:</label>
             <input type="text" id="signup-username" name="username" required>
 
-            <label for="signup-password">Password:</label>
-            <input type="password" id="signup-password" name="password" required>
+                <label for="signup-username">Username:</label>
+                <input type="text" id="signup-username" name="username" required>
 
-            <label for="signup-confirmPassword">Confirm Password:</label>
-            <input type="password" id="signup-confirmPassword" name="confirmPassword" required>
+                <label for="signup-password">Password:</label>
+                <input type="password" id="signup-password" name="password" required>
 
-            <button type="submit">Sign Up</button>
+                <label for="signup-confirmPassword">Confirm Password:</label>
+                <input type="password" id="signup-confirmPassword" name="confirmPassword" required>
 
-            <p>Have an account? <a href="" class="formLink">Login</a></p>
-        </form>
+                <button type="submit">Sign Up</button>
+                <p>Have an account? <a href="" class="formLink">Login</a></p>
+            </form>
 
         <!-- Timer Form -->
         <form id="timerForm">
@@ -121,47 +121,85 @@
                  <button id="settingsBtn">
                     <i class="bi bi-gear"></i>
 
-                    <div id="settingsPopup" style="display: none;">
-                    <h2>Settings</h2>
+                <div id="editPopup" style="display: none;">
+                    <h2>Customize</h2>
                     <hr>
-                    <form id="settingsForm">
-                        <br>
-                        <h3>Volume</h3>
+
+                    <!-- Islands Section -->
+                    <div class="edit-section">
+                        <h3>Island</h3>
                         <hr>
-                        <p> Music: </p>
-                        <input type="range" id="musicVolume" min="0" max="100" value="100">
-                        <p> SFX: </p>
-                        <input type="range" id="sfxVolume" min="0" max="100" value="100">
-                        <br><br>
-                        <h3>Gacha</h3>
+                        <div class="selection-grid" id="islandsGrid">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Angel Slot 1 (Dropdown) -->
+                    <div class="edit-section">
+                        <h3>Angel 1 (Left)</h3>
                         <hr>
-                        <input type="checkbox" id="skipCutscene"> Skip Cutscene</input>
-                        <br><br>
-                        <h3>Player Info</h3>
+                        <select id="angelSelect1" class="angel-dropdown">
+                            <!-- Populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <!-- Angel Slot 2 (Dropdown) -->
+                    <div class="edit-section">
+                        <h3>Angel 2 (Right)</h3>
                         <hr>
-                        <p> Username: <input type="text" id="usernameInput" value=""></input> </p>
-                        <input type="submit" value="Save" id="settingsSubmit">
-                        <a href="" id="logoutBtn">Logout</a>
-                    </form>
+                        <select id="angelSelect2" class="angel-dropdown">
+                            <!-- Populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <button type="button" id="editConfirmBtn">Confirm</button>
                 </div>
-                 </button>
+
+                <button id="shopBtn">
+                    <img src="assets/icons/shop-icon.PNG" alt="">
+                </button>
+
+                <button id="settingsBtn">
+                    <i class="bi bi-gear"></i>
+
+                    <div id="settingsPopup" style="display: none;">
+                        <h2>Settings</h2>
+                        <hr>
+                        <form id="settingsForm">
+                            <br>
+                            <h3>Volume</h3>
+                            <hr>
+                            <p> Music: </p>
+                            <input type="range" id="musicVolume" min="0" max="100" value="100">
+                            <p> SFX: </p>
+                            <input type="range" id="sfxVolume" min="0" max="100" value="100">
+                            <br><br>
+                            <h3>Gacha</h3>
+                            <hr>
+                            <input type="checkbox" id="skipCutscene"> Skip Cutscene</input>
+                            <br><br>
+                            <h3>Player Info</h3>
+                            <hr>
+                            <p> Username: <input type="text" id="usernameInput" value=""></input> </p>
+                            <input type="submit" value="Save" id="settingsSubmit">
+                        </form>
+                    </div>
+                </button>
                 
-                <!-- Info UI -->
-                 <button id="infoBtn">
+                <button id="infoBtn">
                     <i class="bi bi-info-circle"></i>
                     <div id="infoPopup" style="display: none;">
-                    <h2>Socials</h2>
-                    <hr>
-                    <p><a href="https://www.instagram.com/skylockgame/" target="_blank">Kylee Grasela
-                    <i class="bi bi-linkedin"></i> </a><br>Graphic Designer & Programmer</p>
-                    <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Charles Bundy <i class="bi bi-linkedin"></i></a><br>Programmer & Animator</p>
-                    <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Brittany Fetters <i class="bi bi-linkedin"></i></a><br>Programmer</p>
-                 </div>
-                 </button>
-                 
+                        <h2>Socials</h2>
+                        <hr>
+                        <p><a href="https://www.instagram.com/skylockgame/" target="_blank">Kylee Grasela
+                        <i class="bi bi-linkedin"></i> </a><br>Graphic Designer & Programmer</p>
+                        <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Charles Bundy <i class="bi bi-linkedin"></i></a><br>Programmer & Animator</p>
+                        <p><a href="https://www.linkedin.com/in/andrew-lee-9b1a25209/" target="_blank">Brittany Fetters <i class="bi bi-linkedin"></i></a><br>Programmer</p>
+                    </div>
+                </button>
             </div>
 
-                <canvas id="gameCanvas"></canvas>
+            <canvas id="gameCanvas"></canvas>
 
             </div>
         </main>

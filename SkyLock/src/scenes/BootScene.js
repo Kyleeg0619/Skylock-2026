@@ -1,4 +1,4 @@
-import {auth} from "../firebase/firebase.js";
+import { auth } from "../firebase/firebase.js";
 import PlayerDataManager from "../services/PlayerDataManager.js";
 import { IslandRegistry } from "../data/IslandRegistry.js";
 import { AngelRegistry } from "../data/AngelRegistry.js";
@@ -63,11 +63,20 @@ export default class BootScene extends Phaser.Scene {
 
     create() {
         auth.onAuthStateChanged(async (user) => {
+            const playButton = document.querySelector('.playBtn');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+
             if (user) {
+                // User is logged in: Load their data
                 const player = await PlayerDataManager.load();
                 this.registry.set('player', player);
                 this.scene.start('MainScene');
             } else {
+                // User is NOT logged in: Show login
+                if (loginForm) loginForm.style.display = 'flex';
+                if (playButton) playButton.style.display = 'none';
+
                 this.scene.start('LoginScene');
             }
         });
