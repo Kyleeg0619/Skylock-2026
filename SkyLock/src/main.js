@@ -12,7 +12,6 @@ import TitleScene from './scenes/TitleScene.js';
 import BootScene from './scenes/BootScene.js';
 import MainScene from './scenes/MainScene.js';
 import { Preloader } from './scenes/Preloader.js';
-import { Game } from './scenes/Game.js';
 
 const config = {
     type: Phaser.WEBGL,
@@ -45,13 +44,12 @@ window.unlockItem = unlockItem;
 // Initialize UI on page load
 window.onload = () => {
     initUI();
-    initEditPopup(game);  // Pass game instance so it can emit events
+    initEditPopup(game);
     loadCustomization();
 };
 
 // Scene Management
 game.scene.add('Preloader', Preloader);
-game.scene.add('Game', Game);
 game.scene.add('LoginScene', LoginScene);
 game.scene.add('SignupScene', SignupScene);
 game.scene.add('TitleScene', TitleScene);
