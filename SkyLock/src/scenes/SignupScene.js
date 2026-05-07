@@ -33,10 +33,11 @@ export default class SignupScene extends Phaser.Scene {
         newChild.style.zIndex = "100";
         newChild.textContent = "Sign-Up";
         document.getElementById("signupForm").prepend(newChild);
+        this.events.on('shutdown', () => { newChild.remove(); }, this);
 
         // Add Link to Login
         const loginLink = document.getElementsByClassName("formLink");
-        loginLink[0].addEventListener("click", (e) => {
+        loginLink[1].addEventListener("click", (e) => {
             e.preventDefault();
 
             this.scene.start("LoginScene");

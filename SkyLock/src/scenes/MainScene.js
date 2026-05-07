@@ -1,6 +1,7 @@
 import Phaser from "phaser";
-import { showUI } from "../services/ui";
+import { showUI, initUI } from "../services/ui";
 import { Player } from '../gameObjects/Player.js';
+import PlayerDataManager from "../services/PlayerDataManager";
 import { IslandRegistry } from '../data/IslandRegistry.js';
 import { AngelRegistry } from '../data/AngelRegistry.js';
 import CoinManager from '../services/CoinManager.js';
@@ -749,7 +750,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     // --- Update ---
-    update() {
+    async update() {
         if (this.playerObj) {
             this.playerObj.update();
         }
@@ -766,6 +767,7 @@ export default class MainScene extends Phaser.Scene {
 
         if (window.__settingsOpened) {
             window.__settingsOpened = false;
+
             musicVolume.value = this.player.settings.music;
             sfxVolume.value = this.player.settings.sfx;
             skipCutscene.checked = this.player.settings.skipGacha;
@@ -774,27 +776,28 @@ export default class MainScene extends Phaser.Scene {
 
         if (window.__settingsSubmitted) {
             window.__settingsSubmitted = false;
+
             this.player.settings.music = parseInt(musicVolume.value);
             this.player.settings.sfx = parseInt(sfxVolume.value);
             this.player.settings.skipGacha = skipCutscene.checked;
             this.player.profile.username = usernameInput.value;
-            this.player.save();
+
+            await this.player.save();
             this.registry.set('player', this.player);
             this.music.setVolume(this.player.settings.music / 100);
         }
 
-        if (window.__goHomeRequested) {
-            window.__goHomeRequested = false;
-            this.scene.start('MainScene');
+        if (window.__goToShop) {
+            window.__goToShop = false;
+            this.scene.start('ShopScene');
         }
+
+        if (window.__goToExcursion) {
+        window.__goToExcursion = false;
+        this.scene.start('TimerScene');
 
         const coins = document.getElementById('coinCount');
         if (coins) coins.textContent = Math.floor(this.player.coins);
     }
-
-    // --- Shutdown ---
-    shutdown() {
-        this.coinManager?.stop();
-        this.game.events.off('customizationChanged', this.handleCustomizationChange, this);
-    }
+}
 }

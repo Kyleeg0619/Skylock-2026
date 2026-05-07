@@ -69,7 +69,6 @@ header,footer {
     width: 600px;
     height: 800px;
     margin: 0 auto;
-    outline: 2px solid red;
 }
 
 /* *** */
@@ -172,6 +171,7 @@ header,footer {
 /* Game UI Buttons */
 /* *** */
 .game-ui {
+    display: flex;
     position: absolute;
     top: 15px;
     right: 15px;
@@ -282,6 +282,8 @@ header,footer {
 
 #settingsSubmit:hover {
     background: var(--dark-purple);
+}
+
 .coinQty {
     display: flex;
     position: absolute;
@@ -486,6 +488,8 @@ input[type="range"]::-moz-range-thumb {
     width: 100%;
     margin-top: 15px;
     padding: 10px;
+}
+
 #settingsSubmit, #logoutBtn {
     display: block;
     width: fit-content;
@@ -620,11 +624,9 @@ input[type="range"]::-moz-range-thumb {
     color: var(--gold);
     font-weight: bold;
     padding-left: 5px;
-#logoutBtn {
-    background: var(--dark-purple);
 }
 
-#settingsSubmit:hover {
+#logoutBtn {
     background: var(--dark-purple);
 }
 

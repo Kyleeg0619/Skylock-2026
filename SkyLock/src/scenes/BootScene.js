@@ -53,9 +53,9 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('b5', '/assets/icons/button_summon5.png');
         this.load.image('legendary', '/assets/icons/legendary_summon_button.png')
         
-        this.load.image('gate', '/assets/cutscenes/gate.png');
-        this.load.image('cloud', '/assets/cutscenes/cloud.png');
-        this.load.image('cherub', '/assets/cutscenes/cherub-rise.png');
+        this.load.image('gate', '/assets/icons/gate.png');
+        this.load.image('cloud', '/assets/icons/cloud.png');
+        this.load.image('cherub', '/assets/angels/cherub-rise.png');
         this.load.image('backButton','/assets/icons/back_to_gacha.png');
 
         this.load.image('cancel_popup', '/assets/icons/penalty.png');
@@ -63,20 +63,12 @@ export default class BootScene extends Phaser.Scene {
 
     create() {
         auth.onAuthStateChanged(async (user) => {
-            const playButton = document.querySelector('.playBtn');
-            const loginForm = document.getElementById('loginForm');
-            const signupForm = document.getElementById('signupForm');
-
             if (user) {
                 // User is logged in: Load their data
                 const player = await PlayerDataManager.load();
                 this.registry.set('player', player);
                 this.scene.start('MainScene');
             } else {
-                // User is NOT logged in: Show login
-                if (loginForm) loginForm.style.display = 'flex';
-                if (playButton) playButton.style.display = 'none';
-
                 this.scene.start('LoginScene');
             }
         });

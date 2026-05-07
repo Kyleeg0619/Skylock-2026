@@ -8,6 +8,7 @@ export default class TitleScene extends Phaser.Scene {
     }
 
     init() {
+        // Check if player data exists in the registry
         console.log("Registry player:", this.registry.get("player"));
         this.player = this.registry.get("player");
         console.log(this.player.profile.username);
@@ -41,20 +42,8 @@ export default class TitleScene extends Phaser.Scene {
             playBtn.remove();
         });
 
-        // Use the existing HTML play button
-        const playBtn = document.querySelector('.playBtn');
-        if (playBtn) {
-            playBtn.style.display = 'flex';
-            
-            // Remove old listeners and add new one
-            const newPlayBtn = playBtn.cloneNode(true);
-            playBtn.parentNode.replaceChild(newPlayBtn, playBtn);
-            
-            newPlayBtn.addEventListener('click', () => {
-                newPlayBtn.style.display = 'none';
-                this.scene.start('Preloader');
-            });
-        }
+        const container = document.getElementById('game-container');
+        container.appendChild(playBtn);
 
         this.events.on("shutdown",() => {
             infoBtn.style.display = "none";
@@ -62,7 +51,8 @@ export default class TitleScene extends Phaser.Scene {
         })
     }
 
-    async update() {
+async update() {
+        // When settings popup opens → populate values
         if (window.__settingsOpened) {
             window.__settingsOpened = false;
 
@@ -72,26 +62,24 @@ export default class TitleScene extends Phaser.Scene {
             document.getElementById('usernameInput').value = this.player.profile.username;
         }
 
+        // When settings form submits → save values
         if (window.__settingsSubmitted) {
             window.__settingsSubmitted = false;
 
-            this.player.settings.music = parseInt(document.getElementById('musicVolume').value);
-            this.player.settings.sfx = parseInt(document.getElementById('sfxVolume').value);
-            this.player.settings.skipGacha = document.getElementById('skipCutscene').checked;
-            this.player.profile.username = document.getElementById('usernameInput').value;
+            player.settings.music = parseInt(musicVolume.value);
+            player.settings.sfx = parseInt(sfxVolume.value);
+            player.settings.skipGacha = skipCutscene.checked;
+            player.profile.username = usernameInput.value;
 
-            await this.player.save();
-            this.registry.set('player', this.player);
+            await player.save();
+            this.registry.set('player', player);
         }
 
+        // Handle home button
         if (window.__goHomeRequested) {
             window.__goHomeRequested = false;
-            
-            // Hide play button before going to MainScene
-            const playBtn = document.querySelector('.playBtn');
-            if (playBtn) playBtn.style.display = 'none';
-            
-            this.scene.start('Preloader');  // <-- Go to Preloader first, NOT MainScene!
+            this.scene.start('MainScene');
         }
     }
+
 }
