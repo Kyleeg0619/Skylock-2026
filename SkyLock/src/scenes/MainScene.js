@@ -79,8 +79,6 @@ export default class MainScene extends Phaser.Scene {
             excursion: true,
         });
 
-        updateCoinCount(this.player.coins);
-
         // music
         this.music = this.sound.add('theme',{
             volume: this.player.settings.music/100
@@ -723,7 +721,7 @@ export default class MainScene extends Phaser.Scene {
         if (!cpmDisplay) {
             cpmDisplay = document.createElement('p');
             cpmDisplay.id = 'cpmDisplay';
-            const coinQty = document.getElementById('coinQty');
+            const coinQty = document.getElementById('cloudCoin') || document.getElementById('coinQty');
             if (coinQty) coinQty.appendChild(cpmDisplay);
         }
         cpmDisplay.textContent = `+${cpm}/min`;

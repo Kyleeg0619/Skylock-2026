@@ -12,10 +12,14 @@ export default class CoinManager {
 
     // Calculate total coins per minute based on placed angels and islands
     calculateCoinsPerMinute() {
-        const islandLayout = window.gameCustomization?.islandLayout || [];
-        const angelLayout = window.gameCustomization?.angelLayout || [];
+        const islandLayout = Array.isArray(window.gameCustomization?.islandLayout)
+            ? window.gameCustomization.islandLayout
+            : [];
+        const angelLayout = Array.isArray(window.gameCustomization?.angelLayout)
+            ? window.gameCustomization.angelLayout
+            : [];
 
-        let total = 0;
+        let total = 1; // Base coin income per minute
 
         islandLayout.forEach((islandKey, slotIndex) => {
             if (!islandKey) return;
@@ -23,7 +27,9 @@ export default class CoinManager {
             const islandData = IslandRegistry[islandKey];
             if (!islandData) return;
 
-            const islandMultiplier = islandData.buff?.coins || 1;
+            const islandMultiplier = typeof islandData.buff?.coins === 'number'
+                ? islandData.buff.coins
+                : 1;
             const angels = angelLayout[slotIndex] || [null, null];
 
             angels.forEach(angelKey => {
@@ -32,7 +38,9 @@ export default class CoinManager {
                 const angelData = AngelRegistry[angelKey];
                 if (!angelData) return;
 
-                const angelCoins = angelData.buff?.coins || 0;
+                const angelCoins = typeof angelData.buff?.coins === 'number'
+                    ? angelData.buff.coins
+                    : 0;
 
                 // Angel coins * island multiplier
                 total += angelCoins * islandMultiplier;
@@ -86,15 +94,14 @@ tick() {
     const now = Date.now();
     if (now - this.lastSaveTime >= this.SAVE_INTERVAL) {
         this.saveCoins();
-        this.lastSaveTime = now;
     }
 }
 
    async saveCoins() {
     try {
-        // Round before saving to Firebase
-        this.player.coins = Math.floor(this.player.coins);
+        // Keep fractional coin accumulation internally and only floor for display.
         await this.player.save();
+        this.lastSaveTime = Date.now();
         console.log('Coins saved:', this.player.coins);
     } catch (e) {
         console.error('Error saving coins:', e);
