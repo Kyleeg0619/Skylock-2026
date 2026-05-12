@@ -56,7 +56,7 @@ this.cameras.main.setBackgroundColor('#87ceeb');
             e.stopPropagation();
             cancelPopup.style.display = 'none';
             this.handleCancel();
-            this.scene.start('TimerScene');
+            this.scene.start('MainScene');
         });
 
         cancelCloseBtn.addEventListener('click', (e) => {
@@ -140,7 +140,7 @@ this.cameras.main.setBackgroundColor('#87ceeb');
 
             console.log(`Excursion completed! Earned ${this.coinsEarned} coins.`);
 
-            this.scene.start('TimerScene');
+            this.scene.start('MainScene');
         } else if (remaining > 0 && window.__skylockDistraction) {
             this.handleDistraction();
 

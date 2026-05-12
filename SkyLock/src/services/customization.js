@@ -7,13 +7,21 @@ export const defaultCustomization = {
     selectedAngel2: null,
     selectedIsland: null,
     selectedSlot: null,
-    islandLayout: ['starter-island', 'starter-island', 'starter-island', 'starter-island'],
-    angelLayout: [['dog-1', null], [null, null], [null, null], [null, null]],
+    islandLayout: Array(8).fill('starter-island'),
+    angelLayout: [
+        ['dog-1', null],
+        [null, null],
+        [null, null],
+        [null, null],
+        [null, null],
+        [null, null],
+        [null, null],
+        [null, null]
+    ],
     ownedAngels: ['dog-1'],
     ownedIslands: ['starter-island']
 };
 
-// --- Save & Load ---
 export function saveCustomization() {
     localStorage.setItem('gameCustomization', JSON.stringify(window.gameCustomization));
 }

@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import { auth } from "../firebase/firebase.js";
 import PlayerDataManager from "../services/PlayerDataManager.js";
 import { IslandRegistry } from "../data/IslandRegistry.js";
@@ -13,11 +14,11 @@ export default class BootScene extends Phaser.Scene {
         this.load.font('titleFont', '/assets/fonts/titleFont.ttf');
 
         // Backgrounds
-        this.load.image('title_bg', '/assets/backgrounds/title_bg.png');
+        this.load.image('title_bg', '/assets/backgrounds/Title_bg.PNG');
         this.load.image('bg', '/assets/backgrounds/island_bg.png');
-        this.load.image('gacha_bg', '/assets/backgrounds/gacha_bg.png');
-        this.load.image('excursion_bg', '/assets/backgrounds/excursion_bg.png');
-        this.load.image('timer_bg', '/assets/backgrounds/timer_bg.png');
+        this.load.image('gacha_bg', '/assets/backgrounds/Gacha_bg.png');
+        this.load.image('excursion_bg', '/assets/backgrounds/Excursion_bg.PNG');
+        this.load.image('timer_bg', '/assets/backgrounds/Timer_bg.PNG');
         
         // Audio
         this.load.audio('theme',['/assets/audio/floating-garden.mp3']);

@@ -56,7 +56,6 @@ window.unlockItem = unlockItem;
 window.onload = () => {
     initUI();
     initEditPopup(game);
-    loadCustomization();
 };
 
 window.addEventListener("message", (event) => {

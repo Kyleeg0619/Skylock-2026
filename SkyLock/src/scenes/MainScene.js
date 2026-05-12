@@ -103,43 +103,20 @@ export default class MainScene extends Phaser.Scene {
         const defaultAngel = ownedAngels[0] || 'dog-1';
 
         // Load layouts - now 8 islands
-        let savedIslandLayout;
-        try {
-            savedIslandLayout = JSON.parse(localStorage.getItem('islandLayout'));
-            // Upgrade from 4 to 8 if needed
-            if (savedIslandLayout && savedIslandLayout.length < 8) {
-                while (savedIslandLayout.length < 8) {
-                    savedIslandLayout.push(defaultIsland);
-                }
-                localStorage.setItem('islandLayout', JSON.stringify(savedIslandLayout));
+        let savedIslandLayout = this.player.layout?.islandLayout || [];
+        if (savedIslandLayout.length < 8) {
+            // Upgrade from fewer to 8 if needed
+            while (savedIslandLayout.length < 8) {
+                savedIslandLayout.push(defaultIsland);
             }
-            if (!savedIslandLayout) {
-                savedIslandLayout = Array(8).fill(defaultIsland);
-            }
-        } catch (e) {
-            savedIslandLayout = Array(8).fill(defaultIsland);
         }
 
-        let savedAngelLayout;
-        try {
-            savedAngelLayout = JSON.parse(localStorage.getItem('angelLayout'));
-            if (savedAngelLayout && !Array.isArray(savedAngelLayout[0])) {
-                savedAngelLayout = savedAngelLayout.map(angel => [angel, null]);
+        let savedAngelLayout = this.player.layout?.angelLayout || [];
+        if (savedAngelLayout.length < 8) {
+            // Upgrade from fewer to 8 if needed
+            while (savedAngelLayout.length < 8) {
+                savedAngelLayout.push([null, null]);
             }
-            // Upgrade from 4 to 8 if needed
-            if (savedAngelLayout && savedAngelLayout.length < 8) {
-                while (savedAngelLayout.length < 8) {
-                    savedAngelLayout.push([null, null]);
-                }
-                localStorage.setItem('angelLayout', JSON.stringify(savedAngelLayout));
-            }
-            if (!savedAngelLayout) {
-                savedAngelLayout = [[defaultAngel, null], [null, null], [null, null], [null, null],
-                                    [null, null], [null, null], [null, null], [null, null]];
-            }
-        } catch (e) {
-            savedAngelLayout = [[defaultAngel, null], [null, null], [null, null], [null, null],
-                                [null, null], [null, null], [null, null], [null, null]];
         }
 
         // 8 island positions - 2 rows of 2, repeated twice
@@ -268,6 +245,15 @@ export default class MainScene extends Phaser.Scene {
         window.gameCustomization.angelLayout = savedAngelLayout;
         window.gameCustomization.ownedIslands = ownedIslands;
         window.gameCustomization.ownedAngels = ownedAngels;
+
+        // Update player layout
+        this.player.layout.islandLayout = savedIslandLayout;
+        this.player.layout.angelLayout = savedAngelLayout;
+
+        // If the player document did not already have a layout field, create it now.
+        if (!this.player.hasLayoutInDb) {
+            this.savePlayerLayout();
+        }
 
         // Start coin manager
         this.coinManager = new CoinManager(this.player);
@@ -404,9 +390,9 @@ export default class MainScene extends Phaser.Scene {
         const duration = Phaser.Math.Between(1500, 3000);
 
         if (targetX < angel.x) {
-            angel.setFlipX(true);
-        } else {
             angel.setFlipX(false);
+        } else {
+            angel.setFlipX(true);
         }
 
         this.tweens.add({
@@ -501,7 +487,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     // --- Customization Change ---
-   handleCustomizationChange(customization) {
+    async handleCustomizationChange(customization) {
     // console.log('=== MainScene received customizationChanged ===');
 
     const slotToSwap = customization.selectedSlot;
@@ -544,7 +530,32 @@ export default class MainScene extends Phaser.Scene {
         this.coinManager?.onLayoutChange();
         this.updateCPMDisplay();
     });
+
+    await this.savePlayerLayout();
 }
+
+    async savePlayerLayout() {
+        const islandLayout = (window.gameCustomization.islandLayout || []).slice(0, 8);
+        const angelLayout = (window.gameCustomization.angelLayout || []).slice(0, 8);
+
+        while (islandLayout.length < 8) {
+            islandLayout.push(this.player.islands?.owned?.[0] || 'starter-island');
+        }
+        while (angelLayout.length < 8) {
+            angelLayout.push([null, null]);
+        }
+
+        this.player.layout.islandLayout = islandLayout;
+        this.player.layout.angelLayout = angelLayout;
+        console.log('Saving layout to DB:', this.player.layout);
+        try {
+            await this.player.save();
+            this.player.hasLayoutInDb = true;
+        } catch (err) {
+            console.error('Failed to save layout:', err);
+        }
+    }
+
     // --- Island Swap ---
     swapIsland(slotIndex, newIslandId) {
         // console.log(`Swapping island at slot ${slotIndex} to ${newIslandId}`);
@@ -588,7 +599,7 @@ export default class MainScene extends Phaser.Scene {
                 this.islands[slotIndex] = newIsland;
 
                 window.gameCustomization.islandLayout[slotIndex] = newIslandId;
-                localStorage.setItem('islandLayout', JSON.stringify(window.gameCustomization.islandLayout));
+                this.savePlayerLayout();
 
                 this.tweens.add({
                     targets: newIsland,
@@ -632,7 +643,7 @@ export default class MainScene extends Phaser.Scene {
                 window.gameCustomization.angelLayout[slotIndex] = [null, null];
             }
             window.gameCustomization.angelLayout[slotIndex][angelSlot] = null;
-            localStorage.setItem('angelLayout', JSON.stringify(window.gameCustomization.angelLayout));
+            this.savePlayerLayout();
             return;
         }
 
@@ -700,7 +711,7 @@ export default class MainScene extends Phaser.Scene {
             window.gameCustomization.angelLayout[slotIndex] = [null, null];
         }
         window.gameCustomization.angelLayout[slotIndex][angelSlot] = newAngelId;
-        localStorage.setItem('angelLayout', JSON.stringify(window.gameCustomization.angelLayout));
+        this.savePlayerLayout();
     }
 
     // --- CPM Display ---
