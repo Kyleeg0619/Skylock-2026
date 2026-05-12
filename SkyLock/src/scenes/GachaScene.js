@@ -62,8 +62,6 @@ export default class GachaScene extends Phaser.Scene {
                     this.player.angelCoins += 1;
                 };
 
-            // this.player.coins -= this.summon1Cost;
-            this.player.angels.owned.push(result.angel.id);
             await this.player.save();
 
             results.push(result);
