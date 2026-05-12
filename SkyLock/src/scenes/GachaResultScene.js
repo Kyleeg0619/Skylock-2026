@@ -27,8 +27,6 @@ export default class GachaResultScene extends Phaser.Scene {
     cam.fadeIn(300, 0, 0, 50);
     this.input.enabled = true;
 
-    console.log("Gacha results:", this.results);
-
     // Background
     this.add.image(0, 0, 'bg')
         .setOrigin(0, 0)

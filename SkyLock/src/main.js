@@ -61,7 +61,6 @@ window.onload = () => {
 
 window.addEventListener("message", (event) => {
     if (event.data?.type === "SKYLOCK_OPEN_TABS") {
-        console.log("Global Distraction Event:", event.data.urls);
         window.__skylockDistraction  = true;
     }
 });

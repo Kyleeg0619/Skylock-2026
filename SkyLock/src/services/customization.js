@@ -16,7 +16,6 @@ export const defaultCustomization = {
 // --- Save & Load ---
 export function saveCustomization() {
     localStorage.setItem('gameCustomization', JSON.stringify(window.gameCustomization));
-    console.log('Customization saved:', window.gameCustomization);
 }
 
 export function loadCustomization() {
@@ -25,7 +24,6 @@ export function loadCustomization() {
         try {
             const parsed = JSON.parse(saved);
             window.gameCustomization = { ...window.gameCustomization, ...parsed };
-            console.log('Loaded customization:', window.gameCustomization);
         } catch (e) {
             console.error('Error parsing customization:', e);
         }
@@ -35,7 +33,6 @@ export function loadCustomization() {
     if (savedIslandLayout) {
         try {
             window.gameCustomization.islandLayout = JSON.parse(savedIslandLayout);
-            console.log('Loaded island layout:', window.gameCustomization.islandLayout);
         } catch (e) {
             console.error('Error parsing island layout:', e);
         }
@@ -45,7 +42,6 @@ export function loadCustomization() {
     if (savedAngelLayout) {
         try {
             window.gameCustomization.angelLayout = JSON.parse(savedAngelLayout);
-            console.log('Loaded angel layout:', window.gameCustomization.angelLayout);
         } catch (e) {
             console.error('Error parsing angel layout:', e);
         }
@@ -57,7 +53,6 @@ export function updateOwnedItems(playerData) {
     if (playerData) {
         window.gameCustomization.ownedAngels = playerData.angels?.owned || ['dog-1'];
         window.gameCustomization.ownedIslands = playerData.islands?.owned || ['starter-island'];
-        console.log('Updated owned items:', window.gameCustomization.ownedAngels, window.gameCustomization.ownedIslands);
     }
 }
 

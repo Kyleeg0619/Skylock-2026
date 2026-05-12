@@ -1,13 +1,15 @@
 import { AngelRegistry } from '../data/AngelRegistry.js';
 import { IslandRegistry } from '../data/IslandRegistry.js';
+import { updateCoinCount } from './ui.js';
 
 export default class CoinManager {
     constructor(player) {
         this.player = player;
         this.coinsPerMinute = 0;
+        this.accumulatedCoins = 0;
         this.interval = null;
-        this.lastSaveTime = Date.now();
-        this.SAVE_INTERVAL = 30000; // Save to Firebase every 30 seconds
+        this.syncInterval = null;
+        this.SYNC_INTERVAL = 10000; // Sync with Firebase every 10 seconds
     }
 
     // Calculate total coins per minute based on placed angels and islands
@@ -48,7 +50,6 @@ export default class CoinManager {
         });
 
         this.coinsPerMinute = total;
-        console.log(`Coins per minute: ${total}`);
         return total;
     }
 
@@ -63,7 +64,10 @@ export default class CoinManager {
             this.tick();
         }, 1000);
 
-        console.log('CoinManager started. CPM:', this.coinsPerMinute);
+        // Sync with Firebase every 10 seconds
+        this.syncInterval = setInterval(() => {
+            this.syncCoins();
+        }, this.SYNC_INTERVAL);
     }
 
     // Stop the timer
@@ -71,6 +75,10 @@ export default class CoinManager {
         if (this.interval) {
             clearInterval(this.interval);
             this.interval = null;
+        }
+        if (this.syncInterval) {
+            clearInterval(this.syncInterval);
+            this.syncInterval = null;
         }
     }
 
@@ -81,37 +89,34 @@ tick() {
     // Coins per second = coinsPerMinute / 60
     const coinsThisTick = this.coinsPerMinute / 60;
 
-    // Add coins
-    this.player.coins += coinsThisTick;
+    // Accumulate coins locally
+    this.accumulatedCoins += coinsThisTick;
 
-    // Update coin display - show whole numbers only
-    const coinDisplay = document.getElementById('coinCount');
-    if (coinDisplay) {
-        coinDisplay.textContent = Math.floor(this.player.coins);
-    }
-
-    // Save to Firebase every 30 seconds
-    const now = Date.now();
-    if (now - this.lastSaveTime >= this.SAVE_INTERVAL) {
-        this.saveCoins();
-    }
+    // Update coin display through the shared UI helper (using current player.coins + accumulated)
+    updateCoinCount(this.player.coins + this.accumulatedCoins);
 }
 
-   async saveCoins() {
-    try {
-        // Keep fractional coin accumulation internally and only floor for display.
-        await this.player.save();
-        this.lastSaveTime = Date.now();
-        console.log('Coins saved:', this.player.coins);
-    } catch (e) {
-        console.error('Error saving coins:', e);
+    // Sync accumulated coins with Firebase every 10 seconds
+    async syncCoins() {
+        try {
+            // Load current coins from Firebase
+            await this.player.loadCoins();
+            // Add accumulated coins
+            this.player.coins += this.accumulatedCoins;
+            // Save back to Firebase
+            await this.player.save();
+            // Reset accumulator
+            this.accumulatedCoins = 0;
+            // Update display (though it should already be updated)
+            updateCoinCount(this.player.coins);
+        } catch (error) {
+            console.error('Error syncing coins with Firebase:', error);
+        }
     }
-}
 
     // Update CPM when layout changes
     onLayoutChange() {
         this.calculateCoinsPerMinute();
-        console.log('Layout changed, new CPM:', this.coinsPerMinute);
     }
 
     // Get formatted CPM display string

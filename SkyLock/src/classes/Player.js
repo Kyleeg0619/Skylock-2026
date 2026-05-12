@@ -1,5 +1,5 @@
 import { db } from "../firebase/firebase.js";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 export default class Player {
     constructor(uid, email, username) {
@@ -32,6 +32,16 @@ export default class Player {
     async save() {
         const ref = doc(db,"players",this.uid);
         await setDoc(ref, this.toFirestore(), { merge: true });
+    }
+
+    async loadCoins() {
+        const ref = doc(db, "players", this.uid);
+        const docSnap = await getDoc(ref);
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            this.coins = data.coins || 0;
+            this.angelCoins = data.angelCoins || 0;
+        }
     }
 
     static fromFirestore(data, uid) {

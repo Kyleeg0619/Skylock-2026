@@ -35,17 +35,15 @@ export default class MainScene extends Phaser.Scene {
 
     init() {
         this.player = this.registry.get("player");
-        console.log('Player data loaded:', this.player);
     }
 
     preload() {
         if (this.textures.exists('starter-island')) {
-            console.log('Textures already loaded');
             this.assetsLoaded = true;
             return;
         }
 
-        console.log('MainScene: Loading missing textures...');
+        // MainScene: Loading missing textures...
         
         this.load.setPath('assets');
         
@@ -67,8 +65,6 @@ export default class MainScene extends Phaser.Scene {
     }
 
     create() {
-        console.log('MainScene started');
-
         showUI({
             settings: true,
             home: true,
@@ -102,9 +98,6 @@ export default class MainScene extends Phaser.Scene {
         // Get player data
         const ownedIslands = this.player?.islands?.owned || ['starter-island'];
         const ownedAngels = this.player?.angels?.owned || ['dog-1'];
-
-        console.log('Player owns these islands:', ownedIslands);
-        console.log('Player owns these angels:', ownedAngels);
 
         const defaultIsland = ownedIslands[0] || 'starter-island';
         const defaultAngel = ownedAngels[0] || 'dog-1';
@@ -148,9 +141,6 @@ export default class MainScene extends Phaser.Scene {
             savedAngelLayout = [[defaultAngel, null], [null, null], [null, null], [null, null],
                                 [null, null], [null, null], [null, null], [null, null]];
         }
-
-        console.log('Using island layout:', savedIslandLayout);
-        console.log('Using angel layout:', savedAngelLayout);
 
         // 8 island positions - 2 rows of 2, repeated twice
         const positions = [
@@ -284,7 +274,7 @@ export default class MainScene extends Phaser.Scene {
         this.coinManager.start();
         this.updateCPMDisplay();
 
-        console.log('MainScene ready with 8 islands!');
+        // MainScene ready with 8 islands!
     }
 
     // --- Scrolling ---
@@ -438,7 +428,7 @@ export default class MainScene extends Phaser.Scene {
 
     // --- Selection ---
     selectIslandForEditing(index) {
-        console.log(`Double-clicked island slot ${index}`);
+        // console.log(`Double-clicked island slot ${index}`);
 
         if (this.selectedIslandIndex === index) {
             this.clearSelection();
@@ -512,7 +502,7 @@ export default class MainScene extends Phaser.Scene {
 
     // --- Customization Change ---
    handleCustomizationChange(customization) {
-    console.log('=== MainScene received customizationChanged ===');
+    // console.log('=== MainScene received customizationChanged ===');
 
     const slotToSwap = customization.selectedSlot;
 
@@ -557,7 +547,7 @@ export default class MainScene extends Phaser.Scene {
 }
     // --- Island Swap ---
     swapIsland(slotIndex, newIslandId) {
-        console.log(`Swapping island at slot ${slotIndex} to ${newIslandId}`);
+        // console.log(`Swapping island at slot ${slotIndex} to ${newIslandId}`);
 
         if (!this.textures.exists(newIslandId)) {
             console.error(`Cannot swap - texture ${newIslandId} not loaded!`);
@@ -620,7 +610,7 @@ export default class MainScene extends Phaser.Scene {
 
     // --- Angel Swap ---
     swapAngel(slotIndex, angelSlot, newAngelId) {
-        console.log(`Swapping angel ${angelSlot + 1} at island slot ${slotIndex} to ${newAngelId}`);
+        // console.log(`Swapping angel ${angelSlot + 1} at island slot ${slotIndex} to ${newAngelId}`);
 
         if (!newAngelId || newAngelId === 'null' || newAngelId === 'none') {
             const existingAngel = this.angels[slotIndex]?.[angelSlot];

@@ -62,7 +62,7 @@ export default class GachaScene extends Phaser.Scene {
                     this.player.angelCoins += 1;
                 };
 
-            this.player.coins -= this.summon1Cost;
+            // this.player.coins -= this.summon1Cost;
             this.player.angels.owned.push(result.angel.id);
             await this.player.save();
 
@@ -82,7 +82,7 @@ export default class GachaScene extends Phaser.Scene {
             }
             var legendary = false;
             const results = [];
-            this.player.coins -= this.summon5Cost;
+            // this.player.coins -= this.summon5Cost;
             for (let i = 0; i < 5; i++) {
                 const result = await this.rollGacha();
 

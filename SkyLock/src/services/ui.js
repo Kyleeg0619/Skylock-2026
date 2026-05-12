@@ -100,11 +100,11 @@ export function showUI({ settings, home, shop, edit, info, coins, excursion, ang
 }
 
 export function updateCoinCount(coins) {
-    document.getElementById('coinCount').textContent = coins;
-    console.log(`Updated coin count: ${coins}`);
+    const coinValue = Math.floor(Number(coins) || 0);
+    document.getElementById('coinCount').textContent = coinValue;
 }
 
 export function updateAngelCoinCount(angelcoins) {
-    document.getElementById('angelcoinCount').textContent = angelcoins;
-    console.log(`Updated angel coin count: ${angelcoins}`);
+    const coinValue = Math.floor(Number(angelcoins) || 0);
+    document.getElementById('angelcoinCount').textContent = coinValue;
 }
