@@ -105,10 +105,10 @@ export default class Player {
     }
 
     async save() {
-        console.log('Saving player data to DB:', this.toFirestore());
+        // console.log('Saving player data to DB:', this.toFirestore());
         const ref = doc(db,"players",this.uid);
         await setDoc(ref, this.toFirestore(), { merge: true });
-        console.log('Player data saved successfully');
+        // console.log('Player data saved successfully');
     }
 
     async loadCoins() {

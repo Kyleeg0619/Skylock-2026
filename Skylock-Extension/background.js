@@ -14,7 +14,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
         chrome.tabs.query({}, (tabs) => {
             tabs.forEach((t) => {
-                if (t.url && t.url.includes("localhost:5173")) {
+                if (t.url && t.url.includes("skylock-c920c")) {
                     chrome.tabs.sendMessage(t.id, {
                         type: "SKYLOCK_OPEN_TABS",
                         urls: [tab.url],

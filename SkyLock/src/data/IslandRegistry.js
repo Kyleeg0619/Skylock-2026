@@ -47,14 +47,14 @@ export const IslandRegistry = {
         name: "Strawberry Field",
         sprite: "strawberry-field.png",
         price: 700,
-        buff: { coins: 0.25 },
+        buff: { coins: 2 },
         sellValue: 300
     },
     'healing-bath': {
         name: "Healing Bath",
         sprite: "healing-bath.png",
         price: 700,
-        buff: { coins: 0.25 },
+        buff: { coins: 2 },
         sellValue: 300
     },
     'summoning-circle': {
@@ -68,7 +68,7 @@ export const IslandRegistry = {
         name: "Persephone's Garden",
         sprite: "persephones-garden.png",
         price: 2000,
-        buff: { coins: 0.4 },
+        buff: { coins: 4 },
         sellValue: 1000
     }
 };
