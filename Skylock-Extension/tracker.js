@@ -1,6 +1,7 @@
 console.log("Skylock Tracker Loaded");
 
-chrome.runtime.onMessage.addListener((msg) => {
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    console.log("Tracker received: ", msg);
     if (msg.type === "SKYLOCK_OPEN_TABS") {
         window.postMessage({ 
             type: "SKYLOCK_OPEN_TABS", 

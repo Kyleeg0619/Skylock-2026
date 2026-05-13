@@ -1,20 +1,26 @@
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status !== "complete") return;
     if (!tab.url) return;
 
     const socialMedia =
-    tab.url.includes("facebook.com") ||
-    tab.url.includes("twitter.com") ||
-    tab.url.includes("instagram.com") ||
-    tab.url.includes("x.com") ||
-    tab.url.includes("tiktok.com") ||
-    tab.url.includes("bsky.app");
+        tab.url.includes("facebook.com") ||
+        tab.url.includes("twitter.com") ||
+        tab.url.includes("instagram.com") ||
+        tab.url.includes("x.com") ||
+        tab.url.includes("tiktok.com") ||
+        tab.url.includes("bsky.app");
 
     if (socialMedia) {
         console.log(`Social media tab detected: ${tab.url}`);
 
         chrome.tabs.query({}, (tabs) => {
             tabs.forEach((t) => {
-                if (t.url && (t.url.includes("localhost:5173") || t.url.includes("skylock-c920c.web.app") || t.url.includes("skylock-c920c.firebaseapp.com"))) {
+                if (
+                    t.url &&
+                    (t.url.includes("localhost") ||
+                     t.url.includes("skylock-c920c.web.app") ||
+                     t.url.includes("skylock-c920c.firebaseapp.com"))
+                ) {
                     chrome.tabs.sendMessage(t.id, {
                         type: "SKYLOCK_OPEN_TABS",
                         urls: [tab.url],
