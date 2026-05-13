@@ -45,6 +45,16 @@ header,footer {
 }
 
 /* footer styles */
+#instructions {
+    width: 100%;
+    margin: 15px 0 0 25px;
+    color: black;
+}
+
+#instructions li {
+    margin: 15px 0 0 0;
+}
+
 .extension-info {
     display: flex;
     gap: 20px;
@@ -272,12 +282,6 @@ header,footer {
 
 #settingsSubmit {
     border: 2px solid var(--dark-purple);
-    background: none;
-    color: var(--off-white);
-    padding: 5px 12px;
-    border-radius: 50px;
-    margin-top: 8px;
-    transition: all 0.8s;
 }
 
 #settingsSubmit:hover {
@@ -490,20 +494,25 @@ input[type="range"]::-moz-range-thumb {
     padding: 10px;
 }
 
-#settingsSubmit, #logoutBtn {
-    display: block;
+#settingsSubmit, #logoutBtn, #downloadBtn {
     width: fit-content;
-    border: 2px solid var(--dark-purple);
-    text-decoration: none;
-    font-size: inherit;
-    font-family: inherit;
-    background: none;
-    color: var(--off-white);
-    border-radius: 50px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
     transition: all 0.3s ease;
+    text-decoration: none;
+    padding: 5px 12px;
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: inherit;
+    display: block;
+    cursor: pointer;
+    color: var(--off-white);
+    border: 2px solid var(--dark-purple);
+    border-radius: 50px;
+    background: none;
+}
+
+#downloadBtn {
+    background: var(--dark-purple);
 }
 
 #editConfirmBtn:hover {
