@@ -34,6 +34,12 @@ export default class GachaScene extends Phaser.Scene {
                 this.music.play();
             }
 
+        this.events.on('shutdown', () => {
+            if (this.music) {
+                this.music.stop();
+            }
+        });
+
         // Gacha Prices
         this.summon1Cost = 200;
         this.summon5Cost = 1000;

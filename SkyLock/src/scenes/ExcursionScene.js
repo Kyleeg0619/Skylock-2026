@@ -21,11 +21,19 @@ export default class ExcursionScene extends Phaser.Scene {
 
         updateCoinCount(this.player.coins);
 
-        this.music = this.sound.add('excursionMusic', {
+        if (!this.sound.get('excursionMusic')) {
+            this.music = this.sound.add('excursionMusic', {
             volume: this.player.settings.music / 100
         });
         this.music.setLoop(true);
         this.music.play();
+        }
+
+        this.events.on('shutdown', () => {
+            if (this.music) {
+                this.music.stop();
+            }
+        });
 
         // Background
 this.cameras.main.setBackgroundColor('#87ceeb');
@@ -56,7 +64,7 @@ this.cameras.main.setBackgroundColor('#87ceeb');
             e.stopPropagation();
             cancelPopup.style.display = 'none';
             this.handleCancel();
-            this.scene.start('MainScene');
+            this.scene.start('TimerScene');
         });
 
         cancelCloseBtn.addEventListener('click', (e) => {
@@ -140,7 +148,7 @@ this.cameras.main.setBackgroundColor('#87ceeb');
 
             console.log(`Excursion completed! Earned ${this.coinsEarned} coins.`);
 
-            this.scene.start('MainScene');
+            this.scene.start('TimerScene');
         } else if (remaining > 0 && window.__skylockDistraction) {
             this.handleDistraction();
 

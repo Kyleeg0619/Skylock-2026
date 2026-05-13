@@ -44,24 +44,6 @@ export default class MainScene extends Phaser.Scene {
         }
 
         // MainScene: Loading missing textures...
-        
-        this.load.setPath('assets');
-        
-        Object.entries(IslandRegistry).forEach(([key, island]) => {
-            if (!this.textures.exists(key)) {
-                this.load.image(key, `islands/${island.sprite}`);
-            }
-        });
-
-        Object.entries(AngelRegistry).forEach(([key, angel]) => {
-            if (!this.textures.exists(key)) {
-                this.load.image(key, `angels/${angel.sprite}`);
-            }
-        });
-
-        if (!this.textures.exists('bg')) {
-            this.load.image('bg', 'backgrounds/island_bg.png');
-        }
     }
 
     create() {
@@ -76,11 +58,19 @@ export default class MainScene extends Phaser.Scene {
         });
 
         // music
-        this.music = this.sound.add('theme',{
+        if (!this.sound.get('theme') || this.music === undefined) {
+            this.music = this.sound.add('theme',{
             volume: this.player.settings.music/100
         });
         this.music.setLoop(true);
         this.music.play();
+        }
+        
+        this.events.on('shutdown', () => {
+            if (this.music) {
+                this.music.stop();
+            }
+        });
 
         // Set world bounds for scrolling
         this.cameras.main.setBounds(0, 0, this.GAME_WIDTH, this.WORLD_HEIGHT);
@@ -88,11 +78,11 @@ export default class MainScene extends Phaser.Scene {
         this.cameras.main.setBackgroundColor('#87ceeb');
 
         // Background - make it tall enough for scrolling
-        if (this.textures.exists('bg')) {
+        if (this.textures.exists('seamless_bg')) {
             // First background
-            this.add.image(0, 0, 'bg').setOrigin(0, 0).setDisplaySize(this.GAME_WIDTH, this.GAME_HEIGHT);
+            this.add.image(0, 0, 'seamless_bg').setOrigin(0, 0).setDisplaySize(this.GAME_WIDTH, this.GAME_HEIGHT);
             // Second background (below first)
-            this.add.image(0, this.GAME_HEIGHT - 100, 'bg').setOrigin(0, 0).setDisplaySize(this.GAME_WIDTH, this.GAME_HEIGHT);
+            this.add.image(0, this.GAME_HEIGHT - 100, 'seamless_bg').setOrigin(0, 0).setDisplaySize(this.GAME_WIDTH, this.GAME_HEIGHT);
         }
 
         // Get player data
