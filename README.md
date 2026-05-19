@@ -86,10 +86,10 @@ Game Engine: Phaser.js - 2D, Broswer-naive, for idle
 Frontend UI: HTML, CSS - PResent Knowledge 
 
 
-Backend: Node.js + Express - For Accounts, cloud saves, gacha odds, (Potential) leaderboards
+Backend: Firebase - For Accounts, cloud saves, gacha odds, (Potential) leaderboards
 
 
-Database: MongoDB/Fire Base - Easy player data storage 
+Database: Firebase - Easy player data storage 
 
 
-Hosting: Google Cloud - Free Hosting 
+Hosting: Firebase - Free Low-Cost Hosting 
